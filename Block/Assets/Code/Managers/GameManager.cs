@@ -1,12 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    //UI variables
+    [Header("UI")]
+    public Canvas canvas;
+    public Text text;
+
+    [Header("Managers")]
     //managers array
     private static Manager[] managers;
 
+    [Header("Player")]
     //Player Instance
     public Player player;
     
@@ -38,25 +46,42 @@ public class GameManager : MonoBehaviour
         managers = new Manager[]
         {
             new AudioManager(),
+            new EnergyManager(),
+            new UIManager(),
         };
         loadLevelOnce = false;
         
     }
     private void Awake()
     {
-        
+        DontDestroyOnLoad(gameObject);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        for (int i = 0; i < managers.Length; i++)
+        {
+            managers[i].Start();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        for (int i = 0; i < managers.Length; i++)
+        {
+            managers[i].Update();
+        }
+    }
+
+    public static void Pause(bool value)
+    {
+        pause = value;
+        for (int i = 0; i < managers.Length; i++)
+        {
+            managers[i].Pause(value);
+        }
     }
    
 }
