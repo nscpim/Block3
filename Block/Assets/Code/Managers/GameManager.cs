@@ -9,6 +9,11 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public Canvas canvas;
     public Text text;
+    [Space]
+    public Canvas energyCanvas;
+    public Text energyText;
+    [Space]
+    public Text testText;
 
     [Header("Managers")]
     //managers array
@@ -27,6 +32,10 @@ public class GameManager : MonoBehaviour
     private static bool pause;
     //bool for loading once
     private bool loadLevelOnce;
+
+
+    //Main Camera
+    public Camera mainCamera;
 
     public static T GetManager<T>() where T : Manager
     {
@@ -69,6 +78,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var time = (int)GetManager<EnergyManager>().eventTimer.TimeLeft();
+        testText.text = time.ToString();
         for (int i = 0; i < managers.Length; i++)
         {
             managers[i].Update();
@@ -84,4 +95,9 @@ public class GameManager : MonoBehaviour
         }
     }
    
+}
+public enum Levels
+{
+
+
 }

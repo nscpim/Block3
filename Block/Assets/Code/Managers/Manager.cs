@@ -23,6 +23,13 @@ public class Manager
     }
     public virtual void Pause(bool pause)
     {
-        
+        if (pause)
+        {
+            Time.timeScale = 0F;
+        }
+        else
+        {
+            Time.timeScale = 1F;
+        }
     }
 }

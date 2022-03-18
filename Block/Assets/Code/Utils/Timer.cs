@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Timer
 {
-
     //Time.Deltatime.
     private float timeStamp;
     //Interval for how long the timer runs.
