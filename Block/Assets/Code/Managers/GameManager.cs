@@ -7,13 +7,8 @@ public class GameManager : MonoBehaviour
 {
     //UI variables
     [Header("UI")]
-    public Canvas canvas;
-    public Text text;
-    [Space]
-    public Canvas energyCanvas;
-    public Text energyText;
-    [Space]
-    public Text testText;
+    public Canvas UIcanvas;
+    public Font font;
 
     [Header("Managers")]
     //managers array
@@ -76,10 +71,10 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+   public void Update()
     {
         var time = (int)GetManager<EnergyManager>().eventTimer.TimeLeft();
-        testText.text = time.ToString();
+       
         for (int i = 0; i < managers.Length; i++)
         {
             managers[i].Update();

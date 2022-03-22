@@ -24,7 +24,7 @@ public class Player : Actor
         var energyManager = GameManager.GetManager<EnergyManager>();
         if (Input.GetKeyDown(KeyCode.A))
         {
-            GameManager.GetManager<UIManager>().ShowTempUI(5, "Test", 100, 100);
+            GameManager.GetManager<UIManager>().ShowTempUI(5, "Test", 400, 400);
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
@@ -38,13 +38,16 @@ public class Player : Actor
                 energyManager.eventTimer.SetTimer(Random.Range(energyManager.minimumTime, energyManager.maximumTime));
             }
         }
+
+        if (Input.GetKey(KeyCode.F))
+        {
+            Interaction();
+        }
     }
-
-
 
     public void Interaction() 
     {
-        
+
         if (Physics.Raycast(transform.position, transform.TransformDirection(transform.forward), out hit, 5))
         {
             if(hit.transform.tag == "Interactable")
@@ -52,7 +55,5 @@ public class Player : Actor
                 hit.transform.gameObject.GetComponent<Interactable>().Interact();
             }
         }
-    
-    
     }
 }

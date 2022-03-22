@@ -5,22 +5,29 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
 
-    private string name;
+    private string _name;
+    public Animator anim;
+   
+
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
-        name = gameObject.name;
+        _name = gameObject.name;
     }
 
     // Update is called once per frame
-    void Update()
+   public void Update()
     {
 
     }
 
     public void Interact() 
     {
-        Debug.Log("Object name: " + name);
-    
+        Debug.Log("Object name: " + _name);
+
+        //anim.Play("open");
+
+
+       
     }
 }
