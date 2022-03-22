@@ -15,7 +15,6 @@ public class EnergyManager : Manager
     {
         eventTimer = new Timer();
         EnergyBar = 0;
-
     }
 
     // Update is called once per frame

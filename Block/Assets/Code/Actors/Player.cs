@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : Actor
 {
     public int needsBar { get; private set; }
-
+    private RaycastHit hit;
 
     public void Awake()
     {
@@ -38,5 +38,21 @@ public class Player : Actor
                 energyManager.eventTimer.SetTimer(Random.Range(energyManager.minimumTime, energyManager.maximumTime));
             }
         }
+    }
+
+
+
+    public void Interaction() 
+    {
+        
+        if (Physics.Raycast(transform.position, transform.TransformDirection(transform.forward), out hit, 5))
+        {
+            if(hit.transform.tag == "Interactable")
+            {
+                hit.transform.gameObject.GetComponent<Interactable>().Interact();
+            }
+        }
+    
+    
     }
 }
