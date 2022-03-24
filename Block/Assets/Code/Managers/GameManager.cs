@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public Canvas UIcanvas;
     public Font font;
+    public Text eventText;
 
     [Header("Managers")]
     //managers array
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviour
    public void Update()
     {
         var time = (int)GetManager<EnergyManager>().eventTimer.TimeLeft();
+        eventText.text = time.ToString();
        
         for (int i = 0; i < managers.Length; i++)
         {

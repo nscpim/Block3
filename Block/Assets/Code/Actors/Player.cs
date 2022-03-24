@@ -40,10 +40,10 @@ public class Player : Actor
         movement();
         CameraMove();
         var energyManager = GameManager.GetManager<EnergyManager>();
-      //  if (Input.GetKeyDown(KeyCode.A))
-      //  {
-      //      GameManager.GetManager<UIManager>().ShowTempUI(5, "Test", 400, 400);
-     //   }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+           GameManager.GetManager<UIManager>().ShowTempUI(5, "Test", 400, 400);
+      }
         if (Input.GetKeyDown(KeyCode.T))
         {
             if (energyManager.eventTimer.isActive)
