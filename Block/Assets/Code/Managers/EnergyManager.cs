@@ -6,6 +6,7 @@ public class EnergyManager : Manager
 {
     public int EnergyBar { get; private set; }
     public Timer eventTimer;
+    public Timer drainTimer;
     public int minimumTime = 1;
     public int maximumTime = 100;
     private float cameraShake = 5f;
@@ -14,7 +15,7 @@ public class EnergyManager : Manager
     public override void Start()
     {
         eventTimer = new Timer();
-        EnergyBar = 0;
+        EnergyBar = 100;
     }
 
     // Update is called once per frame

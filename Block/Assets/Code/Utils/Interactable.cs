@@ -23,8 +23,15 @@ public class Interactable : MonoBehaviour
 
     public void Interact() 
     {
+        var inventory = GameManager.GetManager<InventoryManager>();
         Debug.Log("Object name: " + _name);
-
+        if (inventory.CheckIfInInv(gameObject.name))
+        {
+           // GameManager.GetManager<AudioManager>().PlaySound();
+            inventory.AddItem(gameObject);
+            gameObject.SetActive(false);
+        }
+        
         //anim.Play("open");
 
 

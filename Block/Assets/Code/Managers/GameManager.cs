@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     //bool for loading once
     private bool loadLevelOnce;
 
+    
 
     //Main Camera
     public Camera mainCamera;
@@ -47,23 +48,25 @@ public class GameManager : MonoBehaviour
 
     GameManager()
     {
+        
         instance = this;
         managers = new Manager[]
         {
             new AudioManager(),
             new EnergyManager(),
             new UIManager(),
+            new InventoryManager(),
         };
         loadLevelOnce = false;
         
     }
-    private void Awake()
+    public void Awake()
     {
         DontDestroyOnLoad(gameObject);
     }
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         for (int i = 0; i < managers.Length; i++)
         {
@@ -74,6 +77,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
    public void Update()
     {
+
+       print(GetManager<InventoryManager>().items.ToString());
+
         var time = (int)GetManager<EnergyManager>().eventTimer.TimeLeft();
         eventText.text = time.ToString();
        
