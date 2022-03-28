@@ -7,8 +7,8 @@ public class Player : Actor
     public int needsBar { get; private set; }
     private RaycastHit hit;
 
-
-
+    
+    public Animator[] anim;
     public float gravity = 40.0f;
 
     private Vector3 moveDirection = Vector3.zero;
@@ -58,12 +58,12 @@ public class Player : Actor
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             Interaction();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
 
             if (!inventory.HasItem())
@@ -121,12 +121,18 @@ public class Player : Actor
 
         if (Physics.Raycast(transform.position, transform.TransformDirection(transform.forward), out hit, 200))
         {
-            Debug.DrawRay(gameObject.transform.position, transform.TransformDirection(transform.forward), Color.black, 5f, true);
+            Debug.DrawRay(gameObject.transform.position, transform.TransformDirection(transform.forward), Color.black, 5f);
             if (hit.transform.tag == "Interactable")
             {
-                hit.transform.gameObject.GetComponent<Interactable>().Interact();
+                hit.transform.gameObject.GetComponent<Interactable>().Interact(true);
                 hit.transform.gameObject.SetActive(false);
             }
+            if (hit.transform.tag == "Fridge")
+            {
+                hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
+                
+            }
+            
         }
     }
     public void movement()

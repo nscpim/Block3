@@ -13,28 +13,32 @@ public class Interactable : MonoBehaviour
     public void Start()
     {
         _name = gameObject.name;
+
     }
 
     // Update is called once per frame
    public void Update()
     {
-
+        
     }
 
-    public void Interact() 
+    public void Interact(bool canPickUp, string animationName = default) 
     {
-        var inventory = GameManager.GetManager<InventoryManager>();
-        Debug.Log("Object name: " + _name);
-        if (inventory.CheckIfInInv(gameObject.name))
+        if (canPickUp)
         {
-           // GameManager.GetManager<AudioManager>().PlaySound();
-            inventory.AddItem(gameObject);
-            gameObject.SetActive(false);
+            var inventory = GameManager.GetManager<InventoryManager>();
+            if (inventory.CheckIfInInv(gameObject.name))
+            {
+                // GameManager.GetManager<AudioManager>().PlaySound();
+                inventory.AddItem(gameObject);
+                gameObject.SetActive(false);
+            }
         }
-        
-        //anim.Play("open");
-
-
+        else
+        {
+            anim.Play(animationName);
+        }
        
     }
 }
+
