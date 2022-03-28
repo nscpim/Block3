@@ -7,6 +7,9 @@ public class InventoryManager : Manager
     public List<GameObject> items = new List<GameObject>();
     
     private bool inInv;
+    private bool hasItem;
+
+    public float selectedSlot;
 
     // Start is called before the first frame update
     public override void Start()
@@ -42,5 +45,18 @@ public class InventoryManager : Manager
     public void RemoveItem(GameObject _gameobject) 
     {
         items.Remove(_gameobject);
+    }
+
+    public bool HasItem()
+    {
+        if (items.Count == 0)
+        {
+            hasItem = false;
+        }
+        else
+        {
+            hasItem = true;
+        }
+        return hasItem;
     }
 }
