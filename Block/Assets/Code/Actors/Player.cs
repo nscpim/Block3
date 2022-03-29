@@ -8,7 +8,6 @@ public class Player : Actor
     private RaycastHit hit;
 
     
-    public Animator[] anim;
     public float gravity = 40.0f;
 
     private Vector3 moveDirection = Vector3.zero;
@@ -46,7 +45,6 @@ public class Player : Actor
         {
             if (energyManager.eventTimer.isActive)
             {
-               
                 energyManager.eventTimer.StopTimer();
                 energyManager.eventTimer.SetTimer(Random.Range(energyManager.minimumTime, energyManager.maximumTime));
             }
@@ -114,10 +112,11 @@ public class Player : Actor
     
 
     public void Interaction()
-    { 
-        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(cam.transform.forward), out hit, 200))
+    {
+
+        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, Mathf.Infinity))
         {
-            Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(cam.transform.forward), Color.black, 50f);
+            Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(transform.forward), Color.black, 200f);
             if (hit.transform.tag == "Interactable")
             {
                 hit.transform.gameObject.GetComponent<Interactable>().Interact(true);
