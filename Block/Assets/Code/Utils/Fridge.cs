@@ -5,32 +5,34 @@ using UnityEngine;
 public class Fridge : Interactable
 {
 
+    
+
+
     public void PlayAnimation()
     {
-        print(anim.GetFloat("Direction"));
-        if (anim.GetFloat("Direction") == 0)
+       
+
+        if (!anim.GetBool("forward"))
         {
             Forward();
+            anim.SetBool("forward", true);
+            
         }
-        if (anim.GetFloat("Direction") == 1)
+        else
         {
-            BackWards();
-        }
-        if (anim.GetFloat("Direction") == -1)
-        {
-            Forward();
+            anim.SetBool("forward", false);
         }
     }
 
     public void Forward()
     {
-        anim.SetFloat("Direction", 1);
         anim.Play("Fridge animation rev");
     }
 
     public void BackWards()
     {
-        anim.SetFloat("Direction", -1);
-        anim.Play("Fridge animation rev");
+        anim.Play("Fridge animation rev back");
     }
+
+    
 }

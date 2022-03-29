@@ -17,7 +17,7 @@ public class Player : Actor
     public float sensitivity;
     private float speed = 6.0F;
     private Camera cam;
-    private InventoryManager inventory = GameManager.GetManager<InventoryManager>();
+    
 
     public void Awake()
     {
@@ -46,9 +46,7 @@ public class Player : Actor
         {
             if (energyManager.eventTimer.isActive)
             {
-
-
-                gameObject.transform.DetachChildren();
+               
                 energyManager.eventTimer.StopTimer();
                 energyManager.eventTimer.SetTimer(Random.Range(energyManager.minimumTime, energyManager.maximumTime));
             }
@@ -66,7 +64,7 @@ public class Player : Actor
         if (Input.GetKeyDown(KeyCode.Z))
         {
 
-            if (!inventory.HasItem())
+            if (!GameManager.GetManager<InventoryManager>().HasItem())
             {
                 return;
             }
@@ -78,30 +76,29 @@ public class Player : Actor
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            inventory.selectedSlot = 1;
+            GameManager.GetManager<InventoryManager>().selectedSlot = 1;
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            inventory.selectedSlot = 2;
+            GameManager.GetManager<InventoryManager>().selectedSlot = 2;
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            inventory.selectedSlot = 3;
+            GameManager.GetManager<InventoryManager>().selectedSlot = 3;
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            inventory.selectedSlot = 4;
+            GameManager.GetManager<InventoryManager>().selectedSlot = 4;
         }
 
         Scroll();
-        print((int)inventory.selectedSlot);
 
     }
 
     public void Place()
     {
 
-        var _gameObject = inventory.items[(int)inventory.selectedSlot];
+        var _gameObject = GameManager.GetManager<InventoryManager>().items[(int)GameManager.GetManager<InventoryManager>().selectedSlot];
 
         if (_gameObject == null)
         {
@@ -114,14 +111,13 @@ public class Player : Actor
     }
 
        
-
+    
 
     public void Interaction()
-    {
-
-        if (Physics.Raycast(transform.position, transform.TransformDirection(transform.forward), out hit, 200))
+    { 
+        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(cam.transform.forward), out hit, 200))
         {
-            Debug.DrawRay(gameObject.transform.position, transform.TransformDirection(transform.forward), Color.black, 5f);
+            Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(cam.transform.forward), Color.black, 50f);
             if (hit.transform.tag == "Interactable")
             {
                 hit.transform.gameObject.GetComponent<Interactable>().Interact(true);
@@ -129,8 +125,8 @@ public class Player : Actor
             }
             if (hit.transform.tag == "Fridge")
             {
+                print("hit fridge");
                 hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
-                
             }
             
         }
@@ -175,17 +171,17 @@ public class Player : Actor
 
     public void Scroll()
     {
-        if (inventory.selectedSlot > 0 && inventory.selectedSlot < 5)
+        if (GameManager.GetManager<InventoryManager>().selectedSlot > 0 && GameManager.GetManager<InventoryManager>().selectedSlot < 5)
         {
-            inventory.selectedSlot += Input.mouseScrollDelta.y;
+            GameManager.GetManager<InventoryManager>().selectedSlot += Input.mouseScrollDelta.y;
         }
-        if (inventory.selectedSlot <= 1)
+        if (GameManager.GetManager<InventoryManager>().selectedSlot <= 1)
         {
-            inventory.selectedSlot = 1;
+            GameManager.GetManager<InventoryManager>().selectedSlot = 1;
         }
-        if (inventory.selectedSlot >= 4)
+        if (GameManager.GetManager<InventoryManager>().selectedSlot >= 4)
         {
-            inventory.selectedSlot = 4;
+            GameManager.GetManager<InventoryManager>().selectedSlot = 4;
         }
        
         

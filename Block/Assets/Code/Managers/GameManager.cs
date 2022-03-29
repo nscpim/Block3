@@ -29,10 +29,18 @@ public class GameManager : MonoBehaviour
     //bool for loading once
     private bool loadLevelOnce;
 
-    
+    private int time = (int)GetManager<EnergyManager>().eventTimer.TimeLeft();
+
 
     //Main Camera
     public Camera mainCamera;
+
+    GameManager()
+    {
+        
+    
+        
+    }
 
     public static T GetManager<T>() where T : Manager
     {
@@ -46,9 +54,8 @@ public class GameManager : MonoBehaviour
         return default(T);
     }
 
-    GameManager()
+    public void Awake()
     {
-        
         instance = this;
         managers = new Manager[]
         {
@@ -58,10 +65,6 @@ public class GameManager : MonoBehaviour
             new InventoryManager(),
         };
         loadLevelOnce = false;
-        
-    }
-    public void Awake()
-    {
         DontDestroyOnLoad(gameObject);
     }
 
@@ -80,7 +83,7 @@ public class GameManager : MonoBehaviour
 
        print(GetManager<InventoryManager>().items.ToString());
 
-        var time = (int)GetManager<EnergyManager>().eventTimer.TimeLeft();
+      
         eventText.text = time.ToString();
        
         for (int i = 0; i < managers.Length; i++)
