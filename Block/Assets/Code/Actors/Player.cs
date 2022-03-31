@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Player : Actor
 {
-    public int needsBar { get; private set; }
-    private RaycastHit hit;
+   
 
+
+    public static Player instance { get; private set; }
+
+
+    private RaycastHit hit;
     
     public float gravity = 40.0f;
 
@@ -15,7 +19,8 @@ public class Player : Actor
     private float looker;
     public float sensitivity;
     private float speed = 6.0F;
-    private Camera cam;
+    [HideInInspector]
+    public Camera cam;
     
 
     public void Awake()
@@ -26,15 +31,15 @@ public class Player : Actor
     // Start is called before the first frame update
     public void Start()
     {
+        instance = this;
         Cursor.lockState = CursorLockMode.Locked;
         cam = gameObject.GetComponentInChildren<Camera>();
-
+       
     }
 
     // Update is called once per frame
     public void Update()
     {
-
         movement();
         var energyManager = GameManager.GetManager<EnergyManager>();
         if (Input.GetKeyDown(KeyCode.U))
@@ -88,7 +93,6 @@ public class Player : Actor
         {
             GameManager.GetManager<InventoryManager>().selectedSlot = 4;
         }
-
         Scroll();
 
     }
@@ -107,9 +111,6 @@ public class Player : Actor
             Instantiate(_gameObject, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
         }
     }
-
-       
-    
 
     public void Interaction()
     {
@@ -136,14 +137,10 @@ public class Player : Actor
 
         if (controller.isGrounded)
         {
-
-
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             moveDirection = cam.transform.TransformDirection(moveDirection);
             moveDirection.y = 0.0f;
             moveDirection *= speed;
-
-
         }
 
         turner = Input.GetAxis("Mouse X") * sensitivity;

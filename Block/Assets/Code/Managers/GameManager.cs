@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     public Canvas UIcanvas;
     public Font font;
     public Text eventText;
+    public Slider energyBarSlider;
+
+
 
     [Header("Managers")]
     //managers array
@@ -29,7 +32,7 @@ public class GameManager : MonoBehaviour
     //bool for loading once
     private bool loadLevelOnce;
 
-   
+    private int time;
 
 
     //Main Camera
@@ -60,13 +63,13 @@ public class GameManager : MonoBehaviour
         };
         loadLevelOnce = false;
         DontDestroyOnLoad(gameObject);
-
-
     }
 
     // Start is called before the first frame update
     public void Start()
     {
+        
+
         for (int i = 0; i < managers.Length; i++)
         {
             managers[i].Start();
@@ -77,10 +80,6 @@ public class GameManager : MonoBehaviour
    public void Update()
     {
 
-       print(GetManager<InventoryManager>().items.ToString());
-         var time = (int)GetManager<EnergyManager>().eventTimer.TimeLeft();
-
-    eventText.text = time.ToString();
        
         for (int i = 0; i < managers.Length; i++)
         {
