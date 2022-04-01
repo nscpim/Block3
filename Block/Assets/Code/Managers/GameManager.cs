@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -76,6 +77,7 @@ public class GameManager : MonoBehaviour
 
     public static void LoadLevel(Levels level) 
     {
+        SceneManager.LoadScene((int)level);
     
     
     
@@ -105,6 +107,9 @@ public class GameManager : MonoBehaviour
 }
 public enum Levels
 {
+    MainMenu, 
+    Game,
+    EndScreen
 
 
 }
