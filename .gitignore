@@ -73,4 +73,4 @@ Block/Logs/shadercompiler-UnityShaderCompiler.exe8.log
 Block/ProjectSettings/EditorBuildSettings.asset
 Block/UserSettings/EditorUserSettings.asset
 *.log
-Block/UserSettings/EditorUserSettings.asset
+*.log

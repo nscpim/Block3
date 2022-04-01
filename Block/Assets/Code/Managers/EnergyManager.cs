@@ -54,7 +54,7 @@ public class EnergyManager : Manager
         if (drainTimer.TimerDone() && drainTimer.isActive)
         {
             drainTimer.StopTimer();
-            SubstractEnergy(5f);
+            SubstractEnergy(drainage);
            
             drainTimer.SetTimer(2);
         }
@@ -85,7 +85,6 @@ public class EnergyManager : Manager
     {
         GameManager.instance.energyBarSlider.value = EnergyBar;
         GameManager.instance.eventText.text = eventDummy.ToString() + " in : " + (int)eventTimer.TimeLeft() + "    Energy: " + (int)EnergyBar;
-        Debug.Log(EnergyBar);
     }
     public void ShowEvent(int _event)
     {
@@ -110,6 +109,7 @@ public class EnergyManager : Manager
         switch (eventInt)
         {
             case (int)EventEnum.Thunderstorm:
+
                 AddEnergy(20);
                 break;
             case (int)EventEnum.Earthquake:
