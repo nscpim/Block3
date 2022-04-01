@@ -12,8 +12,6 @@ public class GameManager : MonoBehaviour
     public Text eventText;
     public Slider energyBarSlider;
 
-
-
     [Header("Managers")]
     //managers array
     private static Manager[] managers;
@@ -75,6 +73,14 @@ public class GameManager : MonoBehaviour
             managers[i].Start();
         }
     }
+
+    public static void LoadLevel(Levels level) 
+    {
+    
+    
+    
+    }
+
 
     // Update is called once per frame
    public void Update()
