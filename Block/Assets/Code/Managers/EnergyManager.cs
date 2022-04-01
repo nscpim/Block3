@@ -10,7 +10,7 @@ public class EnergyManager : Manager
     public Timer drainTimer;
     private int drainage = 0;
     public int minimumTime = 1;
-    public int maximumTime = 10;
+    public int maximumTime = 100;
     public bool canDrain = false;
     private int delay = 30;
     private int eventInt;

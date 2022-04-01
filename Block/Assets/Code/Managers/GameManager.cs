@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     public Text eventText;
     public Slider energyBarSlider;
 
-    [Header("Managers")]
     //managers array
     private static Manager[] managers;
 
@@ -31,7 +30,6 @@ public class GameManager : MonoBehaviour
     private bool loadLevelOnce;
 
     private int time;
-
 
     //Main Camera
     public Camera mainCamera;
@@ -66,8 +64,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        
-
         for (int i = 0; i < managers.Length; i++)
         {
             managers[i].Start();
@@ -105,6 +101,6 @@ public class GameManager : MonoBehaviour
 }
 public enum Levels
 {
-
+    
 
 }

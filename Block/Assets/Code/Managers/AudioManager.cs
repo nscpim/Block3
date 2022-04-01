@@ -61,6 +61,7 @@ public class AudioManager : Manager
         PlayerPrefs.SetFloat("sfx Volume", sfxVolume);
         PlayerPrefs.SetFloat("master Volume", masterVolume);
         PlayerPrefs.Save();
+        
     }
     //Sets the Volume when called for the Audio type
     public void SetVolume(float volumePercent, AudioType type)
