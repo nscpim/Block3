@@ -4,16 +4,10 @@ using UnityEngine;
 
 public class Player : Actor
 {
-   
-
-
     public static Player instance { get; private set; }
 
-
     private RaycastHit hit;
-    
     public float gravity = 40.0f;
-
     private Vector3 moveDirection = Vector3.zero;
     private float turner;
     private float looker;
@@ -34,7 +28,6 @@ public class Player : Actor
         instance = this;
         Cursor.lockState = CursorLockMode.Locked;
         cam = gameObject.GetComponentInChildren<Camera>();
-       
     }
 
     // Update is called once per frame
@@ -69,11 +62,12 @@ public class Player : Actor
 
             if (!GameManager.GetManager<InventoryManager>().HasItem())
             {
+                print("false");
                 return;
             }
             else
             {
-                
+                print("true");
                 Place();
             }
         }
@@ -127,6 +121,18 @@ public class Player : Actor
             {
                 print("hit fridge");
                 hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
+            }
+            if (hit.transform.tag == "Lights")
+            {
+                if (hit.transform.gameObject.GetComponent<Lights>().GetState())
+                {
+                    hit.transform.gameObject.GetComponent<Lights>().ToggleLights(false);
+                }
+                else
+                {
+                    hit.transform.gameObject.GetComponent<Lights>().ToggleLights(true);
+                }
+              
             }
             
         }
