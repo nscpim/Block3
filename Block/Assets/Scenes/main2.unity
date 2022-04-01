@@ -1124,7 +1124,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44853675a64f53a4d874ecb470ab0d50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drainAmount: 20
   anim: {fileID: 1517560405}
+  canDrain: 0
 --- !u!1 &1634223993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,7 +1284,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ae45045fd729344bf004fdade3e15e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drainAmount: 0
   anim: {fileID: 0}
+  canDrain: 0
 --- !u!1 &1784065451
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ public class InventoryManager : Manager
     // Update is called once per frame
    public override void Update()
     {
-        Debug.Log(items.ToString() + " | Inventory");
+        Debug.Log(items.Count + " | Inventory");
         
     }
     public bool CheckIfInInv(string _name) 
@@ -41,7 +41,8 @@ public class InventoryManager : Manager
     }
     public void AddItem(GameObject _gameobject) 
     {
-        items.Add(_gameobject);
+        string name = _gameobject.name;
+        items.Add(GameObject.Find(name));
     }
     public void RemoveItem(GameObject _gameobject) 
     {

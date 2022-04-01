@@ -88,7 +88,6 @@ public class Player : Actor
             GameManager.GetManager<InventoryManager>().selectedSlot = 4;
         }
         Scroll();
-
     }
 
     public void Place()
@@ -102,7 +101,8 @@ public class Player : Actor
         }
         else
         {
-            Instantiate(_gameObject, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
+            _gameObject.SetActive(true);
+            GameManager.GetManager<InventoryManager>().RemoveItem(_gameObject);
         }
     }
 
@@ -114,13 +114,14 @@ public class Player : Actor
             Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(transform.forward), Color.black, 200f);
             if (hit.transform.tag == "Interactable")
             {
-                hit.transform.gameObject.GetComponent<Interactable>().Interact(true);
+                hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false);
                 hit.transform.gameObject.SetActive(false);
             }
             if (hit.transform.tag == "Fridge")
             {
                 print("hit fridge");
                 hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
+                hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true);
             }
             if (hit.transform.tag == "Lights")
             {
@@ -153,20 +154,15 @@ public class Player : Actor
         looker = -Input.GetAxis("Mouse Y") * sensitivity;
         if (turner != 0)
         {
-
             transform.localEulerAngles += new Vector3(0, turner, 0);
         }
         if (looker != 0)
         {
-
             transform.localEulerAngles += new Vector3(looker, 0, 0);
         }
 
         moveDirection.y -= gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
-
-
-
     }
 
 
