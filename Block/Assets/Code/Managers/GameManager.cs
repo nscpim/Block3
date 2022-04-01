@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     public Text eventText;
     public Slider energyBarSlider;
 
+    [Header("Managers")]
     //managers array
     private static Manager[] managers;
 
@@ -30,6 +32,7 @@ public class GameManager : MonoBehaviour
     private bool loadLevelOnce;
 
     private int time;
+
 
     //Main Camera
     public Camera mainCamera;
@@ -64,6 +67,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
+        
+
         for (int i = 0; i < managers.Length; i++)
         {
             managers[i].Start();
@@ -72,6 +77,7 @@ public class GameManager : MonoBehaviour
 
     public static void LoadLevel(Levels level) 
     {
+        SceneManager.LoadScene((int)level);
     
     
     
@@ -101,6 +107,9 @@ public class GameManager : MonoBehaviour
 }
 public enum Levels
 {
-    
+    MainMenu, 
+    Game,
+    EndScreen
+
 
 }
