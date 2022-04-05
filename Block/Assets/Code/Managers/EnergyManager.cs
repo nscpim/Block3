@@ -4,36 +4,74 @@ using UnityEngine;
 
 public class EnergyManager : Manager
 {
-    public int EnergyBar { get; private set; }
+    public float needsBar { get; private set; }
+    public float EnergyBar { get; private set; }
     public Timer eventTimer;
     public Timer drainTimer;
+    private int drainage = 0;
     public int minimumTime = 1;
     public int maximumTime = 100;
-    private float cameraShake = 5f;
+    public bool canDrain = false;
+    private int delay = 30;
+    private int eventInt;
+    private EventEnum eventDummy;
+
+
 
     // Start is called before the first frame update
     public override void Start()
     {
         eventTimer = new Timer();
-        EnergyBar = 100;
+        drainTimer = new Timer();
+        EnergyBar = 100f;
+        drainTimer.SetTimer(1);
+        ShowEvent(Random.Range(0, 2));
+        UpdateBar();
+        
     }
 
     // Update is called once per frame
     public override void Update()
     {
-        if (eventTimer.TimerDone())
+        //If statements so our energy bar doesnt go out of bounds
+        if (EnergyBar >= 100)
+        {
+            EnergyBar = 100;
+        }
+        if (EnergyBar <= 0)
+        {
+            EnergyBar = 0;
+        }
+
+        if (eventTimer.isActive && eventTimer.TimerDone())
         {
             eventTimer.StopTimer();
+            ExecuteEvent();
         }
+
+        UpdateBar();
+
+        if (drainTimer.TimerDone() && drainTimer.isActive)
+        {
+            drainTimer.StopTimer();
+            SubstractEnergy(drainage);
+           
+            drainTimer.SetTimer(2);
+        }
+        /*  if (!canDrain && drainTimer.isActive)
+          {
+              drainTimer.PauseTimer(true);
+          }
+        */
     }
 
 
-    public int SubstractEnergy(int amount)
+    public float SubstractEnergy(float amount)
     {
         return EnergyBar -= amount;
     }
 
-    public int AddEnergy(int amount)
+    public float AddEnergy(float amount)
     {
         return EnergyBar += amount;
     }
@@ -43,28 +81,69 @@ public class EnergyManager : Manager
         eventTimer.SetTimer(Random.Range(minimumTime, maximumTime));
     }
 
-
-    public void RandomEvent(EventEnum _event, int _delay)
+    public void UpdateBar()
     {
+        GameManager.instance.energyBarSlider.value = EnergyBar;
+        GameManager.instance.eventText.text = eventDummy.ToString() + " in : " + (int)eventTimer.TimeLeft() + "    Energy: " + (int)EnergyBar;
+    }
+    public void ShowEvent(int _event)
+    {
+        eventInt = _event;
         switch (_event)
         {
-            case EventEnum.Thunderstorm:
-                AddEnergy(50);
+            case (int)EventEnum.Thunderstorm:
+                eventDummy = EventEnum.Thunderstorm;
                 break;
-            case EventEnum.Earthquake:
-                SubstractEnergy(10);
-                
+            case (int)EventEnum.Earthquake:
+                eventDummy = EventEnum.Earthquake;
+                break;
+            case (int)EventEnum.None:
                 break;
             default:
                 break;
         }
-       
         SetRandomTimer();
     }
+    public void ExecuteEvent()
+    {
+        switch (eventInt)
+        {
+            case (int)EventEnum.Thunderstorm:
 
+                AddEnergy(20);
+                break;
+            case (int)EventEnum.Earthquake:
+                Utils.instance.StartShake();
+                SubstractEnergy(20);
+                break;
+            case (int)EventEnum.None:
+                break;
+            default:
+                break;
+        }
+        ShowEvent(Random.Range(0, 2));
+    }
+
+
+
+    //End game
+    public void EnergyDepleted()
+    {
+
+    }
+
+    public int AddDrainage(int _amount)
+    {
+        return drainage += _amount;
+    }
+    public int RemoveDrainage(int _amount)
+    {
+        return drainage -= _amount;
+    }
 }
 public enum EventEnum
 {
-   Thunderstorm,
-   Earthquake,
+    Thunderstorm,
+    Earthquake,
+    None,
 }

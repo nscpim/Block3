@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour
     public Canvas UIcanvas;
     public Font font;
     public Text eventText;
+    public Slider energyBarSlider;
 
     [Header("Managers")]
     //managers array
@@ -29,7 +31,7 @@ public class GameManager : MonoBehaviour
     //bool for loading once
     private bool loadLevelOnce;
 
-   
+    private int time;
 
 
     //Main Camera
@@ -60,27 +62,32 @@ public class GameManager : MonoBehaviour
         };
         loadLevelOnce = false;
         DontDestroyOnLoad(gameObject);
-
-
     }
 
     // Start is called before the first frame update
     public void Start()
     {
+        
+
         for (int i = 0; i < managers.Length; i++)
         {
             managers[i].Start();
         }
     }
 
+    public static void LoadLevel(Levels level) 
+    {
+        SceneManager.LoadScene((int)level);
+    
+    
+    
+    }
+
+
     // Update is called once per frame
    public void Update()
     {
 
-       print(GetManager<InventoryManager>().items.ToString());
-         var time = (int)GetManager<EnergyManager>().eventTimer.TimeLeft();
-
-    eventText.text = time.ToString();
        
         for (int i = 0; i < managers.Length; i++)
         {
@@ -100,6 +107,9 @@ public class GameManager : MonoBehaviour
 }
 public enum Levels
 {
+    MainMenu, 
+    Game,
+    EndScreen
 
 
 }

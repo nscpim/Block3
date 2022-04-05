@@ -4,41 +4,52 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-
+    public int drainAmount;
     private string _name;
     public Animator anim;
+    public bool canDrain = false;
+   
    
 
     // Start is called before the first frame update
-    public void Start()
+    public virtual void Start()
     {
         _name = gameObject.name;
 
     }
 
     // Update is called once per frame
-   public void Update()
+   public virtual void Update()
     {
         
     }
 
-    public void Interact(bool canPickUp, string animationName = default) 
+    public void Interact(bool canPickUp, bool drain) 
     {
         if (canPickUp)
         {
             var inventory = GameManager.GetManager<InventoryManager>();
-            if (inventory.CheckIfInInv(gameObject.name))
+            GameObject objectList = gameObject;
+            if (inventory.CheckIfInInv(objectList.name))
             {
                 // GameManager.GetManager<AudioManager>().PlaySound();
-                inventory.AddItem(gameObject);
+                inventory.AddItem(objectList);
                 gameObject.SetActive(false);
             }
         }
-        else
+        if (drain && !canDrain)
         {
-            anim.Play(animationName);
+            GameManager.GetManager<EnergyManager>().AddDrainage(drainAmount);
+            canDrain = true;
         }
-       
+        else if(drain && canDrain)
+        {
+            GameManager.GetManager<EnergyManager>().RemoveDrainage(drainAmount);
+            canDrain = false;
+        }
+         
+        
+     
     }
 }
 

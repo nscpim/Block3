@@ -7,8 +7,6 @@ public class Fridge : Interactable
 
     public void PlayAnimation()
     {
-       
-
         if (!anim.GetBool("forward"))
         {
             Forward();
