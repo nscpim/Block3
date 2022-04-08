@@ -12,7 +12,7 @@ public class Player : Actor
     private float turner;
     private float looker;
     public float sensitivity;
-    private float speed = 6.0F;
+    private float speed = 3.0F;
     [HideInInspector]
     public Camera cam;
     
