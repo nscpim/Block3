@@ -8,7 +8,7 @@ public class EnergyManager : Manager
     public float EnergyBar { get; private set; }
     public Timer eventTimer;
     public Timer drainTimer;
-    private int drainage = 0;
+    private float drainage = 0;
     public int minimumTime = 1;
     public int maximumTime = 100;
     public bool canDrain = false;
@@ -132,11 +132,11 @@ public class EnergyManager : Manager
 
     }
 
-    public int AddDrainage(int _amount)
+    public float AddDrainage(float _amount)
     {
         return drainage += _amount;
     }
-    public int RemoveDrainage(int _amount)
+    public float RemoveDrainage(float _amount)
     {
         return drainage -= _amount;
     }
