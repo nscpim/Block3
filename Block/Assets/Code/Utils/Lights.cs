@@ -29,6 +29,9 @@ public class Lights : Interactable
             i.transform.gameObject.SetActive(lightToggle);
         }
   
+
+        
+
     }
 
 

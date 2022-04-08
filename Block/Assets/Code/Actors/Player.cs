@@ -52,6 +52,19 @@ public class Player : Actor
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            if (GameManager.instance.phoneanim.GetBool("Phone"))
+            {
+                GameManager.instance.phoneanim.SetBool("Phone", false);
+            }
+            else 
+            {
+                GameManager.instance.phoneanim.SetBool("Phone", true);
+            }
+        }
+
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             Interaction();
@@ -70,6 +83,9 @@ public class Player : Actor
                 print("true");
                 Place();
             }
+
+
+
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {

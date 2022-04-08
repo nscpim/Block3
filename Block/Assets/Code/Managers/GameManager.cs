@@ -20,7 +20,9 @@ public class GameManager : MonoBehaviour
     [Header("Player")]
     //Player Instance
     public Player player;
-    
+    public GameObject phone;
+    public Animator phoneanim;
+
     //Gamemanager instance
     public static GameManager instance { get; private set; }
 

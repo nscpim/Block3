@@ -85,6 +85,9 @@ public class EnergyManager : Manager
     {
         GameManager.instance.energyBarSlider.value = EnergyBar;
         GameManager.instance.eventText.text = eventDummy.ToString() + " in : " + (int)eventTimer.TimeLeft() + "    Energy: " + (int)EnergyBar;
+        GameManager.instance.energyBarSlider.transform.position = new Vector3(GameManager.instance.phone.transform.transform.position.x, GameManager.instance.phone.transform.transform.position.y + 0.01f, GameManager.instance.phone.transform.transform.position.z + 0.05f);
+        GameManager.instance.energyBarSlider.transform.eulerAngles = GameManager.instance.phone.transform.rotation.eulerAngles;
+        
     }
     public void ShowEvent(int _event)
     {
@@ -123,8 +126,6 @@ public class EnergyManager : Manager
         }
         ShowEvent(Random.Range(0, 2));
     }
-
-
 
     //End game
     public void EnergyDepleted()
