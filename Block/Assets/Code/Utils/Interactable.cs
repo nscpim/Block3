@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    public int drainAmount;
+    public float drainAmount;
     private string _name;
     public Animator anim;
     public bool canDrain = false;
