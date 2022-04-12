@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public Font font;
     public Text eventText;
     public Slider energyBarSlider;
+    public Slider needsBarSlider;
 
     [Header("Managers")]
     //managers array
@@ -22,6 +23,11 @@ public class GameManager : MonoBehaviour
     public Player player;
     public GameObject phone;
     public Animator phoneanim;
+
+    [Header("Player")]
+    public Material red;
+    public Material green;
+    public Material orange;
 
     //Gamemanager instance
     public static GameManager instance { get; private set; }

@@ -8,6 +8,7 @@ public class Interactable : MonoBehaviour
     private string _name;
     public Animator anim;
     public bool canDrain = false;
+    public float needsAmount;
    
    
 
@@ -47,7 +48,7 @@ public class Interactable : MonoBehaviour
             GameManager.GetManager<EnergyManager>().RemoveDrainage(drainAmount);
             canDrain = false;
         }
-         
+      
         
      
     }

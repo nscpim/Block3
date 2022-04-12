@@ -9,6 +9,7 @@ public class EnergyManager : Manager
     public Timer eventTimer;
     public Timer drainTimer;
     private float drainage = 0;
+    private float needsDrainage = 0;
     public int minimumTime = 1;
     public int maximumTime = 100;
     public bool canDrain = false;
@@ -24,6 +25,8 @@ public class EnergyManager : Manager
         eventTimer = new Timer();
         drainTimer = new Timer();
         EnergyBar = 100f;
+        needsBar = 100f;
+        needsDrainage = 10f;
         drainTimer.SetTimer(1);
         ShowEvent(Random.Range(0, 2));
         UpdateBar();
@@ -43,6 +46,16 @@ public class EnergyManager : Manager
             EnergyBar = 0;
         }
 
+
+        if (needsBar >= 100)
+        {
+            needsBar = 100;
+        }
+        if (needsBar <= 0)
+        {
+            needsBar = 0;
+        }
+
         if (eventTimer.isActive && eventTimer.TimerDone())
         {
             eventTimer.StopTimer();
@@ -55,7 +68,7 @@ public class EnergyManager : Manager
         {
             drainTimer.StopTimer();
             SubstractEnergy(drainage);
-           
+            RemoveNeeds(needsDrainage);
             drainTimer.SetTimer(2);
         }
         /*  if (!canDrain && drainTimer.isActive)
@@ -84,10 +97,21 @@ public class EnergyManager : Manager
     public void UpdateBar()
     {
         GameManager.instance.energyBarSlider.value = EnergyBar;
+        GameManager.instance.needsBarSlider.value = needsBar;
         GameManager.instance.eventText.text = eventDummy.ToString() + " in : " + (int)eventTimer.TimeLeft() + "    Energy: " + (int)EnergyBar;
-        GameManager.instance.energyBarSlider.transform.position = new Vector3(GameManager.instance.phone.transform.transform.position.x, GameManager.instance.phone.transform.transform.position.y + 0.01f, GameManager.instance.phone.transform.transform.position.z + 0.05f);
-        GameManager.instance.energyBarSlider.transform.eulerAngles = GameManager.instance.phone.transform.rotation.eulerAngles;
-        
+        // GameManager.instance.needsBarSlider.transform.position = new Vector3(GameManager.instance.phone.transform.transform.position.x, GameManager.instance.phone.transform.transform.position.y, GameManager.instance.phone.transform.transform.position.z);
+        if (needsBar <= 100 && needsBar >= 50)
+        {
+            GameManager.instance.phone.GetComponent<Renderer>().material = GameManager.instance.green;
+        }
+        if (needsBar <= 50 && needsBar >= 25)
+        {
+            GameManager.instance.phone.GetComponent<Renderer>().material = GameManager.instance.orange;
+        }
+        if (needsBar <= 25 && needsBar >= 0)
+        {
+            GameManager.instance.phone.GetComponent<Renderer>().material = GameManager.instance.red;
+        }
     }
     public void ShowEvent(int _event)
     {
@@ -141,6 +165,18 @@ public class EnergyManager : Manager
     {
         return drainage -= _amount;
     }
+
+
+    public float AddNeeds(float _amount)
+    {
+        return needsBar += _amount;
+    }
+    public float RemoveNeeds(float _amount)
+    {
+        return needsBar -= _amount;
+    }
+
+
 }
 public enum EventEnum
 {
