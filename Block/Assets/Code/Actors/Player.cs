@@ -15,7 +15,7 @@ public class Player : Actor
     private float speed = 3.0F;
     [HideInInspector]
     public Camera cam;
-    
+
 
     public void Awake()
     {
@@ -58,7 +58,7 @@ public class Player : Actor
             {
                 GameManager.instance.phoneanim.SetBool("Phone", false);
             }
-            else 
+            else
             {
                 GameManager.instance.phoneanim.SetBool("Phone", true);
             }
@@ -139,6 +139,15 @@ public class Player : Actor
                 hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
                 hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true);
             }
+            //code for interacting with the doors
+            if (hit.transform.tag == "Door")
+            {
+                //it checks if the object is a door and play the animation from the animator
+                hit.transform.gameObject.GetComponent<Doors>().PlayAnimation();
+                //checks if it is interactable and if it can be picked up and if it should drain power
+                hit.transform.gameObject.GetComponent<Interactable>().Interact(false, false);
+            }
+
             if (hit.transform.tag == "Lights")
             {
                 if (hit.transform.gameObject.GetComponent<Lights>().GetState())
@@ -149,11 +158,12 @@ public class Player : Actor
                 {
                     hit.transform.gameObject.GetComponent<Lights>().ToggleLights(true);
                 }
-              
+
             }
-            
+
         }
     }
+
     public void movement()
     {
         CharacterController controller = GetComponent<CharacterController>();
@@ -197,12 +207,13 @@ public class Player : Actor
         {
             GameManager.GetManager<InventoryManager>().selectedSlot = 4;
         }
-       
-        
-        
-        
-        
+
+
+
+
+
     }
 
 }
+
 

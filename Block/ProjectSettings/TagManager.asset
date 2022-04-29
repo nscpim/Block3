@@ -7,6 +7,7 @@ TagManager:
   - Interactable
   - Fridge
   - Lights
+  - Door
   layers:
   - Default
   - TransparentFX
