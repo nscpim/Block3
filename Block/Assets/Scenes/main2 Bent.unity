@@ -681,6 +681,7 @@ MonoBehaviour:
   drainAmount: 0.5
   anim: {fileID: 0}
   canDrain: 0
+  needsAmount: 0
   lights:
   - {fileID: 1388195860}
 --- !u!65 &257941682
@@ -1155,6 +1156,7 @@ MonoBehaviour:
   drainAmount: 0
   anim: {fileID: 0}
   canDrain: 0
+  needsAmount: 0
 --- !u!1 &339171737
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,6 +1206,7 @@ MonoBehaviour:
   drainAmount: 0.5
   anim: {fileID: 0}
   canDrain: 0
+  needsAmount: 0
   lights:
   - {fileID: 1292456174}
   - {fileID: 1529834798}
@@ -1489,6 +1492,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.679
       objectReference: {fileID: 0}
+    - target: {fileID: -7681799794947180530, guid: 8a6f8f2bf6ed11645a623d2c38a605c3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: -7681799794947180530, guid: 8a6f8f2bf6ed11645a623d2c38a605c3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.153
+      objectReference: {fileID: 0}
+    - target: {fileID: -7681799794947180530, guid: 8a6f8f2bf6ed11645a623d2c38a605c3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00000027428
+      objectReference: {fileID: 0}
     - target: {fileID: -7149437090072268883, guid: 8a6f8f2bf6ed11645a623d2c38a605c3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.010000229
@@ -1519,7 +1534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 418086715792842097, guid: 8a6f8f2bf6ed11645a623d2c38a605c3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.51
+      value: 0.71
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8a6f8f2bf6ed11645a623d2c38a605c3, type: 3}
       propertyPath: m_Name
@@ -1530,8 +1545,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3534916117301952706, guid: 8a6f8f2bf6ed11645a623d2c38a605c3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534916117301952706, guid: 8a6f8f2bf6ed11645a623d2c38a605c3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.334
+      value: 0.04
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a6f8f2bf6ed11645a623d2c38a605c3, type: 3}
@@ -4265,6 +4284,7 @@ MonoBehaviour:
   drainAmount: 20
   anim: {fileID: 1517560405}
   canDrain: 0
+  needsAmount: 0
 --- !u!1 &1529834796
 GameObject:
   m_ObjectHideFlags: 0
@@ -4425,6 +4445,7 @@ MonoBehaviour:
   drainAmount: 0.5
   anim: {fileID: 0}
   canDrain: 0
+  needsAmount: 0
   lights:
   - {fileID: 1410844697}
 --- !u!65 &1568177132
@@ -4556,6 +4577,7 @@ MonoBehaviour:
   drainAmount: 0.5
   anim: {fileID: 0}
   canDrain: 0
+  needsAmount: 0
   lights:
   - {fileID: 1410844697}
 --- !u!65 &1585651301
@@ -4653,9 +4675,13 @@ MonoBehaviour:
   font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   eventText: {fileID: 731123527}
   energyBarSlider: {fileID: 652334719}
+  needsBarSlider: {fileID: 0}
   player: {fileID: 1162579024}
   phone: {fileID: 0}
   phoneanim: {fileID: 0}
+  red: {fileID: 0}
+  green: {fileID: 0}
+  orange: {fileID: 0}
   mainCamera: {fileID: 93929659}
 --- !u!4 &1634223995
 Transform:
@@ -4690,6 +4716,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3380450145559933470, guid: 19f44a3998c60d34d816c878fe8d0782, type: 3}
+--- !u!1 &1637719345 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7146521406498821007, guid: 8a6f8f2bf6ed11645a623d2c38a605c3, type: 3}
+  m_PrefabInstance: {fileID: 471743225}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1637719346
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637719345}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0019999966, y: 0.007999998, z: 0.023499995}
+  m_Center: {x: -0.07114081, y: 0.01708858, z: 0.011749998}
 --- !u!1 &1645894120 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8073544435559905044, guid: 8a6f8f2bf6ed11645a623d2c38a605c3, type: 3}
@@ -4888,6 +4932,7 @@ MonoBehaviour:
   drainAmount: 0
   anim: {fileID: 0}
   canDrain: 0
+  needsAmount: 0
 --- !u!1 &1672788301 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2775001095172440689, guid: 19f44a3998c60d34d816c878fe8d0782, type: 3}
@@ -5427,6 +5472,7 @@ MonoBehaviour:
   drainAmount: 0
   anim: {fileID: 0}
   canDrain: 0
+  needsAmount: 0
   lights:
   - {fileID: 647968391}
   - {fileID: 1969667110}
