@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
     //Gamemanager instance
     public static GameManager instance { get; private set; }
 
+    //GeneratorObject
+    public GameObject generator;
+
     //Check if ingame
     private static bool inGame;
     //check if the game is paused
@@ -67,6 +70,7 @@ public class GameManager : MonoBehaviour
             new EnergyManager(),
             new AudioManager(),
             new UIManager(),
+            new GeneratorManager(),
         };
         loadLevelOnce = false;
         DontDestroyOnLoad(gameObject);

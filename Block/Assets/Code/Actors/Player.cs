@@ -15,7 +15,12 @@ public class Player : Actor
     private float speed = 3.0F;
     [HideInInspector]
     public Camera cam;
-    
+
+    [Header("Materials")]
+    Material ogMat;
+    public Material highlightmat;
+    GameObject lasthighlightedObject;
+
 
     public void Awake()
     {
@@ -34,6 +39,7 @@ public class Player : Actor
     public void Update()
     {
         movement();
+        
         var energyManager = GameManager.GetManager<EnergyManager>();
         if (Input.GetKeyDown(KeyCode.U))
         {
@@ -104,6 +110,7 @@ public class Player : Actor
             GameManager.GetManager<InventoryManager>().selectedSlot = 4;
         }
         Scroll();
+        HighLightObjectRay();
     }
 
     public void Place()
@@ -202,6 +209,53 @@ public class Player : Actor
         
         
         
+    }
+
+
+    public void HighLightObjectRay() 
+    {
+
+        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 10))
+        {
+            switch (hit.transform.tag)
+            {
+                case "Interactable":
+                    HighLightObject(hit.transform.gameObject);
+                    print("Interactable");
+                    break;
+                case "Fridge":
+                    HighLightObject(hit.transform.gameObject);
+                    print("Highlightfridge");
+                    break;
+                case "Lights":
+                    HighLightObject(hit.transform.gameObject);
+                    print("Lights");
+                    break;
+                default:
+                    ClearHighLight();
+                    break;
+            }
+        }
+    }
+
+    public void HighLightObject(GameObject highlightedObject) 
+    {
+        if (lasthighlightedObject != highlightedObject)
+        {
+            ClearHighLight();
+            ogMat = highlightedObject.GetComponent<MeshRenderer>().sharedMaterial;
+            highlightedObject.GetComponent<MeshRenderer>().sharedMaterial = highlightmat;
+            lasthighlightedObject = highlightedObject;
+        }
+    }
+
+    public void ClearHighLight() 
+    {
+        if (lasthighlightedObject != null)
+        {
+            lasthighlightedObject.GetComponent<MeshRenderer>().sharedMaterial = ogMat;
+            lasthighlightedObject = null;
+        }
     }
 
 }

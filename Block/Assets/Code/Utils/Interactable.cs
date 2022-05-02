@@ -38,12 +38,14 @@ public class Interactable : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
-        if (drain && !canDrain)
+        bool generator = GameManager.GetManager<GeneratorManager>().generatorStatus;
+
+        if (drain && !canDrain && generator)
         {
             GameManager.GetManager<EnergyManager>().AddDrainage(drainAmount);
             canDrain = true;
         }
-        else if(drain && canDrain)
+        else if(drain && canDrain && generator)
         {
             GameManager.GetManager<EnergyManager>().RemoveDrainage(drainAmount);
             canDrain = false;
