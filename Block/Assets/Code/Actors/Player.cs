@@ -39,7 +39,7 @@ public class Player : Actor
     public void Update()
     {
         movement();
-        
+
         var energyManager = GameManager.GetManager<EnergyManager>();
         if (Input.GetKeyDown(KeyCode.U))
         {
@@ -64,7 +64,7 @@ public class Player : Actor
             {
                 GameManager.instance.phoneanim.SetBool("Phone", false);
             }
-            else 
+            else
             {
                 GameManager.instance.phoneanim.SetBool("Phone", true);
             }
@@ -135,30 +135,37 @@ public class Player : Actor
         if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, Mathf.Infinity))
         {
             Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(transform.forward), Color.black, 200f);
-            if (hit.transform.tag == "Interactable")
+
+
+            switch (hit.transform.tag)
             {
-                hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false);
-                hit.transform.gameObject.SetActive(false);
+                case "Interactable":
+                    if (Generator.CanDrain())
+                    {
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false);
+                        hit.transform.gameObject.SetActive(false);
+                    }
+                    break;
+                case "Fridge":
+                    if (Generator.CanDrain())
+                    {
+                        hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true);
+                    }
+                    break;
+                case "Lights":
+                    if (Generator.CanDrain())
+                    {
+                        hit.transform.gameObject.GetComponent<Lights>().ToggleLights();
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true);
+                    }
+                    break;
+                case "Generator":
+                    hit.transform.gameObject.GetComponent<Generator>().ToggleDrain();
+                    break;
+                default:
+                    break;
             }
-            if (hit.transform.tag == "Fridge")
-            {
-                print("hit fridge");
-                hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
-                hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true);
-            }
-            if (hit.transform.tag == "Lights")
-            {
-                if (hit.transform.gameObject.GetComponent<Lights>().GetState())
-                {
-                    hit.transform.gameObject.GetComponent<Lights>().ToggleLights(false);
-                }
-                else
-                {
-                    hit.transform.gameObject.GetComponent<Lights>().ToggleLights(true);
-                }
-              
-            }
-            
         }
     }
     public void movement()
@@ -204,56 +211,44 @@ public class Player : Actor
         {
             GameManager.GetManager<InventoryManager>().selectedSlot = 4;
         }
-       
-        
-        
-        
-        
     }
 
 
-    public void HighLightObjectRay() 
+    public void HighLightObjectRay()
     {
 
         if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 10))
         {
-            switch (hit.transform.tag)
+            //Layer 8 == Outlined
+            if (hit.transform.gameObject.layer == 8)
             {
-                case "Interactable":
-                    HighLightObject(hit.transform.gameObject);
-                    print("Interactable");
-                    break;
-                case "Fridge":
-                    HighLightObject(hit.transform.gameObject);
-                    print("Highlightfridge");
-                    break;
-                case "Lights":
-                    HighLightObject(hit.transform.gameObject);
-                    print("Lights");
-                    break;
-                default:
-                    ClearHighLight();
-                    break;
+                HighLightObject(hit.transform.gameObject);
+            }
+            else
+            {
+                ClearHighLight();
             }
         }
     }
 
-    public void HighLightObject(GameObject highlightedObject) 
+    public void HighLightObject(GameObject highlightedObject)
     {
         if (lasthighlightedObject != highlightedObject)
         {
             ClearHighLight();
             ogMat = highlightedObject.GetComponent<MeshRenderer>().sharedMaterial;
             highlightedObject.GetComponent<MeshRenderer>().sharedMaterial = highlightmat;
+            highlightedObject.transform.gameObject.AddComponent<OutlineNormalsCalculator>();
             lasthighlightedObject = highlightedObject;
         }
     }
 
-    public void ClearHighLight() 
+    public void ClearHighLight()
     {
         if (lasthighlightedObject != null)
         {
             lasthighlightedObject.GetComponent<MeshRenderer>().sharedMaterial = ogMat;
+            Destroy(lasthighlightedObject.GetComponent<OutlineNormalsCalculator>());
             lasthighlightedObject = null;
         }
     }
