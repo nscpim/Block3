@@ -103,14 +103,19 @@ public class EnergyManager : Manager
         if (needsBar <= 100 && needsBar >= 50)
         {
             GameManager.instance.phone.GetComponent<Renderer>().material = GameManager.instance.green;
+            GameManager.instance.phoneLight.color = Color.green;
         }
         if (needsBar <= 50 && needsBar >= 25)
         {
             GameManager.instance.phone.GetComponent<Renderer>().material = GameManager.instance.orange;
+             Color color = new Color32(255, 165, 0, 255);
+            GameManager.instance.phoneLight.color = color;
         }
         if (needsBar <= 25 && needsBar >= 0)
         {
             GameManager.instance.phone.GetComponent<Renderer>().material = GameManager.instance.red;
+            GameManager.instance.phoneLight.color = Color.red;
+
         }
     }
     public void ShowEvent(int _event)

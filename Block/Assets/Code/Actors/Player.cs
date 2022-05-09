@@ -62,13 +62,17 @@ public class Player : Actor
         {
             if (GameManager.instance.phoneanim.GetBool("Phone"))
             {
+                StartCoroutine(LightsOut());
                 GameManager.instance.phoneanim.SetBool("Phone", false);
             }
             else
             {
+
+                GameManager.instance.phoneLight.enabled = true;
                 GameManager.instance.phoneanim.SetBool("Phone", true);
             }
         }
+
 
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -113,6 +117,12 @@ public class Player : Actor
         HighLightObjectRay();
     }
 
+    public IEnumerator LightsOut()
+    {
+        yield return new WaitForSeconds(1f);
+        GameManager.instance.phoneLight.enabled = false;
+
+    }
     public void Place()
     {
 

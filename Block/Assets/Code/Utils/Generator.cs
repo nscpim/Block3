@@ -5,12 +5,16 @@ using UnityEngine;
 public class Generator : Interactable
 {
     public static bool generatorDraining = false;
-
+    public GameObject display;
+    public Material red;
+    public Material green;
+    public GameObject[] screens;
+    public bool firstTime = false;
 
     // Start is called before the first frame update
     public override void Start()
     {
-        
+        display.gameObject.GetComponent<MeshRenderer>().material = red;
     }
 
     // Update is called once per frame
@@ -22,6 +26,7 @@ public class Generator : Interactable
     public bool ToggleDrain()
     {
         generatorDraining = !generatorDraining;
+        Display();
         return generatorDraining;
     }
 
@@ -29,4 +34,17 @@ public class Generator : Interactable
     {
         return generatorDraining;
     }
+
+    public void Display()
+    {
+        if (CanDrain())
+        {
+            display.gameObject.GetComponent<MeshRenderer>().material = green;
+        }
+        else 
+        {
+            display.gameObject.GetComponent<MeshRenderer>().material = red;
+        }
+    }
+
 }

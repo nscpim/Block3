@@ -38,7 +38,7 @@ public class Interactable : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
-        bool generator = GameManager.GetManager<GeneratorManager>().generatorStatus;
+        bool generator = Generator.CanDrain() ;
 
         if (drain && !canDrain && generator)
         {

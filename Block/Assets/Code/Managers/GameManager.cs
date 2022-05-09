@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public Material red;
     public Material green;
     public Material orange;
+    public Light phoneLight;
 
     //Gamemanager instance
     public static GameManager instance { get; private set; }
@@ -70,7 +71,6 @@ public class GameManager : MonoBehaviour
             new EnergyManager(),
             new AudioManager(),
             new UIManager(),
-            new GeneratorManager(),
         };
         loadLevelOnce = false;
         DontDestroyOnLoad(gameObject);
@@ -90,9 +90,14 @@ public class GameManager : MonoBehaviour
     public static void LoadLevel(Levels level) 
     {
         SceneManager.LoadScene((int)level);
-    
-    
-    
+    }
+
+    public IEnumerator StartGame() 
+    {
+        yield return new WaitForSeconds(5f);
+
+
+
     }
 
 
