@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
+    [Tooltip("Only use values that are needed for the object you are using it for,leave blank if you dont need it")]
     public float drainAmount;
     private string _name;
     public Animator anim;

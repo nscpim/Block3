@@ -11,7 +11,7 @@ public class EnergyManager : Manager
     private float drainage = 0;
     private float needsDrainage = 0;
     public int minimumTime = 1;
-    public int maximumTime = 100;
+    public int maximumTime = 10;
     public bool canDrain = false;
     private int delay = 30;
     private int eventInt;
