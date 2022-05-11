@@ -8,6 +8,7 @@ TagManager:
   - Fridge
   - Lights
   - Generator
+  - Pickup
   layers:
   - Default
   - TransparentFX

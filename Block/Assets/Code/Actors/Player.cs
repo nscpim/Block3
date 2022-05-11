@@ -15,6 +15,7 @@ public class Player : Actor
     private float speed = 3.0F;
     [HideInInspector]
     public Camera cam;
+    public  Transform handLocation;
 
     [Header("Materials")]
     Material ogMat;
@@ -73,8 +74,6 @@ public class Player : Actor
             }
         }
 
-
-
         if (Input.GetKeyDown(KeyCode.E))
         {
             Interaction();
@@ -93,9 +92,6 @@ public class Player : Actor
                 print("true");
                 Place();
             }
-
-
-
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -141,7 +137,6 @@ public class Player : Actor
 
     public void Interaction()
     {
-
         if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, Mathf.Infinity))
         {
             Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(transform.forward), Color.black, 200f);
@@ -152,7 +147,7 @@ public class Player : Actor
                 case "Interactable":
                     if (Generator.CanDrain())
                     {
-                        hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false);
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false, null);
                         hit.transform.gameObject.SetActive(false);
                     }
                     break;
@@ -160,18 +155,20 @@ public class Player : Actor
                     if (Generator.CanDrain())
                     {
                         hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
-                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true);
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
                     }
                     break;
                 case "Lights":
                     if (Generator.CanDrain())
                     {
                         hit.transform.gameObject.GetComponent<Lights>().ToggleLights();
-                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true);
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
                     }
                     break;
                 case "Generator":
                     hit.transform.gameObject.GetComponent<Generator>().ToggleDrain();
+                    break;
+                case "Pickup": hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false, hit.transform.gameObject);
                     break;
                 default:
                     break;
@@ -204,9 +201,6 @@ public class Player : Actor
         moveDirection.y -= gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
     }
-
-
-
     public void Scroll()
     {
         if (GameManager.GetManager<InventoryManager>().selectedSlot > 0 && GameManager.GetManager<InventoryManager>().selectedSlot < 5)

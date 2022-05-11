@@ -23,8 +23,6 @@ public class GameManager : MonoBehaviour
     public Player player;
     public GameObject phone;
     public Animator phoneanim;
-
-    [Header("Player")]
     public Material red;
     public Material green;
     public Material orange;

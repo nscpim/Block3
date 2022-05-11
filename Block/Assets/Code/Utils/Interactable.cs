@@ -25,20 +25,15 @@ public class Interactable : MonoBehaviour
         
     }
 
-    public void Interact(bool canPickUp, bool drain) 
+    public void Interact(bool canPickUp, bool drain, GameObject objectPickedUp) 
     {
-        if (canPickUp)
+        if (canPickUp && objectPickedUp != null)
         {
-            var inventory = GameManager.GetManager<InventoryManager>();
-            GameObject objectList = gameObject;
-            if (inventory.CheckIfInInv(objectList.name))
-            {
-                // GameManager.GetManager<AudioManager>().PlaySound();
-                inventory.AddItem(objectList);
-                gameObject.SetActive(false);
-            }
+            objectPickedUp.transform.position = GameManager.instance.player.handLocation.transform.position;
+            objectPickedUp.transform.SetParent(GameManager.instance.player.handLocation.transform, true);
+            
         }
-        bool generator = Generator.CanDrain() ;
+        bool generator = Generator.CanDrain();
 
         if (drain && !canDrain && generator)
         {
