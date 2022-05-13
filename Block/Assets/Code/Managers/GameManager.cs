@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     public Font font;
     public Text eventText;
     public Slider energyBarSlider;
-    public Slider needsBarSlider;
 
     [Header("Managers")]
     //managers array
