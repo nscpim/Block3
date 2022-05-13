@@ -27,11 +27,16 @@ public class Interactable : MonoBehaviour
 
     public void Interact(bool canPickUp, bool drain, GameObject objectPickedUp) 
     {
-        if (canPickUp && objectPickedUp != null)
+        if (canPickUp && objectPickedUp != null && !Player.instance.hasObject)
         {
+            if (objectPickedUp.GetComponent<Rigidbody>() == null)
+            {
+                objectPickedUp.AddComponent<Rigidbody>();
+            }
+            objectPickedUp.GetComponent<Rigidbody>().isKinematic = true;
             objectPickedUp.transform.position = GameManager.instance.player.handLocation.transform.position;
             objectPickedUp.transform.SetParent(GameManager.instance.player.handLocation.transform, true);
-            
+            Player.instance.hasObject = true;
         }
         bool generator = Generator.CanDrain();
 

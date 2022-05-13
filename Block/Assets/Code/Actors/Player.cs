@@ -16,6 +16,8 @@ public class Player : Actor
     [HideInInspector]
     public Camera cam;
     public  Transform handLocation;
+    public bool hasObject = false;
+    private float throwSpeed;
 
     [Header("Materials")]
     Material ogMat;
@@ -74,7 +76,7 @@ public class Player : Actor
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Mouse0))
         {
             Interaction();
         }
@@ -137,18 +139,24 @@ public class Player : Actor
 
     public void Interaction()
     {
-        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, Mathf.Infinity))
+        if (handLocation.childCount > 0 && hasObject)
         {
-            Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(transform.forward), Color.black, 200f);
-
-
+            var childObject = handLocation.GetChild(0).gameObject.transform;
+            if (childObject != null)
+            {
+                childObject.GetComponent<Rigidbody>().isKinematic = false;
+                childObject.GetComponent<Rigidbody>().AddForce(cam.transform.forward * throwSpeed);
+                childObject.SetParent(null);
+                hasObject = false;
+            }
+        }
+        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(cam.transform.forward), out hit, 5))
+        {
             switch (hit.transform.tag)
             {
                 case "Interactable":
                     if (Generator.CanDrain())
                     {
-                        hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false, null);
-                        hit.transform.gameObject.SetActive(false);
                     }
                     break;
                 case "Fridge":
@@ -173,7 +181,10 @@ public class Player : Actor
                 default:
                     break;
             }
+
         }
+        Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(transform.forward), Color.white, 200f);
+
     }
     public void movement()
     {

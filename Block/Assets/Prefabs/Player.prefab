@@ -402,7 +402,7 @@ MonoBehaviour:
   gravity: 20
   sensitivity: 0
   cam: {fileID: 0}
-  handLocation: {fileID: 0}
+  handLocation: {fileID: 7177673237892489396}
   highlightmat: {fileID: 2100000, guid: aac8d71ad8cc6b24b934029b55e9b728, type: 2}
 --- !u!54 &6400100570443411041
 Rigidbody:
@@ -463,7 +463,7 @@ Transform:
   m_GameObject: {fileID: 8693974688766815807}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.1244965, y: 0.13168687, z: -1.5148413}
-  m_LocalScale: {x: 2, y: 1.3806235, z: 2}
+  m_LocalScale: {x: 2, y: 1.3806232, z: 2}
   m_Children: []
   m_Father: {fileID: 5216598405923699902}
   m_RootOrder: 1
