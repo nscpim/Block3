@@ -11,9 +11,7 @@ public class EnergyManager : Manager
     private float drainage = 0;
     private float needsDrainage = 0;
     public int minimumTime = 1;
-    public int maximumTime = 10;
-    public bool canDrain = false;
-    private int delay = 30;
+    public int maximumTime = 100;
     private int eventInt;
     private EventEnum eventDummy;
 
@@ -30,7 +28,6 @@ public class EnergyManager : Manager
         drainTimer.SetTimer(1);
         ShowEvent(Random.Range(0, 2));
         UpdateBar();
-        
     }
 
     // Update is called once per frame
@@ -71,11 +68,10 @@ public class EnergyManager : Manager
             RemoveNeeds(needsDrainage);
             drainTimer.SetTimer(2);
         }
-        /*  if (!canDrain && drainTimer.isActive)
+         if (!Generator.CanDrain() && drainTimer.isActive)
           {
               drainTimer.PauseTimer(true);
           }
-        */
     }
 
 
@@ -99,7 +95,6 @@ public class EnergyManager : Manager
         GameManager.instance.energyBarSlider.value = EnergyBar;
         //GameManager.instance.needsBarSlider.value = needsBar;
         GameManager.instance.eventText.text = eventDummy.ToString() + " in : " + (int)eventTimer.TimeLeft() + "    Energy: " + (int)EnergyBar;
-        // GameManager.instance.needsBarSlider.transform.position = new Vector3(GameManager.instance.phone.transform.transform.position.x, GameManager.instance.phone.transform.transform.position.y, GameManager.instance.phone.transform.transform.position.z);
         if (needsBar <= 100 && needsBar >= 50)
         {
             GameManager.instance.phone.GetComponent<Renderer>().material = GameManager.instance.green;
