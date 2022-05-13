@@ -97,20 +97,25 @@ public class EnergyManager : Manager
     public void UpdateBar()
     {
         GameManager.instance.energyBarSlider.value = EnergyBar;
-        GameManager.instance.needsBarSlider.value = needsBar;
+        //GameManager.instance.needsBarSlider.value = needsBar;
         GameManager.instance.eventText.text = eventDummy.ToString() + " in : " + (int)eventTimer.TimeLeft() + "    Energy: " + (int)EnergyBar;
         // GameManager.instance.needsBarSlider.transform.position = new Vector3(GameManager.instance.phone.transform.transform.position.x, GameManager.instance.phone.transform.transform.position.y, GameManager.instance.phone.transform.transform.position.z);
         if (needsBar <= 100 && needsBar >= 50)
         {
             GameManager.instance.phone.GetComponent<Renderer>().material = GameManager.instance.green;
+            GameManager.instance.phoneLight.color = Color.green;
         }
         if (needsBar <= 50 && needsBar >= 25)
         {
             GameManager.instance.phone.GetComponent<Renderer>().material = GameManager.instance.orange;
+             Color color = new Color32(255, 165, 0, 255);
+            GameManager.instance.phoneLight.color = color;
         }
         if (needsBar <= 25 && needsBar >= 0)
         {
             GameManager.instance.phone.GetComponent<Renderer>().material = GameManager.instance.red;
+            GameManager.instance.phoneLight.color = Color.red;
+
         }
     }
     public void ShowEvent(int _event)

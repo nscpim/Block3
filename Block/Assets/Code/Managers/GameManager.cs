@@ -23,14 +23,16 @@ public class GameManager : MonoBehaviour
     public Player player;
     public GameObject phone;
     public Animator phoneanim;
-
-    [Header("Player")]
     public Material red;
     public Material green;
     public Material orange;
+    public Light phoneLight;
 
     //Gamemanager instance
     public static GameManager instance { get; private set; }
+
+    //GeneratorObject
+    public GameObject generator;
 
     //Check if ingame
     private static bool inGame;
@@ -86,9 +88,14 @@ public class GameManager : MonoBehaviour
     public static void LoadLevel(Levels level) 
     {
         SceneManager.LoadScene((int)level);
-    
-    
-    
+    }
+
+    public IEnumerator StartGame() 
+    {
+        yield return new WaitForSeconds(5f);
+
+
+
     }
 
 

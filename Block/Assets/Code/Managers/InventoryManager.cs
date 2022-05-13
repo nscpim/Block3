@@ -20,7 +20,6 @@ public class InventoryManager : Manager
     // Update is called once per frame
    public override void Update()
     {
-        Debug.Log(items.Count + " | Inventory");
         
     }
     public bool CheckIfInInv(string _name) 

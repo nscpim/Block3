@@ -7,7 +7,8 @@ TagManager:
   - Interactable
   - Fridge
   - Lights
-  - Door
+  - Generator
+  - Pickup
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - UI
   - Player
   - Post-Processing
-  - 
+  - Outlined
   - 
   - 
   - 

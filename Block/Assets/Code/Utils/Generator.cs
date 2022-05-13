@@ -2,37 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Generator : MonoBehaviour
+public class Generator : Interactable
 {
-
-    public bool generatorStatus;
-
+    public static bool generatorDraining = false;
+    public GameObject display;
+    public Material red;
+    public Material green;
+    public GameObject[] screens;
+    public bool firstTime = false;
 
     // Start is called before the first frame update
-    public void Start()
+    public override void Start()
     {
-
+        display.gameObject.GetComponent<MeshRenderer>().material = red;
     }
 
     // Update is called once per frame
-    public void Update()
+    public override void Update()
     {
-
+        print("Generator" + CanDrain());
+    }
+    
+    public bool ToggleDrain()
+    {
+        generatorDraining = !generatorDraining;
+        Display();
+        return generatorDraining;
     }
 
-
-
-
-    public bool GetGenStatus() 
+    public static bool CanDrain()
     {
-        return generatorStatus;
+        return generatorDraining;
     }
 
-    public bool ToggleGenStatus() 
+    public void Display()
     {
-        generatorStatus = !generatorStatus;
-        return generatorStatus;
+        if (CanDrain())
+        {
+            display.gameObject.GetComponent<MeshRenderer>().material = green;
+        }
+        else 
+        {
+            display.gameObject.GetComponent<MeshRenderer>().material = red;
+        }
     }
-
 
 }

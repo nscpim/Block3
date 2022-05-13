@@ -15,6 +15,14 @@ public class Player : Actor
     private float speed = 3.0F;
     [HideInInspector]
     public Camera cam;
+    public  Transform handLocation;
+    public bool hasObject = false;
+    private float throwSpeed;
+
+    [Header("Materials")]
+    Material ogMat;
+    public Material highlightmat;
+    GameObject lasthighlightedObject;
 
 
     public void Awake()
@@ -34,6 +42,7 @@ public class Player : Actor
     public void Update()
     {
         movement();
+
         var energyManager = GameManager.GetManager<EnergyManager>();
         if (Input.GetKeyDown(KeyCode.U))
         {
@@ -56,16 +65,18 @@ public class Player : Actor
         {
             if (GameManager.instance.phoneanim.GetBool("Phone"))
             {
+                StartCoroutine(LightsOut());
                 GameManager.instance.phoneanim.SetBool("Phone", false);
             }
             else
             {
+
+                GameManager.instance.phoneLight.enabled = true;
                 GameManager.instance.phoneanim.SetBool("Phone", true);
             }
         }
 
-
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Mouse0))
         {
             Interaction();
         }
@@ -83,9 +94,6 @@ public class Player : Actor
                 print("true");
                 Place();
             }
-
-
-
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -104,8 +112,15 @@ public class Player : Actor
             GameManager.GetManager<InventoryManager>().selectedSlot = 4;
         }
         Scroll();
+        HighLightObjectRay();
     }
 
+    public IEnumerator LightsOut()
+    {
+        yield return new WaitForSeconds(1f);
+        GameManager.instance.phoneLight.enabled = false;
+
+    }
     public void Place()
     {
 
@@ -124,46 +139,53 @@ public class Player : Actor
 
     public void Interaction()
     {
-
-        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, Mathf.Infinity))
+        if (handLocation.childCount > 0 && hasObject)
         {
-            Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(transform.forward), Color.black, 200f);
-            if (hit.transform.tag == "Interactable")
+            var childObject = handLocation.GetChild(0).gameObject.transform;
+            if (childObject != null)
             {
-                hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false);
-                hit.transform.gameObject.SetActive(false);
+                childObject.GetComponent<Rigidbody>().isKinematic = false;
+                childObject.GetComponent<Rigidbody>().AddForce(cam.transform.forward * throwSpeed);
+                childObject.SetParent(null);
+                hasObject = false;
             }
-            if (hit.transform.tag == "Fridge")
+        }
+        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(cam.transform.forward), out hit, 5))
+        {
+            switch (hit.transform.tag)
             {
-                print("hit fridge");
-                hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
-                hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true);
-            }
-            //code for interacting with the doors
-            if (hit.transform.tag == "Door")
-            {
-                //it checks if the object is a door and play the animation from the animator
-                hit.transform.gameObject.GetComponent<Doors>().PlayAnimation();
-                //checks if it is interactable and if it can be picked up and if it should drain power
-                hit.transform.gameObject.GetComponent<Interactable>().Interact(false, false);
-            }
-
-            if (hit.transform.tag == "Lights")
-            {
-                if (hit.transform.gameObject.GetComponent<Lights>().GetState())
-                {
-                    hit.transform.gameObject.GetComponent<Lights>().ToggleLights(false);
-                }
-                else
-                {
-                    hit.transform.gameObject.GetComponent<Lights>().ToggleLights(true);
-                }
-
+                case "Interactable":
+                    if (Generator.CanDrain())
+                    {
+                    }
+                    break;
+                case "Fridge":
+                    if (Generator.CanDrain())
+                    {
+                        hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
+                    }
+                    break;
+                case "Lights":
+                    if (Generator.CanDrain())
+                    {
+                        hit.transform.gameObject.GetComponent<Lights>().ToggleLights();
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
+                    }
+                    break;
+                case "Generator":
+                    hit.transform.gameObject.GetComponent<Generator>().ToggleDrain();
+                    break;
+                case "Pickup": hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false, hit.transform.gameObject);
+                    break;
+                default:
+                    break;
             }
 
         }
-    }
+        Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(transform.forward), Color.white, 200f);
 
+    }
     public void movement()
     {
         CharacterController controller = GetComponent<CharacterController>();
@@ -190,9 +212,6 @@ public class Player : Actor
         moveDirection.y -= gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
     }
-
-
-
     public void Scroll()
     {
         if (GameManager.GetManager<InventoryManager>().selectedSlot > 0 && GameManager.GetManager<InventoryManager>().selectedSlot < 5)
@@ -207,13 +226,47 @@ public class Player : Actor
         {
             GameManager.GetManager<InventoryManager>().selectedSlot = 4;
         }
+    }
 
 
+    public void HighLightObjectRay()
+    {
 
+        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 10))
+        {
+            //Layer 8 == Outlined
+            if (hit.transform.gameObject.layer == 8)
+            {
+                HighLightObject(hit.transform.gameObject);
+            }
+            else
+            {
+                ClearHighLight();
+            }
+        }
+    }
 
+    public void HighLightObject(GameObject highlightedObject)
+    {
+        if (lasthighlightedObject != highlightedObject)
+        {
+            ClearHighLight();
+            ogMat = highlightedObject.GetComponent<MeshRenderer>().sharedMaterial;
+            highlightedObject.GetComponent<MeshRenderer>().sharedMaterial = highlightmat;
+            highlightedObject.transform.gameObject.AddComponent<OutlineNormalsCalculator>();
+            lasthighlightedObject = highlightedObject;
+        }
+    }
 
+    public void ClearHighLight()
+    {
+        if (lasthighlightedObject != null)
+        {
+            lasthighlightedObject.GetComponent<MeshRenderer>().sharedMaterial = ogMat;
+            Destroy(lasthighlightedObject.GetComponent<OutlineNormalsCalculator>());
+            lasthighlightedObject = null;
+        }
     }
 
 }
-
 
