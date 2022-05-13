@@ -28,6 +28,7 @@ public class Interactable : MonoBehaviour
 
     public void Interact(bool canPickUp, bool drain, GameObject objectPickedUp) 
     {
+        print("Interaction");
         if (canPickUp && objectPickedUp != null && !Player.instance.hasObject)
         {
             if (objectPickedUp.GetComponent<Rigidbody>() == null)

@@ -150,7 +150,7 @@ public class Player : Actor
                 hasObject = false;
             }
         }
-        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(cam.transform.forward), out hit, 5))
+        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 5))
         {
             switch (hit.transform.tag)
             {
@@ -174,9 +174,14 @@ public class Player : Actor
                     }
                     break;
                 case "Generator":
+                    print("Hits generator");
                     hit.transform.gameObject.GetComponent<Generator>().ToggleDrain();
                     break;
                 case "Pickup": hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false, hit.transform.gameObject);
+                    break;
+                case "Door":
+                    //it checks if the object is a door and play the animation from the animator
+                    hit.transform.gameObject.GetComponent<Doors>().PlayAnimation();
                     break;
                 default:
                     break;
