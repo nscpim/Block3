@@ -13,10 +13,6 @@ public class Doors : Interactable
             anim.SetBool("open", true);
 
         }
-        else
-        {
-            anim.SetBool("open", false);
-        }
     }
 
     public void open()
@@ -35,6 +31,7 @@ public class Doors : Interactable
     private IEnumerator ClosingDoor()
     {
         yield return new WaitForSeconds(5);
+        anim.SetBool("open", false);
         BackWards();    
     }
 }
