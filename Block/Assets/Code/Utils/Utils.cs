@@ -21,19 +21,19 @@ public class Utils : MonoBehaviour
     public IEnumerator CameraShake(float duration, float magnitude) 
     {
         
-        Vector3 ogPositon = Player.instance.transform.position;
+      
         float elapsed = 0;
 
             while (elapsed < duration)
         {
-            float x = Random.Range(-0.5f, 0.5f) * magnitude;
-            float y = Random.Range(-0.5f, 0.5f) * magnitude;
+            float x = Random.Range(-0.2f, 0.2f) * magnitude;
+            float y = Random.Range(-0.2f, 0.2f) * magnitude;
 
             Player.instance.transform.position = new Vector3(Player.instance.transform.position.x + x, Player.instance.transform.position.y + y, Player.instance.transform.position.z);
             elapsed += Time.deltaTime;
             yield return 0;
         }
-        Player.instance.transform.position = ogPositon;
+       
     }
 
     public void StartShake() 

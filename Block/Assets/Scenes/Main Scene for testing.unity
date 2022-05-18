@@ -1509,6 +1509,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1144857818}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!108 &1145825278 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 2237408032657059325, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
+  m_PrefabInstance: {fileID: 5780334083684384167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1236082565
 GameObject:
   m_ObjectHideFlags: 0
@@ -1795,6 +1800,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   canDrain: 0
   needsAmount: 0
+  type: 0
 --- !u!65 &1585147594
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1897,6 +1903,10 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 5240c8ebb839af442993b0b5d3167f2b, type: 2}
   orange: {fileID: 2100000, guid: 2908f556538aec44bad56401709ee60e, type: 2}
   phoneLight: {fileID: 1463036974}
+  lights:
+  - {fileID: 2007655822}
+  - {fileID: 1145825278}
+  - {fileID: 1805187366}
   generator: {fileID: 3885635594060299783}
   mainCamera: {fileID: 1528862778}
 --- !u!4 &1634223995
@@ -2025,6 +2035,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   canDrain: 0
   needsAmount: 0
+  type: 0
 --- !u!1 &1784065451
 GameObject:
   m_ObjectHideFlags: 0
@@ -2104,6 +2115,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1784065451}
   m_CullTransparentMesh: 1
+--- !u!108 &1805187366 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 2237408032176268641, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
+  m_PrefabInstance: {fileID: 5780334083684384167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1825112093 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: 488c2e7788ea06c40a9be704f38515dd, type: 3}
@@ -2368,6 +2384,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   canDrain: 0
   needsAmount: 0
+  type: 0
   lights:
   - {fileID: 6526771621584056259}
   - {fileID: 6526771622905881954}
@@ -2391,6 +2408,11 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8678823145569952518, guid: 488c2e7788ea06c40a9be704f38515dd, type: 3}
+--- !u!108 &2007655822 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 5809921869661898448, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
+  m_PrefabInstance: {fileID: 5780334083684384167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2131902629
 GameObject:
   m_ObjectHideFlags: 0
@@ -2737,6 +2759,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   canDrain: 0
   needsAmount: 0
+  type: 2
   display: {fileID: 1383561821}
   red: {fileID: 2100000, guid: c167a19da14854a4690b39dd700d0666, type: 2}
   green: {fileID: 2100000, guid: 0a7796fea5e1fe44c99e29d711870441, type: 2}
@@ -2762,6 +2785,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 128602491635296783, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
+      propertyPath: type
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 406367405046842064, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -2773,6 +2800,14 @@ PrefabInstance:
     - target: {fileID: 1156146151697959755, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1468211429749285780, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
+      propertyPath: type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2115143039277052152, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
+      propertyPath: type
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2237408031742807433, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
       propertyPath: m_Layer
@@ -2805,6 +2840,10 @@ PrefabInstance:
     - target: {fileID: 2665309932875462618, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3643569937665250560, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
+      propertyPath: type
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3983631940212503678, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
       propertyPath: m_Name
@@ -2853,6 +2892,22 @@ PrefabInstance:
     - target: {fileID: 4221974070954673678, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5809921869514708127, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
+      propertyPath: type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5809921869514708127, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
+      propertyPath: drainAmount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5809921869514708127, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
+      propertyPath: needsAmount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5809921869661898448, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
+      propertyPath: m_Intensity
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8102980724908214843, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
       propertyPath: m_Name

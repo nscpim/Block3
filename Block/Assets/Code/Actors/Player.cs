@@ -263,19 +263,18 @@ public class Player : Actor
             ClearHighLight();
             ogMat = highlightedObject.GetComponent<MeshRenderer>().sharedMaterial;
             highlightedObject.GetComponent<MeshRenderer>().sharedMaterial = highlightmat;
-            if (highlightedObject.GetComponent<Interactable>().type == highLight.Small)
+            if (highlightedObject.GetComponent<Interactable>() == null || highlightedObject.GetComponent<Interactable>().type == highLight.Small)
             {
-                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.2f);
+                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.05f);
             }
             else if (highlightedObject.GetComponent<Interactable>().type == highLight.Medium)
             {
-                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.01f);
+                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.1f);
             }
             else if (highlightedObject.GetComponent<Interactable>().type == highLight.Large)
             {
                 highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.001f);
             }
-
             highlightedObject.transform.gameObject.AddComponent<OutlineNormalsCalculator>();
             lasthighlightedObject = highlightedObject;
         }

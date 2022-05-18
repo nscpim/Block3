@@ -27,6 +27,10 @@ public class GameManager : MonoBehaviour
     public Material orange;
     public Light phoneLight;
 
+    [Header("Scene")]
+    public Light[] lights;
+
+
     //Gamemanager instance
     public static GameManager instance { get; private set; }
 
@@ -117,7 +121,25 @@ public class GameManager : MonoBehaviour
             managers[i].Pause(value);
         }
     }
-   
+    public void Flick() 
+    {
+        StartCoroutine(LightsFlicking());
+    }
+    public IEnumerator LightsFlicking() 
+    {
+        foreach (Light i in lights)
+        {
+            i.intensity = 0.13f;
+        }
+        yield return new WaitForSeconds(0.2f);
+        
+        foreach (Light i in lights)
+        {
+            i.intensity = 3f;
+        }
+
+    }
+
 }
 public enum Levels
 {
