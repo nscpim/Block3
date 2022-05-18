@@ -10,6 +10,7 @@ public class Interactable : MonoBehaviour
     public Animator anim;
     public bool canDrain = false;
     public float needsAmount;
+    public highLight type;
    
    
 

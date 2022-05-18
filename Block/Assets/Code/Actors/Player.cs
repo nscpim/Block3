@@ -15,7 +15,7 @@ public class Player : Actor
     private float speed = 3.0F;
     [HideInInspector]
     public Camera cam;
-    public  Transform handLocation;
+    public Transform handLocation;
     public bool hasObject = false;
     private float throwSpeed;
 
@@ -177,7 +177,8 @@ public class Player : Actor
                     print("Hits generator");
                     hit.transform.gameObject.GetComponent<Generator>().ToggleDrain();
                     break;
-                case "Pickup": hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false, hit.transform.gameObject);
+                case "Pickup":
+                    hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false, hit.transform.gameObject);
                     break;
                 case "Door":
                     //it checks if the object is a door and play the animation from the animator
@@ -239,8 +240,9 @@ public class Player : Actor
 
         if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 10))
         {
+            var layer = hit.transform.gameObject.layer;
             //Layer 8 == Outlined
-            if (hit.transform.gameObject.layer == 8)
+            if (layer == 8)
             {
                 HighLightObject(hit.transform.gameObject);
             }
@@ -248,6 +250,8 @@ public class Player : Actor
             {
                 ClearHighLight();
             }
+
+
         }
     }
 
@@ -255,9 +259,23 @@ public class Player : Actor
     {
         if (lasthighlightedObject != highlightedObject)
         {
+            print(highlightedObject.layer);
             ClearHighLight();
             ogMat = highlightedObject.GetComponent<MeshRenderer>().sharedMaterial;
             highlightedObject.GetComponent<MeshRenderer>().sharedMaterial = highlightmat;
+            if (highlightedObject.GetComponent<Interactable>().type == highLight.Small)
+            {
+                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.2f);
+            }
+            else if (highlightedObject.GetComponent<Interactable>().type == highLight.Medium)
+            {
+                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.01f);
+            }
+            else if (highlightedObject.GetComponent<Interactable>().type == highLight.Large)
+            {
+                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.001f);
+            }
+
             highlightedObject.transform.gameObject.AddComponent<OutlineNormalsCalculator>();
             lasthighlightedObject = highlightedObject;
         }
@@ -273,5 +291,11 @@ public class Player : Actor
         }
     }
 
+}
+public enum highLight
+{
+    Small,
+    Medium,
+    Large,
 }
 

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Require a mesh filter component
-// This script, unfortunately, does not support skinned meshes
 [RequireComponent(typeof(MeshFilter))]
 public class OutlineNormalsCalculator : MonoBehaviour
 {
