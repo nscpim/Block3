@@ -70,7 +70,6 @@ public class EnergyManager : Manager
             {
                 i.color = Color.black;
             }
-
         }
         else if (energyBar > 25 && !eventComing)
         {
@@ -94,7 +93,6 @@ public class EnergyManager : Manager
         {
             eventComing = false;
         }
-
 
         if (lightsFlickering.TimerDone() && lightsFlickering.isActive)
         {

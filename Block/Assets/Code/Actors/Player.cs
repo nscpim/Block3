@@ -250,11 +250,8 @@ public class Player : Actor
             {
                 ClearHighLight();
             }
-
-
         }
     }
-
     public void HighLightObject(GameObject highlightedObject)
     {
         if (lasthighlightedObject != highlightedObject)

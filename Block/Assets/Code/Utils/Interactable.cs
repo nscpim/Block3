@@ -26,7 +26,6 @@ public class Interactable : MonoBehaviour
     {
         
     }
-
     public void Interact(bool canPickUp, bool drain, GameObject objectPickedUp) 
     {
         print("Interaction");
