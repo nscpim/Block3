@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Interactable : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class Interactable : MonoBehaviour
     public bool canDrain = false;
     public float needsAmount;
     public highLight type;
+    public TextMeshProUGUI interactableText;
+    public InteractionUI interaction_UI;
    
    
 
