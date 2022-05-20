@@ -411,6 +411,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119194524}
   m_CullTransparentMesh: 1
+--- !u!108 &127376478 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 5780334084540493129, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
+  m_PrefabInstance: {fileID: 5780334083684384167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &181393723 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8068073526183931155, guid: 488c2e7788ea06c40a9be704f38515dd, type: 3}
@@ -685,6 +690,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &549463539 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 2237408031697204441, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
+  m_PrefabInstance: {fileID: 5780334083684384167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &560601468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2020,6 +2030,8 @@ MonoBehaviour:
   - {fileID: 2007655822}
   - {fileID: 1145825278}
   - {fileID: 1805187366}
+  - {fileID: 549463539}
+  - {fileID: 127376478}
   generator: {fileID: 3885635594060299783}
   mainCamera: {fileID: 1528862778}
 --- !u!4 &1634223995
@@ -2941,11 +2953,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2237408032176268641, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2237408032657059325, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2237408032766128538, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
       propertyPath: m_Layer
@@ -3033,7 +3045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5809921869661898448, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5809921869661898448, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
       propertyPath: m_Intensity

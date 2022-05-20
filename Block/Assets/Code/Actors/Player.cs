@@ -247,9 +247,9 @@ public class Player : Actor
 
         if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 10))
         {
-            var layer = hit.transform.gameObject.layer;
+            var tag = hit.transform.gameObject.tag;
             //Layer 8 == Outlined
-            if (layer == 8)
+            if (tag == "Outlining" || tag == "Fridge" || tag == "Lights" || tag == "Generator" || tag == "Screen")
             {
                 HighLightObject(hit.transform.gameObject);
             }
@@ -263,7 +263,6 @@ public class Player : Actor
     {
         if (lasthighlightedObject != highlightedObject)
         {
-            print(highlightedObject.layer);
             ClearHighLight();
             ogMat = highlightedObject.GetComponent<MeshRenderer>().sharedMaterial;
             highlightedObject.GetComponent<MeshRenderer>().sharedMaterial = highlightmat;
