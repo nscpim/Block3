@@ -250,7 +250,9 @@ public class Player : Actor
 
     public void HighLightObjectRay()
     {
-        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 10))
+        int layerMask = 1 << 0 | 1 << 8;   
+
+        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 10, layerMask))
         {
             var tag = hit.transform.gameObject.tag;
             //Layer 8 == Outlined
