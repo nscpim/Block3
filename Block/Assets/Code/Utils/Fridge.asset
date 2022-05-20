@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f829780d19e254648a640aaaf778034d, type: 3}
   m_Name: Fridge
   m_EditorClassIdentifier: 
-  text: Press E or LMB to open
-  position: {x: 0, y: 0, z: 0}
+  text: Press E or LMB to open the fridge
   firstTime: 0

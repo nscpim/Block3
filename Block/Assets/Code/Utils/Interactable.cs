@@ -22,7 +22,7 @@ public class Interactable : MonoBehaviour
     public virtual void Start()
     {
         _name = gameObject.name;
-
+        interaction_UI.firstTime = false;
     }
 
     // Update is called once per frame

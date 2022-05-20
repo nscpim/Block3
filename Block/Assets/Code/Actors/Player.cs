@@ -23,6 +23,7 @@ public class Player : Actor
     Material ogMat;
     public Material highlightmat;
     GameObject lasthighlightedObject;
+    GameObject lastrayObject;
 
 
     public void Awake()
@@ -36,6 +37,7 @@ public class Player : Actor
         instance = this;
         Cursor.lockState = CursorLockMode.Locked;
         cam = gameObject.GetComponentInChildren<Camera>();
+
     }
 
     // Update is called once per frame
@@ -199,7 +201,6 @@ public class Player : Actor
 
         }
         Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(transform.forward), Color.white, 200f);
-
     }
     public void movement()
     {
@@ -246,40 +247,56 @@ public class Player : Actor
 
     public void HighLightObjectRay()
     {
-
         if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 10))
         {
             var tag = hit.transform.gameObject.tag;
             //Layer 8 == Outlined
-            if (tag == "Outlining" || tag == "Fridge" || tag == "Lights" || tag == "Generator" || tag == "Screen")
+            if (tag == "Interactable" || tag == "Fridge" || tag == "Lights" || tag == "Generator" || tag == "Screen" || tag == "Pickup" || tag == "Door")
             {
+                InteractionUI ui = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI;
                 HighLightObject(hit.transform.gameObject);
-            }
-            else
-            {
-                ClearHighLight();
-                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(false);
-            }
-          
-            
-            //this switch case allows text to pop up the first time the player looks at an object until the first interaction
-           
+
                 switch (tag)
                 {
                     case "Fridge":
-                        InteractionUI ui = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI;
-                    if (!ui.firstTime)
-                    {
-                        hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
-                        hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = ui.text;
-                    }
+
+                        if (!ui.firstTime)
+                        {
+                            lastrayObject = hit.transform.gameObject;
+                            hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                            hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = ui.text;
+                        }
                         break;
-                default:
-                   
-                    break;
+                    case "Door":
+                        if (!ui.firstTime)
+                        {
+                            lastrayObject = hit.transform.gameObject;
+                            hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                            hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = ui.text;
+                        }
+                        break;
+                    default:
+                        break;
                 }
+            }
+            else
+            {
+                ClearText();
+                ClearHighLight();
+            }
+            //this switch case allows text to pop up the first time the player looks at an object until the first interaction
+           
         }
-      
+
+    }
+
+    public void ClearText()
+    {
+        if (lastrayObject != null)
+        {
+            lastrayObject.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(false);
+            lastrayObject = null;
+        }
     }
     public void HighLightObject(GameObject highlightedObject)
     {
@@ -287,6 +304,7 @@ public class Player : Actor
         {
             ClearHighLight();
             ogMat = highlightedObject.GetComponent<MeshRenderer>().sharedMaterial;
+
             highlightedObject.GetComponent<MeshRenderer>().sharedMaterial = highlightmat;
             if (highlightedObject.GetComponent<Interactable>() == null || highlightedObject.GetComponent<Interactable>().type == highLight.Small)
             {
@@ -309,6 +327,7 @@ public class Player : Actor
     {
         if (lasthighlightedObject != null)
         {
+
             lasthighlightedObject.GetComponent<MeshRenderer>().sharedMaterial = ogMat;
             Destroy(lasthighlightedObject.GetComponent<OutlineNormalsCalculator>());
             lasthighlightedObject = null;
