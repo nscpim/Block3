@@ -152,7 +152,6 @@ public class Player : Actor
         }
         if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 5))
         {
-            InteractionUI ui = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI;
             switch (hit.transform.tag)
             {
                 case "Interactable":
@@ -163,6 +162,7 @@ public class Player : Actor
                 case "Fridge":
                     if (Generator.CanDrain())
                     {
+                        InteractionUI ui = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI;
                         hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
                         hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
                         ui.firstTime = true;
@@ -258,31 +258,28 @@ public class Player : Actor
             else
             {
                 ClearHighLight();
+                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(false);
             }
-            InteractionUI ui = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI;
+          
             
             //this switch case allows text to pop up the first time the player looks at an object until the first interaction
-            if (!ui.firstTime)
-            {
+           
                 switch (tag)
                 {
                     case "Fridge":
-                        hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);   
+                        InteractionUI ui = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI;
+                    if (!ui.firstTime)
+                    {
+                        hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
                         hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = ui.text;
+                    }
                         break;
                 default:
-                        break;
+                   
+                    break;
                 }
-            }
-            
         }
-        else
-        {
-            if (hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject != null)
-            {
-                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(false);
-            }
-        }
+      
     }
     public void HighLightObject(GameObject highlightedObject)
     {
