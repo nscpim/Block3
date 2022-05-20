@@ -176,6 +176,13 @@ public class Player : Actor
                 case "Generator":
                     print("Hits generator");
                     hit.transform.gameObject.GetComponent<Generator>().ToggleDrain();
+                    if (!Generator.CanDrain())
+                    {
+                        foreach (Light i in GameManager.instance.lights)
+                        {
+                            i.transform.gameObject.SetActive(false);
+                        }
+                    }
                     break;
                 case "Pickup":
                     hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false, hit.transform.gameObject);

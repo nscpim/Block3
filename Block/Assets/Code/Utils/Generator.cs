@@ -9,7 +9,7 @@ public class Generator : Interactable
     public Material red;
     public Material green;
     public GameObject[] screens;
-    public bool firstTime = false;
+    public bool firstTime = true;
 
     // Start is called before the first frame update
     public override void Start()
@@ -25,6 +25,16 @@ public class Generator : Interactable
     
     public bool ToggleDrain()
     {
+        if (firstTime)
+        {
+            foreach (Light item in GameManager.instance.lights)
+            {
+                item.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
+                item.gameObject.SetActive(true);
+                firstTime = false;
+            }
+        }
+       
         generatorDraining = !generatorDraining;
         Display();
         return generatorDraining;
