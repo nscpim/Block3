@@ -20,12 +20,11 @@ public class Player : Actor
     private float throwSpeed;
     [SerializeField] private GameObject pauseMenuUI;
 
-    
-
     [Header("Materials")]
     Material ogMat;
     public Material highlightmat;
     GameObject lasthighlightedObject;
+    GameObject lastrayObject;
 
 
     public void Awake()
@@ -39,6 +38,7 @@ public class Player : Actor
         instance = this;
         Cursor.lockState = CursorLockMode.Locked;
         cam = gameObject.GetComponentInChildren<Camera>();
+
     }
 
     // Update is called once per frame
@@ -120,16 +120,13 @@ public class Player : Actor
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             GameManager.PauseGame(true);
+            ActivateMenu();
+            Cursor.lockState = CursorLockMode.None;
         }
 
-        if (GameManager.pause)
-        {
-            ActivateMenu();
-        }
-        else
-        {
-            DeactivateMenu();
-        }
+        
+       
+        
     }
 
     public IEnumerator LightsOut()
@@ -169,8 +166,10 @@ public class Player : Actor
         }
         if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 5))
         {
+            
             switch (hit.transform.tag)
             {
+
                 case "Interactable":
                     if (Generator.CanDrain())
                     {
@@ -179,10 +178,9 @@ public class Player : Actor
                 case "Fridge":
                     if (Generator.CanDrain())
                     {
-                        InteractionUI ui = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI;
+
                         hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
                         hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
-                        ui.firstTime = true;
                     }
                     break;
                 case "Lights":
@@ -209,6 +207,7 @@ public class Player : Actor
                 case "Door":
                     //it checks if the object is a door and play the animation from the animator
                     hit.transform.gameObject.GetComponent<Doors>().PlayAnimation();
+                 
                     break;
                 default:
                     break;
@@ -216,7 +215,6 @@ public class Player : Actor
 
         }
         Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(transform.forward), Color.white, 200f);
-
     }
     public void movement()
     {
@@ -263,40 +261,58 @@ public class Player : Actor
 
     public void HighLightObjectRay()
     {
+        int layerMask = 1 << 0 | 1 << 8;
 
-        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 10))
+        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 10, layerMask))
         {
             var tag = hit.transform.gameObject.tag;
             //Layer 8 == Outlined
-            if (tag == "Outlining" || tag == "Fridge" || tag == "Lights" || tag == "Generator" || tag == "Screen")
+            if (tag == "Interactable" || tag == "Fridge" || tag == "Lights" || tag == "Generator" || tag == "Screen" || tag == "Pickup" || tag == "Door")
             {
+               
                 HighLightObject(hit.transform.gameObject);
-            }
-            else
-            {
-                ClearHighLight();
-                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(false);
-            }
-          
-            
-            //this switch case allows text to pop up the first time the player looks at an object until the first interaction
-           
+
                 switch (tag)
                 {
                     case "Fridge":
-                        InteractionUI ui = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI;
-                    if (!ui.firstTime)
-                    {
-                        hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
-                        hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = ui.text;
-                    }
+
+                      
+                        
+                            lastrayObject = hit.transform.gameObject;
+                           
+                            
+                        
                         break;
-                default:
-                   
-                    break;
+                    case "Door":
+                        
+                        
+                            lastrayObject = hit.transform.gameObject;
+
+                            
+                        
+                        break;
+                    default:
+                        break;
                 }
+            }
+            else
+            {
+                ClearText();
+                ClearHighLight();
+            }
+            //this switch case allows text to pop up the first time the player looks at an object until the first interaction
+
         }
-      
+
+    }
+
+    public void ClearText()
+    {
+        if (lastrayObject != null)
+        {
+         
+            lastrayObject = null;
+        }
     }
     public void HighLightObject(GameObject highlightedObject)
     {
@@ -304,6 +320,7 @@ public class Player : Actor
         {
             ClearHighLight();
             ogMat = highlightedObject.GetComponent<MeshRenderer>().sharedMaterial;
+
             highlightedObject.GetComponent<MeshRenderer>().sharedMaterial = highlightmat;
             if (highlightedObject.GetComponent<Interactable>() == null || highlightedObject.GetComponent<Interactable>().type == highLight.Small)
             {
@@ -326,21 +343,27 @@ public class Player : Actor
     {
         if (lasthighlightedObject != null)
         {
+
             lasthighlightedObject.GetComponent<MeshRenderer>().sharedMaterial = ogMat;
             Destroy(lasthighlightedObject.GetComponent<OutlineNormalsCalculator>());
             lasthighlightedObject = null;
         }
     }
+
     void ActivateMenu()
     {
         pauseMenuUI.SetActive(true);
     }
 
     public void DeactivateMenu()
+
     {
+        Debug.Log("menu");
         GameManager.PauseGame(false);
         pauseMenuUI.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
     }
+
 
 }
 public enum highLight
@@ -349,5 +372,3 @@ public enum highLight
     Medium,
     Large,
 }
-
-
