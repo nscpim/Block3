@@ -18,6 +18,9 @@ public class Player : Actor
     public Transform handLocation;
     public bool hasObject = false;
     private float throwSpeed;
+    [SerializeField] private GameObject pauseMenuUI;
+
+    
 
     [Header("Materials")]
     Material ogMat;
@@ -113,6 +116,20 @@ public class Player : Actor
         }
         Scroll();
         HighLightObjectRay();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.PauseGame(true);
+        }
+
+        if (GameManager.pause)
+        {
+            ActivateMenu();
+        }
+        else
+        {
+            DeactivateMenu();
+        }
     }
 
     public IEnumerator LightsOut()
@@ -314,6 +331,16 @@ public class Player : Actor
             lasthighlightedObject = null;
         }
     }
+    void ActivateMenu()
+    {
+        pauseMenuUI.SetActive(true);
+    }
+
+    public void DeactivateMenu()
+    {
+        GameManager.PauseGame(false);
+        pauseMenuUI.SetActive(false);
+    }
 
 }
 public enum highLight
@@ -322,4 +349,5 @@ public enum highLight
     Medium,
     Large,
 }
+
 
