@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public Font font;
     public Text eventText;
     public Slider energyBarSlider;
+    public static bool pause;
 
     [Header("Managers")]
     //managers array
@@ -36,7 +37,7 @@ public class GameManager : MonoBehaviour
     //Check if ingame
     private static bool inGame;
     //check if the game is paused
-    private static bool pause;
+    private static bool Pause;
     //bool for loading once
     private bool loadLevelOnce;
 
@@ -109,7 +110,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public static void Pause(bool value)
+    public static void PauseGame(bool value)
     {
         pause = value;
         for (int i = 0; i < managers.Length; i++)
