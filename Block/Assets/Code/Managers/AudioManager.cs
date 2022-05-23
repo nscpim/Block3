@@ -17,7 +17,6 @@ public class AudioManager : Manager
 
     public List<AudioSource> SFXSources = new List<AudioSource>();
     private int sfxIndex;
-
     public static AudioManager instance;
 
 

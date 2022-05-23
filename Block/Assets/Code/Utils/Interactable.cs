@@ -10,7 +10,7 @@ public class Interactable : MonoBehaviour
     public float drainAmount;
     private string _name;
     public Animator anim;
-    public bool canDrain = false;
+    [HideInInspector]public bool canDrain = false;
     public float needsAmount;
     public highLight type;
     public TextMeshProUGUI interactableText;
@@ -32,7 +32,7 @@ public class Interactable : MonoBehaviour
     // Update is called once per frame
    public virtual void Update()
     {
-        
+    
     }
     public void Interact(bool canPickUp, bool drain, GameObject objectPickedUp) 
     {
