@@ -107,6 +107,11 @@ public class AudioManager : Manager
         {
             musicSources[i].enabled = mute;
         }
+
+        for (int i = 0; i < SFXSources.Count; i++)
+        {
+
+        }
     }
     //gets the audio from the AudioLibrary with the given name and Plays the music.
     public void PlayMusic(string clipName, float fadeLength = 1f)

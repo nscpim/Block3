@@ -22,8 +22,12 @@ public class Interactable : MonoBehaviour
     public virtual void Start()
     {
         _name = gameObject.name;
-        interaction_UI.firstTime = false;
+        if (interaction_UI != null)
+        {
+            interaction_UI.firstTime = false;
+        }
     }
+    
 
     // Update is called once per frame
    public virtual void Update()
