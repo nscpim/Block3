@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
     //UI variables
     [Header("UI")]
     public Canvas UIcanvas;
@@ -50,7 +51,6 @@ public class GameManager : MonoBehaviour
 
     //Main Camera
     public Camera mainCamera;
-
 
     public static T GetManager<T>() where T : Manager
     {

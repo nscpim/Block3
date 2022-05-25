@@ -26,6 +26,7 @@ public class Player : Actor
     Material ogMat;
     public Material highlightmat;
     GameObject lasthighlightedObject;
+    GameObject lastrayObject;
 
 
     public void Awake()
@@ -39,6 +40,7 @@ public class Player : Actor
         instance = this;
         Cursor.lockState = CursorLockMode.Locked;
         cam = gameObject.GetComponentInChildren<Camera>();
+
     }
 
     // Update is called once per frame
@@ -167,22 +169,24 @@ public class Player : Actor
                 hasObject = false;
             }
         }
-        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 5))
+        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 2))
         {
+
             switch (hit.transform.tag)
             {
                 case "Interactable":
                     if (Generator.CanDrain())
                     {
+
                     }
                     break;
                 case "Fridge":
                     if (Generator.CanDrain())
                     {
-                        InteractionUI ui = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI;
+
                         hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
                         hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
-                        ui.firstTime = true;
+                        hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
                     }
                     break;
                 case "Lights":
@@ -190,6 +194,10 @@ public class Player : Actor
                     {
                         hit.transform.gameObject.GetComponent<Lights>().ToggleLights();
                         hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
+                        }
                     }
                     break;
                 case "Generator":
@@ -202,13 +210,25 @@ public class Player : Actor
                             i.transform.gameObject.SetActive(false);
                         }
                     }
+                    if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                    {
+                        hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
+                    }
                     break;
                 case "Pickup":
                     hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false, hit.transform.gameObject);
+                    if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                    {
+                        hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
+                    }
                     break;
                 case "Door":
                     //it checks if the object is a door and play the animation from the animator
                     hit.transform.gameObject.GetComponent<Doors>().PlayAnimation();
+                    if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                    {
+                        hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
+                    }
                     break;
                 default:
                     break;
@@ -216,7 +236,6 @@ public class Player : Actor
 
         }
         Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(transform.forward), Color.white, 200f);
-
     }
     public void movement()
     {
@@ -263,40 +282,90 @@ public class Player : Actor
 
     public void HighLightObjectRay()
     {
+        int layerMask = 1 << 0 | 1 << 8;
 
-        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 10))
+        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 10, layerMask))
         {
             var tag = hit.transform.gameObject.tag;
-            //Layer 8 == Outlined
-            if (tag == "Outlining" || tag == "Fridge" || tag == "Lights" || tag == "Generator" || tag == "Screen")
+
+            if (tag == "Interactable" || tag == "Fridge" || tag == "Lights" || tag == "Generator" || tag == "Screen" || tag == "Pickup" || tag == "Door")
             {
                 HighLightObject(hit.transform.gameObject);
-            }
-            else
-            {
-                ClearHighLight();
-                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(false);
-            }
-          
-            
-            //this switch case allows text to pop up the first time the player looks at an object until the first interaction
-           
                 switch (tag)
                 {
                     case "Fridge":
-                        InteractionUI ui = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI;
-                    if (!ui.firstTime)
-                    {
-                        hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
-                        hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = ui.text;
-                    }
+
+                        if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                        {
+                            lastrayObject = hit.transform.gameObject;
+                            hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                            hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text;
+                        }
                         break;
-                default:
-                   
-                    break;
+                    case "Door":
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                            {
+                                lastrayObject = hit.transform.gameObject;
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text;
+                            }
+                        }
+                        break;
+                    case "Lights":
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                            {
+                                lastrayObject = hit.transform.gameObject;
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text;
+                            }
+                        }
+                        break;
+                    case "Pickup":
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                            {
+                                lastrayObject = hit.transform.gameObject;
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text;
+                            }
+                        }
+                        break;
+                    case "Generator":
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                            {
+                                lastrayObject = hit.transform.gameObject;
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text;
+                            }
+                        }
+                        break;
+                    default:
+                        break;
                 }
+            }
+            else
+            {
+                ClearText();
+                ClearHighLight();
+            }
+            //this switch case allows text to pop up the first time the player looks at an object until the first interaction
         }
-      
+    }
+
+    public void ClearText()
+    {
+        if (lastrayObject != null)
+        {
+            lastrayObject.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(false);
+            lastrayObject = null;
+        }
     }
     public void HighLightObject(GameObject highlightedObject)
     {
@@ -304,6 +373,7 @@ public class Player : Actor
         {
             ClearHighLight();
             ogMat = highlightedObject.GetComponent<MeshRenderer>().sharedMaterial;
+
             highlightedObject.GetComponent<MeshRenderer>().sharedMaterial = highlightmat;
             if (highlightedObject.GetComponent<Interactable>() == null || highlightedObject.GetComponent<Interactable>().type == highLight.Small)
             {
@@ -326,6 +396,7 @@ public class Player : Actor
     {
         if (lasthighlightedObject != null)
         {
+
             lasthighlightedObject.GetComponent<MeshRenderer>().sharedMaterial = ogMat;
             Destroy(lasthighlightedObject.GetComponent<OutlineNormalsCalculator>());
             lasthighlightedObject = null;
