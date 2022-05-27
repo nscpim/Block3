@@ -409,12 +409,19 @@ public class Player : Actor
     void ActivateMenu()
     {
         pauseMenuUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void DeactivateMenu()
     {
         GameManager.PauseGame(false);
         pauseMenuUI.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void QuitButton() 
+    {
+        Application.Quit();
     }
 
 }
