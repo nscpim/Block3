@@ -36,8 +36,7 @@ public class GameManager : MonoBehaviour
     //Gamemanager instance
     public static GameManager instance { get; private set; }
 
-    //GeneratorObject
-    public GameObject generator;
+ 
 
     //Check if ingame
     private static bool inGame;
