@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class InteractionUI : ScriptableObject {
     public string text;
-    public Vector3 position;
     public bool firstTime;
    
 }

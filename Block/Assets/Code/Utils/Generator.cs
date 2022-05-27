@@ -25,16 +25,6 @@ public class Generator : Interactable
     
     public bool ToggleDrain()
     {
-        if (firstTime)
-        {
-            foreach (Light item in GameManager.instance.lights)
-            {
-                item.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
-                item.gameObject.SetActive(true);
-                firstTime = false;
-            }
-        }
-       
         generatorDraining = !generatorDraining;
         Display();
         return generatorDraining;

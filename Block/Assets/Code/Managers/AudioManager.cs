@@ -17,7 +17,6 @@ public class AudioManager : Manager
 
     public List<AudioSource> SFXSources = new List<AudioSource>();
     private int sfxIndex;
-
     public static AudioManager instance;
 
 
@@ -106,6 +105,11 @@ public class AudioManager : Manager
         for (int i = 0; i < musicSources.Length; i++)
         {
             musicSources[i].enabled = mute;
+        }
+
+        for (int i = 0; i < SFXSources.Count; i++)
+        {
+
         }
     }
     //gets the audio from the AudioLibrary with the given name and Plays the music.

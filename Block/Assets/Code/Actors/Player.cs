@@ -20,6 +20,8 @@ public class Player : Actor
     private float throwSpeed;
     [SerializeField] private GameObject pauseMenuUI;
 
+    
+
     [Header("Materials")]
     Material ogMat;
     public Material highlightmat;
@@ -120,13 +122,16 @@ public class Player : Actor
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             GameManager.PauseGame(true);
-            ActivateMenu();
-            Cursor.lockState = CursorLockMode.None;
         }
 
-        
-       
-        
+        if (GameManager.pause)
+        {
+            ActivateMenu();
+        }
+        else
+        {
+            DeactivateMenu();
+        }
     }
 
     public IEnumerator LightsOut()
@@ -164,15 +169,15 @@ public class Player : Actor
                 hasObject = false;
             }
         }
-        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 5))
+        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 2))
         {
-            
+
             switch (hit.transform.tag)
             {
-
                 case "Interactable":
                     if (Generator.CanDrain())
                     {
+
                     }
                     break;
                 case "Fridge":
@@ -181,6 +186,7 @@ public class Player : Actor
 
                         hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
                         hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
+                        hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
                     }
                     break;
                 case "Lights":
@@ -188,6 +194,10 @@ public class Player : Actor
                     {
                         hit.transform.gameObject.GetComponent<Lights>().ToggleLights();
                         hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
+                        }
                     }
                     break;
                 case "Generator":
@@ -200,14 +210,25 @@ public class Player : Actor
                             i.transform.gameObject.SetActive(false);
                         }
                     }
+                    if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                    {
+                        hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
+                    }
                     break;
                 case "Pickup":
                     hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false, hit.transform.gameObject);
+                    if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                    {
+                        hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
+                    }
                     break;
                 case "Door":
                     //it checks if the object is a door and play the animation from the animator
                     hit.transform.gameObject.GetComponent<Doors>().PlayAnimation();
-                 
+                    if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                    {
+                        hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
+                    }
                     break;
                 default:
                     break;
@@ -266,30 +287,64 @@ public class Player : Actor
         if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 10, layerMask))
         {
             var tag = hit.transform.gameObject.tag;
-            //Layer 8 == Outlined
+
             if (tag == "Interactable" || tag == "Fridge" || tag == "Lights" || tag == "Generator" || tag == "Screen" || tag == "Pickup" || tag == "Door")
             {
-               
                 HighLightObject(hit.transform.gameObject);
-
                 switch (tag)
                 {
                     case "Fridge":
 
-                      
-                        
+                        if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                        {
                             lastrayObject = hit.transform.gameObject;
-                           
-                            
-                        
+                            hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                            hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = string.Format(hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text);
+                        }
                         break;
                     case "Door":
-                        
-                        
-                            lastrayObject = hit.transform.gameObject;
-
-                            
-                        
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                            {
+                                lastrayObject = hit.transform.gameObject;
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text;
+                            }
+                        }
+                        break;
+                    case "Lights":
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                            {
+                                lastrayObject = hit.transform.gameObject;
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text;
+                            }
+                        }
+                        break;
+                    case "Pickup":
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                            {
+                                lastrayObject = hit.transform.gameObject;
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text;
+                            }
+                        }
+                        break;
+                    case "Generator":
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                            {
+                                lastrayObject = hit.transform.gameObject;
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = string.Format(hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text);
+                            }
+                        }
                         break;
                     default:
                         break;
@@ -301,16 +356,14 @@ public class Player : Actor
                 ClearHighLight();
             }
             //this switch case allows text to pop up the first time the player looks at an object until the first interaction
-
         }
-
     }
 
     public void ClearText()
     {
         if (lastrayObject != null)
         {
-         
+            lastrayObject.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(false);
             lastrayObject = null;
         }
     }
@@ -334,6 +387,10 @@ public class Player : Actor
             {
                 highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.001f);
             }
+            else if (highlightedObject.GetComponent<Interactable>().type == highLight.Screen)
+            {
+                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.00009f);
+            }
             highlightedObject.transform.gameObject.AddComponent<OutlineNormalsCalculator>();
             lasthighlightedObject = highlightedObject;
         }
@@ -349,21 +406,16 @@ public class Player : Actor
             lasthighlightedObject = null;
         }
     }
-
     void ActivateMenu()
     {
         pauseMenuUI.SetActive(true);
     }
 
     public void DeactivateMenu()
-
     {
-        Debug.Log("menu");
         GameManager.PauseGame(false);
         pauseMenuUI.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
     }
-
 
 }
 public enum highLight
@@ -371,4 +423,7 @@ public enum highLight
     Small,
     Medium,
     Large,
+    Screen,
 }
+
+

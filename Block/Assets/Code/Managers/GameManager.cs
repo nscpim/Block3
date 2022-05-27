@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
     //UI variables
     [Header("UI")]
     public Canvas UIcanvas;
@@ -40,8 +41,7 @@ public class GameManager : MonoBehaviour
     //Gamemanager instance
     public static GameManager instance { get; private set; }
 
-    //GeneratorObject
-    public GameObject generator;
+ 
 
     //Check if ingame
     private static bool inGame;
@@ -55,7 +55,6 @@ public class GameManager : MonoBehaviour
 
     //Main Camera
     public Camera mainCamera;
-
 
     public static T GetManager<T>() where T : Manager
     {
