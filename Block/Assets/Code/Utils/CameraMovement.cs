@@ -20,8 +20,13 @@ public class CameraMovement : MonoBehaviour
 
     // Update is called once per frame
     public void Update()
+    
     {
-        CameraMove();
+        if (!GameManager.pause) 
+        {
+            CameraMove();
+        }
+        
     }
 
     private void CameraMove()
