@@ -218,7 +218,7 @@ public class EnergyManager : Manager
                 break;
         }
         ShowEvent(Random.Range(0, 2));
-        ComputerScreen.Instance.ToggleScreen();
+        ComputerScreen.Instance.SetEventImage(eventInt);
     }
 
 

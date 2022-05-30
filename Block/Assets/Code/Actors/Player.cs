@@ -20,6 +20,10 @@ public class Player : Actor
     private float throwSpeed;
     [SerializeField] private GameObject pauseMenuUI;
 
+    public Transform phone;
+    public Transform screen;
+    private Vector3 offset;
+
     
 
     [Header("Materials")]
@@ -40,6 +44,7 @@ public class Player : Actor
         instance = this;
         Cursor.lockState = CursorLockMode.Locked;
         cam = gameObject.GetComponentInChildren<Camera>();
+        offset = phone.transform.position - screen.transform.position; 
 
     }
 
@@ -133,7 +138,10 @@ public class Player : Actor
             DeactivateMenu();
         }
     }
-
+    public void LateUpdate()
+    {
+        phone.transform.position = screen.transform.position + offset;
+    }
     public IEnumerator LightsOut()
     {
         yield return new WaitForSeconds(1f);
