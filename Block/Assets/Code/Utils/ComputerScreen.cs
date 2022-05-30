@@ -7,31 +7,31 @@ public class ComputerScreen : Interactable
 {
     public static ComputerScreen Instance { get; private set; }
 
-   
+
     public GameObject sourceObject;
     public Sprite[] events;
     private bool toggleScreen = true;
 
-    ComputerScreen() 
+    ComputerScreen()
     {
-    
-    Instance = this;   
-    
+
+        Instance = this;
+
     }
 
     // Start is called before the first frame update
     public override void Start()
     {
-       
+
     }
 
     // Update is called once per frame
     public override void Update()
     {
-        
+
     }
 
-    public void ToggleScreen() 
+    public void ToggleScreen()
     {
         toggleScreen = !toggleScreen;
         sourceObject.SetActive(toggleScreen);
@@ -41,7 +41,7 @@ public class ComputerScreen : Interactable
             print(GameManager.GetManager<EnergyManager>().eventInt + " EventInteger");
         }
     }
-    public void SetEventImage(int eventInteger) 
+    public void SetEventImage(int eventInteger)
     {
         switch (eventInteger)
         {
