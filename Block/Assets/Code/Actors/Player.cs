@@ -346,6 +346,17 @@ public class Player : Actor
                             }
                         }
                         break;
+                    case "Screen":
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                            {
+                                lastrayObject = hit.transform.gameObject;
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = string.Format(hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text);
+                            }
+                        }
+                        break;
                     default:
                         break;
                 }
