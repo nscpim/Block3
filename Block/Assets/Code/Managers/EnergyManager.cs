@@ -12,8 +12,8 @@ public class EnergyManager : Manager
     public Timer lightsFlickering;
     private float drainage = 0;
     private float needsDrainage;
-    public int minimumTime = 1;
-    public int maximumTime = 100;
+    public int minimumTime = 20;
+    public int maximumTime = 200;
     private int eventInt;
     private EventEnum eventDummy;
     private float lightsflicking = 1f;

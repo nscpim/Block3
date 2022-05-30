@@ -299,7 +299,7 @@ public class Player : Actor
                         {
                             lastrayObject = hit.transform.gameObject;
                             hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
-                            hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text;
+                            hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = string.Format(hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text);
                         }
                         break;
                     case "Door":
@@ -342,7 +342,7 @@ public class Player : Actor
                             {
                                 lastrayObject = hit.transform.gameObject;
                                 hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
-                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text;
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = string.Format(hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text);
                             }
                         }
                         break;
@@ -387,6 +387,10 @@ public class Player : Actor
             {
                 highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.001f);
             }
+            else if (highlightedObject.GetComponent<Interactable>().type == highLight.Screen)
+            {
+                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.00009f);
+            }
             highlightedObject.transform.gameObject.AddComponent<OutlineNormalsCalculator>();
             lasthighlightedObject = highlightedObject;
         }
@@ -419,6 +423,7 @@ public enum highLight
     Small,
     Medium,
     Large,
+    Screen,
 }
 
 

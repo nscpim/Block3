@@ -14,7 +14,12 @@ public class GameManager : MonoBehaviour
     public Text eventText;
     public Slider energyBarSlider;
     public static bool pause;
-
+    public Slider MusicvolumeSlider;
+    public Slider SFXvolumeSlider;
+    public Toggle Muteallvolume;
+    public Text musictext;
+    public Text SFXtext;
+    private bool doonce = false;
     [Header("Managers")]
     //managers array
     private static Manager[] managers;
@@ -36,8 +41,7 @@ public class GameManager : MonoBehaviour
     //Gamemanager instance
     public static GameManager instance { get; private set; }
 
-    //GeneratorObject
-    public GameObject generator;
+ 
 
     //Check if ingame
     private static bool inGame;
@@ -76,17 +80,23 @@ public class GameManager : MonoBehaviour
         };
         loadLevelOnce = false;
         DontDestroyOnLoad(gameObject);
+
+        for (int i = 0; i < managers.Length; i++)
+        {
+            managers[i].Awake();
+        }
     }
 
     // Start is called before the first frame update
     public void Start()
     {
-        
 
         for (int i = 0; i < managers.Length; i++)
         {
             managers[i].Start();
         }
+      
+
     }
 
     public static void LoadLevel(Levels level) 
@@ -112,6 +122,12 @@ public class GameManager : MonoBehaviour
         {
             managers[i].Update();
         }
+        if (!doonce)
+        {
+            GetManager<AudioManager>().PlayMusic("testmusic", 1);
+            doonce = true;
+        }
+        
     }
 
     public static void PauseGame(bool value)
