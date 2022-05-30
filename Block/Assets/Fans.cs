@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Fans : MonoBehaviour
 {
+
+    public ParticleSystem particle;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +18,11 @@ public class Fans : MonoBehaviour
         if (Generator.generatorDraining)
         {
             gameObject.transform.RotateAround(transform.position, -transform.right, Time.deltaTime * 500f);
+            particle.Play();
+        }
+        else
+        {
+            particle.Stop();
         }
     
            

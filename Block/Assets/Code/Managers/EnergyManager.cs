@@ -12,9 +12,9 @@ public class EnergyManager : Manager
     public Timer lightsFlickering;
     private float drainage = 0;
     private float needsDrainage;
-    public int minimumTime = 20;
-    public int maximumTime = 200;
-    private int eventInt;
+    public int minimumTime = 5;
+    public int maximumTime = 50;
+    public int eventInt { get; private set; }
     private EventEnum eventDummy;
     private float lightsflicking = 1f;
     private bool eventComing;
@@ -34,6 +34,7 @@ public class EnergyManager : Manager
         drainTimer.SetTimer(1);
         needsTimer.SetTimer(1);
         ShowEvent(Random.Range(0, 2));
+        ComputerScreen.Instance.ToggleScreen();
         UpdateBar();
     }
 
@@ -217,8 +218,14 @@ public class EnergyManager : Manager
                 break;
         }
         ShowEvent(Random.Range(0, 2));
+        ComputerScreen.Instance.ToggleScreen();
     }
 
+
+    public int GetEvent() 
+    {
+        return eventInt;
+    }
     //End game
     public void EnergyDepleted()
     {

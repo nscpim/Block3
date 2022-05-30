@@ -230,6 +230,13 @@ public class Player : Actor
                         hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
                     }
                     break;
+                case "Screen":
+                    if (Generator.CanDrain())
+                    {
+                        ComputerScreen.Instance.ToggleScreen();
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
+                    }
+                    break;
                 default:
                     break;
             }

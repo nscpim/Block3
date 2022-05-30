@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     [Header("Scene")]
     public Light[] lights;
 
+    public GameObject computerScreenObject;
+
 
     //Gamemanager instance
     public static GameManager instance { get; private set; }
