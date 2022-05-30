@@ -16,13 +16,7 @@ public class UIManager : Manager
     // Update is called once per frame
     public override void Update()
     {
-        if (GameManager.pause)
-        {
-            GameManager.GetManager<AudioManager>().SetVolume(GameManager.instance.MusicvolumeSlider.value, AudioType.Music);
-            GameManager.GetManager<AudioManager>().SetVolume(GameManager.instance.SFXvolumeSlider.value, AudioType.sfx);
-            GameManager.instance.musictext.text = "" + GameManager.instance.MusicvolumeSlider.value;
-            GameManager.instance.SFXtext.text = "" + GameManager.instance.SFXvolumeSlider.value;
-        }
+      
     }
 
     public void ShowTempUI(int _delay, string _text, int posX, int posY)
