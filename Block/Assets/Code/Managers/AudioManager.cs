@@ -47,6 +47,11 @@ public class AudioManager : Manager
             musicSources[i].loop = true;
             Object.DontDestroyOnLoad(newMusicSource);
         }
+        //Saves the Volumes in the player prefs
+        musicVolume = PlayerPrefs.GetFloat("music Volume", 1);
+        sfxVolume = PlayerPrefs.GetFloat("sfx Volume", 1);
+        masterVolume = PlayerPrefs.GetFloat("master Volume", 1);
+        PlayerPrefs.Save();
     }
     //Sets Default Volume and saves it
     public void SetDefaultVolume(float musicVolume = 1f, float sfxVolume = 1f, float masterVolume = 1f)
@@ -74,8 +79,6 @@ public class AudioManager : Manager
             default:
                 break;
         }
-        Debug.Log(musicVolume + "  Value");
-
         for (int i = 0; i < musicSources.Length; i++)
         {
             musicSources[i].volume = musicVolume;
@@ -92,6 +95,8 @@ public class AudioManager : Manager
                 SFXSources[j].volume = masterVolume;
             }
         }
+        SetDefaultVolume(musicVolume, sfxVolume, masterVolume);
+
     }
     //Mutes the Audio when called.
     public void Mute(bool mute)

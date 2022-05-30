@@ -116,6 +116,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
    public void Update()
     {
+
        
         for (int i = 0; i < managers.Length; i++)
         {
@@ -155,25 +156,6 @@ public class GameManager : MonoBehaviour
         }
 
     }
-
-
-    public void ChangeVolume(Slider slider) 
-    {
-       GetManager<AudioManager>().SetVolume(slider.value, AudioType.Music);
-        GameManager.instance.musictext.text = "" + GameManager.instance.MusicvolumeSlider.value;
-    }
-    public void Mute() 
-    {
-        if (!Muteallvolume.isOn)
-        {
-            GetManager<AudioManager>().Mute(true);
-        }
-        else
-        {
-            GetManager<AudioManager>().Mute(false);
-        }
-    }
-  
 
 }
 public enum Levels
