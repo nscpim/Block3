@@ -33,13 +33,13 @@ public class ComputerScreen : Interactable
 
     public void ToggleScreen()
     {
-        toggleScreen = !toggleScreen;
-        sourceObject.SetActive(toggleScreen);
-        if (toggleScreen)
-        {
-            SetEventImage(GameManager.GetManager<EnergyManager>().eventInt);
-            print(GameManager.GetManager<EnergyManager>().eventInt + " EventInteger");
-        }
+            toggleScreen = !toggleScreen;
+            sourceObject.SetActive(toggleScreen);
+            if (toggleScreen)
+            {
+                SetEventImage(GameManager.GetManager<EnergyManager>().eventInt);
+                print(GameManager.GetManager<EnergyManager>().eventInt + " EventInteger");
+            }
     }
     public void SetEventImage(int eventInteger)
     {

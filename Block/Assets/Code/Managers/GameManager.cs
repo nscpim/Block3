@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Scene")]
     public Light[] lights;
+    public GameObject[] lightObjects;
 
     public GameObject computerScreenObject;
 

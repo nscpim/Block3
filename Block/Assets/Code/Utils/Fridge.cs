@@ -11,7 +11,7 @@ public class Fridge : Interactable
         {
             Forward();
             anim.SetBool("forward", true);
-            
+
         }
         else
         {
@@ -22,6 +22,7 @@ public class Fridge : Interactable
     public void Forward()
     {
         anim.Play("Fridge animation rev");
+        //Add when you are above X percent needs, you dont gain needs
         GameManager.GetManager<EnergyManager>().AddNeeds(needsAmount);
     }
 
@@ -30,5 +31,5 @@ public class Fridge : Interactable
         anim.Play("Fridge animation rev back");
     }
 
-    
+
 }

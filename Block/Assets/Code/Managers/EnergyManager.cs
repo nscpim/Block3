@@ -5,20 +5,20 @@ using UnityEngine;
 public class EnergyManager : Manager
 {
     public float needsBar { get; private set; }
-    public float energyBar { get; private set; }
+    public float energyBar;
     public Timer eventTimer;
     public Timer drainTimer;
     public Timer needsTimer;
     public Timer lightsFlickering;
     private float drainage = 0;
     private float needsDrainage;
-    public int minimumTime = 5;
-    public int maximumTime = 50;
+    public int minimumTime = 20;
+    public int maximumTime = 180;
     public int eventInt { get; private set; }
     private EventEnum eventDummy;
     private float lightsflicking = 1f;
     private bool eventComing;
-
+   
 
 
     // Start is called before the first frame update
@@ -30,7 +30,7 @@ public class EnergyManager : Manager
         needsTimer = new Timer();
         energyBar = 100f;
         needsBar = 100f;
-        needsDrainage = 0.5f;
+        needsDrainage = 1.5f;
         drainTimer.SetTimer(1);
         needsTimer.SetTimer(1);
         ShowEvent(Random.Range(0, 2));
@@ -41,6 +41,7 @@ public class EnergyManager : Manager
     // Update is called once per frame
     public override void Update()
     {
+
         //If statements so our energy bar doesnt go out of bounds
         if (energyBar >= 100)
         {
@@ -49,6 +50,7 @@ public class EnergyManager : Manager
         if (energyBar <= 0)
         {
             energyBar = 0;
+            EnergyDepleted();
         }
 
         if (needsBar >= 100)
@@ -59,7 +61,7 @@ public class EnergyManager : Manager
         {
             needsBar = 0;
         }
-
+       
         //Under 25%
         if (energyBar < 26 && !lightsFlickering.isActive)
         {
@@ -229,7 +231,7 @@ public class EnergyManager : Manager
     //End game
     public void EnergyDepleted()
     {
-
+        
     }
 
     public float AddDrainage(float _amount)

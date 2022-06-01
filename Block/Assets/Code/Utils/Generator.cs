@@ -27,6 +27,16 @@ public class Generator : Interactable
     {
         generatorDraining = !generatorDraining;
         Display();
+        if (firstTime)
+        {
+            for (int i = 0; i < GameManager.instance.lights.Length; i++)
+            {
+                GameManager.instance.lights[i].GetComponent<Interactable>().canDrain = true;
+                GameManager.instance.lights[i].gameObject.SetActive(true);
+            }
+            
+            firstTime = false;
+        }
         return generatorDraining;
     }
 

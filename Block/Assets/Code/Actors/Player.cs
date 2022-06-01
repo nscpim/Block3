@@ -12,16 +12,15 @@ public class Player : Actor
     private float turner;
     private float looker;
     public float sensitivity;
-    private float speed = 3.0F;
+    private float speed = 1.0F;
+    private float needsModifier = 0.5f;
     [HideInInspector]
     public Camera cam;
     public Transform handLocation;
     public bool hasObject = false;
     private float throwSpeed;
     [SerializeField] private GameObject pauseMenuUI;
-
-    public Transform phone;
-    public Transform screen;
+    private bool sprintneed = false;
     private Vector3 offset;
 
     
@@ -44,13 +43,14 @@ public class Player : Actor
         instance = this;
         Cursor.lockState = CursorLockMode.Locked;
         cam = gameObject.GetComponentInChildren<Camera>();
-        offset = phone.transform.position - screen.transform.position; 
+      
 
     }
 
     // Update is called once per frame
     public void Update()
     {
+
         movement();
 
         var energyManager = GameManager.GetManager<EnergyManager>();
@@ -90,7 +90,17 @@ public class Player : Actor
         {
             Interaction();
         }
-
+        print(sprintneed + " Sprint");
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            sprintneed = true;
+            speed = 2f;
+        }
+        else
+        {
+            speed = 1.0f;
+            sprintneed = false;
+        }
         if (Input.GetKeyDown(KeyCode.Z))
         {
 
@@ -105,23 +115,11 @@ public class Player : Actor
                 Place();
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (sprintneed)
         {
-            GameManager.GetManager<InventoryManager>().selectedSlot = 1;
+            GameManager.GetManager<EnergyManager>().RemoveNeeds((1 * Time.deltaTime) * needsModifier);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            GameManager.GetManager<InventoryManager>().selectedSlot = 2;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            GameManager.GetManager<InventoryManager>().selectedSlot = 3;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            GameManager.GetManager<InventoryManager>().selectedSlot = 4;
-        }
-        Scroll();
+        Scroll(); 
         HighLightObjectRay();
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -137,10 +135,6 @@ public class Player : Actor
         {
             DeactivateMenu();
         }
-    }
-    public void LateUpdate()
-    {
-        phone.transform.position = screen.transform.position + offset;
     }
     public IEnumerator LightsOut()
     {
@@ -233,6 +227,7 @@ public class Player : Actor
                 case "Door":
                     //it checks if the object is a door and play the animation from the animator
                     hit.transform.gameObject.GetComponent<Doors>().PlayAnimation();
+                    GameManager.GetManager<AudioManager>().PlaySound("nameofthesound");
                     if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
                     {
                         hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
@@ -243,6 +238,10 @@ public class Player : Actor
                     {
                         ComputerScreen.Instance.ToggleScreen();
                         hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
+                        }
                     }
                     break;
                 default:
