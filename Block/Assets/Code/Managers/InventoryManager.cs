@@ -40,7 +40,8 @@ public class InventoryManager : Manager
     }
     public void AddItem(GameObject _gameobject) 
     {
-        items.Add(_gameobject);
+        string name = _gameobject.name;
+        items.Add(GameObject.Find(name));
     }
     public void RemoveItem(GameObject _gameobject) 
     {

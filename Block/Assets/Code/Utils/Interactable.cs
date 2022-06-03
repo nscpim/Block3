@@ -1,44 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Interactable : MonoBehaviour
 {
-
+    [Tooltip("Only use values that are needed for the object you are using it for,leave blank if you dont need it")]
+    public float drainAmount;
     private string _name;
     public Animator anim;
+    [HideInInspector]public bool canDrain = false;
+    public float needsAmount;
+    public highLight type;
+    public TextMeshProUGUI interactableText;
+    public InteractionUI interaction_UI;
+   
    
 
     // Start is called before the first frame update
-    public void Start()
+    public virtual void Start()
     {
         _name = gameObject.name;
-
+        if (interaction_UI != null)
+        {
+            interaction_UI.firstTime = false;
+        }
     }
+    
 
     // Update is called once per frame
-   public void Update()
+   public virtual void Update()
     {
-        
+    
     }
-
-    public void Interact(bool canPickUp, string animationName = default) 
+    public void Interact(bool canPickUp, bool drain, GameObject objectPickedUp) 
     {
-        if (canPickUp)
+        print("Interaction");
+        if (canPickUp && objectPickedUp != null && !Player.instance.hasObject)
         {
-            var inventory = GameManager.GetManager<InventoryManager>();
-            if (inventory.CheckIfInInv(gameObject.name))
+            if (objectPickedUp.GetComponent<Rigidbody>() == null)
             {
-                // GameManager.GetManager<AudioManager>().PlaySound();
-                inventory.AddItem(gameObject);
-                gameObject.SetActive(false);
+                objectPickedUp.AddComponent<Rigidbody>();
             }
+            objectPickedUp.GetComponent<Rigidbody>().isKinematic = true;
+            objectPickedUp.transform.position = GameManager.instance.player.handLocation.transform.position;
+            objectPickedUp.transform.SetParent(GameManager.instance.player.handLocation.transform, true);
+            Player.instance.hasObject = true;
         }
-        else
+        bool generator = Generator.CanDrain();
+
+        if (drain && !canDrain && generator)
         {
-            anim.Play(animationName);
+            GameManager.GetManager<EnergyManager>().AddDrainage(drainAmount);
+            canDrain = true;
         }
-       
+        else if(drain && canDrain && generator)
+        {
+            GameManager.GetManager<EnergyManager>().RemoveDrainage(drainAmount);
+            canDrain = false;
+        }
+      
+        
+     
     }
 }
 

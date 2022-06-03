@@ -17,7 +17,6 @@ public class AudioManager : Manager
 
     public List<AudioSource> SFXSources = new List<AudioSource>();
     private int sfxIndex;
-
     public static AudioManager instance;
 
 
@@ -61,6 +60,7 @@ public class AudioManager : Manager
         PlayerPrefs.SetFloat("sfx Volume", sfxVolume);
         PlayerPrefs.SetFloat("master Volume", masterVolume);
         PlayerPrefs.Save();
+        
     }
     //Sets the Volume when called for the Audio type
     public void SetVolume(float volumePercent, AudioType type)
@@ -105,6 +105,11 @@ public class AudioManager : Manager
         for (int i = 0; i < musicSources.Length; i++)
         {
             musicSources[i].enabled = mute;
+        }
+
+        for (int i = 0; i < SFXSources.Count; i++)
+        {
+
         }
     }
     //gets the audio from the AudioLibrary with the given name and Plays the music.

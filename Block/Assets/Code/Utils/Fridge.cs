@@ -22,6 +22,7 @@ public class Fridge : Interactable
     public void Forward()
     {
         anim.Play("Fridge animation rev");
+        GameManager.GetManager<EnergyManager>().AddNeeds(needsAmount);
     }
 
     public void BackWards()
