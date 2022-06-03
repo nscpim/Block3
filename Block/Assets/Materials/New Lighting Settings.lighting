@@ -8,7 +8,7 @@ LightingSettings:
   m_PrefabAsset: {fileID: 0}
   m_Name: New Lighting Settings
   serializedVersion: 3
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_EnableBakedLightmaps: 1
   m_EnableRealtimeLightmaps: 0
   m_RealtimeEnvironmentLighting: 1
@@ -22,7 +22,7 @@ LightingSettings:
   m_Padding: 12
   m_TextureCompression: 0
   m_AO: 1
-  m_AOMaxDistance: 0.7
+  m_AOMaxDistance: 1.12
   m_CompAOExponent: 0.1
   m_CompAOExponentDirect: 0
   m_ExtractAO: 0
