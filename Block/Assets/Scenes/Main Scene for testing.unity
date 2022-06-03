@@ -6308,7 +6308,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &626417195
 GameObject:
@@ -10093,6 +10093,30 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3145869035551084928, guid: b06469198acd15e4aa05fc11ecd223ca, type: 3}
   m_PrefabInstance: {fileID: 2138531281}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2138531285 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3027940323676542340, guid: b06469198acd15e4aa05fc11ecd223ca, type: 3}
+  m_PrefabInstance: {fileID: 2138531281}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2138531286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138531285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ae45045fd729344bf004fdade3e15e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drainAmount: 0
+  anim: {fileID: 0}
+  canDrain: 0
+  needsAmount: 0
+  type: 0
+  interactableText: {fileID: 0}
+  interaction_UI: {fileID: 0}
 --- !u!1 &2144921202 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1599826595754709761, guid: 488c2e7788ea06c40a9be704f38515dd, type: 3}
