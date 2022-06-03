@@ -16,7 +16,8 @@ public class Player : Actor
     private float needsModifier = 0.5f;
     [HideInInspector]
     public Camera cam;
-    public Transform handLocation;
+    public Transform leftHandLocation;
+    public Transform rightHandLocation;
     public bool hasObject = false;
     private float throwSpeed;
     [SerializeField] private GameObject pauseMenuUI;
@@ -68,21 +69,6 @@ public class Player : Actor
             else
             {
                 energyManager.eventTimer.SetTimer(Random.Range(energyManager.minimumTime, energyManager.maximumTime));
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            if (GameManager.instance.phoneanim.GetBool("Phone"))
-            {
-                StartCoroutine(LightsOut());
-                GameManager.instance.phoneanim.SetBool("Phone", false);
-            }
-            else
-            {
-
-                GameManager.instance.phoneLight.enabled = true;
-                GameManager.instance.phoneanim.SetBool("Phone", true);
             }
         }
 
@@ -160,9 +146,9 @@ public class Player : Actor
 
     public void Interaction()
     {
-        if (handLocation.childCount > 0 && hasObject)
+        if (leftHandLocation.childCount > 0 && hasObject)
         {
-            var childObject = handLocation.GetChild(0).gameObject.transform;
+            var childObject = leftHandLocation.GetChild(0).gameObject.transform;
             if (childObject != null)
             {
                 childObject.GetComponent<Rigidbody>().isKinematic = false;

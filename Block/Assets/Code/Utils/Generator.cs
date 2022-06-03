@@ -29,12 +29,14 @@ public class Generator : Interactable
         Display();
         if (firstTime)
         {
-            for (int i = 0; i < GameManager.instance.lights.Length; i++)
+            foreach (Light item in GameManager.instance.lights)
             {
-                GameManager.instance.lights[i].GetComponent<Interactable>().canDrain = true;
-                GameManager.instance.lights[i].gameObject.SetActive(true);
+                item.gameObject.SetActive(true);
+               if (item.enabled) 
+                {
+                    item.GetComponent<Interactable>().canDrain = true;
+                }  
             }
-            
             firstTime = false;
         }
         return generatorDraining;

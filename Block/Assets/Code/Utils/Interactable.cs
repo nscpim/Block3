@@ -44,8 +44,8 @@ public class Interactable : MonoBehaviour
                 objectPickedUp.AddComponent<Rigidbody>();
             }
             objectPickedUp.GetComponent<Rigidbody>().isKinematic = true;
-            objectPickedUp.transform.position = GameManager.instance.player.handLocation.transform.position;
-            objectPickedUp.transform.SetParent(GameManager.instance.player.handLocation.transform, true);
+            objectPickedUp.transform.position = GameManager.instance.player.leftHandLocation.transform.position;
+            objectPickedUp.transform.SetParent(GameManager.instance.player.leftHandLocation.transform, true);
             Player.instance.hasObject = true;
         }
         bool generator = Generator.CanDrain();
