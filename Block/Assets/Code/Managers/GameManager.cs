@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
     //Player Instance
     public Player player;
     public GameObject phone;
-    public Animator phoneanim;
     public Material red;
     public Material green;
     public Material orange;
@@ -40,6 +39,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject computerScreenObject;
 
+    [SerializeField] private GameObject pauseMenuUI;
 
     //Gamemanager instance
     public static GameManager instance { get; private set; }
@@ -159,7 +159,22 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    public void ActivateMenu()
+    {
+        pauseMenuUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+    }
 
+    public void DeactivateMenu()
+    {
+        GameManager.PauseGame(false);
+        pauseMenuUI.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+    public void ExitGame() 
+    {
+        Application.Quit();
+    }
 }
 public enum Levels
 {

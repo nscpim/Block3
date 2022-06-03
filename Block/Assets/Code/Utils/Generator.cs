@@ -22,17 +22,15 @@ public class Generator : Interactable
     {
         print("Generator" + CanDrain());
     }
-    
     public bool ToggleDrain()
     {
         generatorDraining = !generatorDraining;
         Display();
         if (firstTime)
         {
-            GameObject[] lightObjects = GameObject.FindGameObjectsWithTag("Lights");
-            for (int i = 0; i < lightObjects.Length; i++) 
+            foreach (GameObject item in GameManager.instance.lightObjects)
             {
-                lightObjects[i].GetComponent<Interactable>().Interact(false, true, null);
+                item.GetComponent<Interactable>().Interact(false, true, null);
             }
             foreach (Light item in GameManager.instance.lights)
             {
