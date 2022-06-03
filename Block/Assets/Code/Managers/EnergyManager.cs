@@ -211,8 +211,11 @@ public class EnergyManager : Manager
                 AddEnergy(100);
                 break;
             case (int)EventEnum.Earthquake:
+                if (Generator.CanDrain())
+                {
+                    SubstractEnergy(20);
+                }
                 Utils.instance.StartShake();
-                SubstractEnergy(20);
                 break;
             case (int)EventEnum.None:
                 break;

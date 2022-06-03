@@ -19,8 +19,6 @@ public class Player : Actor
     public Transform leftHandLocation;
     public Transform rightHandLocation;
     public bool hasObject = false;
-    private float throwSpeed;
-    [SerializeField] private GameObject pauseMenuUI;
     private bool sprintneed = false;
     private Vector3 offset;
 
@@ -110,16 +108,17 @@ public class Player : Actor
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GameManager.PauseGame(true);
-        }
-
-        if (GameManager.pause)
-        {
-            ActivateMenu();
-        }
-        else
-        {
-            DeactivateMenu();
+            if (GameManager.pause)
+            {
+                GameManager.instance.DeactivateMenu();
+                GameManager.PauseGame(false);
+            }
+            else
+            {
+                GameManager.PauseGame(true);
+                GameManager.instance.ActivateMenu();
+            }
+           
         }
     }
     public IEnumerator LightsOut()
@@ -146,7 +145,7 @@ public class Player : Actor
 
     public void Interaction()
     {
-        if (leftHandLocation.childCount > 0 && hasObject)
+       /* if (leftHandLocation.childCount > 0 && hasObject)
         {
             var childObject = leftHandLocation.GetChild(0).gameObject.transform;
             if (childObject != null)
@@ -156,7 +155,7 @@ public class Player : Actor
                 childObject.SetParent(null);
                 hasObject = false;
             }
-        }
+        }*/
         if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 2))
         {
 
@@ -196,6 +195,7 @@ public class Player : Actor
                         foreach (Light i in GameManager.instance.lights)
                         {
                             i.transform.gameObject.SetActive(false);
+                            GameManager.GetManager<EnergyManager>().RemoveDrainage(0.2f);
                         }
                     }
                     if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
@@ -213,7 +213,6 @@ public class Player : Actor
                 case "Door":
                     //it checks if the object is a door and play the animation from the animator
                     hit.transform.gameObject.GetComponent<Doors>().PlayAnimation();
-                    GameManager.GetManager<AudioManager>().PlaySound("nameofthesound");
                     if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
                     {
                         hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
@@ -417,17 +416,6 @@ public class Player : Actor
             lasthighlightedObject = null;
         }
     }
-    void ActivateMenu()
-    {
-        pauseMenuUI.SetActive(true);
-    }
-
-    public void DeactivateMenu()
-    {
-        GameManager.PauseGame(false);
-        pauseMenuUI.SetActive(false);
-    }
-
 }
 public enum highLight
 {

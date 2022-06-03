@@ -36,9 +36,11 @@ public class Interactable : MonoBehaviour
     }
     public void Interact(bool canPickUp, bool drain, GameObject objectPickedUp) 
     {
+        
         print("Interaction");
         if (canPickUp && objectPickedUp != null && !Player.instance.hasObject)
         {
+            objectPickedUp = objectPickedUp.transform.parent.gameObject;
             if (objectPickedUp.GetComponent<Rigidbody>() == null)
             {
                 objectPickedUp.AddComponent<Rigidbody>();
@@ -46,7 +48,9 @@ public class Interactable : MonoBehaviour
             objectPickedUp.GetComponent<Rigidbody>().isKinematic = true;
             objectPickedUp.layer = LayerMask.NameToLayer("Ignore Raycast");
             objectPickedUp.transform.position = GameManager.instance.player.leftHandLocation.transform.position;
+            objectPickedUp.transform.rotation = GameManager.instance.player.leftHandLocation.transform.rotation;
             objectPickedUp.transform.SetParent(GameManager.instance.player.leftHandLocation.transform, true);
+            
             Player.instance.hasObject = true;
         }
         bool generator = Generator.CanDrain();
