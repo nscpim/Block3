@@ -196,6 +196,7 @@ public class Player : Actor
                         foreach (Light i in GameManager.instance.lights)
                         {
                             i.transform.gameObject.SetActive(false);
+                            GameManager.GetManager<EnergyManager>().RemoveDrainage(0.2f);
                         }
                     }
                     if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)

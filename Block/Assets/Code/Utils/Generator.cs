@@ -30,6 +30,14 @@ public class Generator : Interactable
         if (firstTime)
         {
             GameObject[] lightObjects = GameObject.FindGameObjectsWithTag("Lights");
+            for (int i = 0; i < lightObjects.Length; i++) 
+            {
+                lightObjects[i].GetComponent<Interactable>().Interact(false, true, null);
+            }
+            foreach (Light item in GameManager.instance.lights)
+            {
+                item.gameObject.SetActive(true);
+            }
             firstTime = false;
         }
         return generatorDraining;
