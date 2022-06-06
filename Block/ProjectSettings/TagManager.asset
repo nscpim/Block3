@@ -11,6 +11,7 @@ TagManager:
   - Pickup
   - Door
   - Screen
+  - Sink
   layers:
   - Default
   - TransparentFX
