@@ -229,6 +229,20 @@ public class Player : Actor
                         }
                     }
                     break;
+                case "GenScreen":
+                    if (Generator.CanDrain())
+                    {
+                        GeneratorScreen.Instance.ToggleScreen();
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
+                        }
+                    }
+                    break;
+                case "Collect":
+                    hit.transform.gameObject.GetComponent<PowerCollector>().CollectPower();
+                    break;
                 default:
                     break;
             }
@@ -346,6 +360,17 @@ public class Player : Actor
                         }
                         break;
                     case "Screen":
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                            {
+                                lastrayObject = hit.transform.gameObject;
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = string.Format(hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text);
+                            }
+                        }
+                        break;
+                    case "GenScreen":
                         if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
                         {
                             if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)

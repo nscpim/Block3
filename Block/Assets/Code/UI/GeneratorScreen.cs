@@ -5,32 +5,60 @@ using UnityEngine.UI;
 
 public class GeneratorScreen : Interactable
 {
-    public Image[] eventImages;
+    public static GeneratorScreen Instance { get; private set; }
     public Image genImage;
+    private float energy;
+    public Sprite[] battery;
+    private bool toggleScreen = true;
     // Start is called before the first frame update
+    private void Awake()
+    {
+            Instance = this;
+    }
     public override void Start()
     {
-
+       
     }
     // Update is called once per frame
     public override void Update()
     {
-
-    }
-    public void SwitchImage(EventEnum eventValue)
-    {
-        switch (eventValue)
+        if (genImage.isActiveAndEnabled)
         {
-            case EventEnum.Thunderstorm:
-                genImage = eventImages[0];
-                break;
-            case EventEnum.Earthquake:
-                genImage = eventImages[1];
-                break;
-            case EventEnum.None:
-                break;
-            default:
-                break;
+            SetBattery();
+        }
+        energy = GameManager.GetManager<EnergyManager>().energyBar;
+    }
+    public void ToggleScreen() 
+    {
+        toggleScreen = !toggleScreen;
+        genImage.gameObject.SetActive(toggleScreen);
+        if (toggleScreen)
+        {
+            SetBattery(); 
+        }
+    }
+
+    public void SetBattery() 
+    {
+        if (energy > 74)
+        {
+            genImage.sprite = battery[0];
+        }
+        else if (energy < 75 && energy > 49)
+        {
+            genImage.sprite = battery[1];
+        }
+        else if (energy < 51 && energy > 24)
+        {
+            genImage.sprite = battery[2];
+        }
+        else if (energy < 26 && energy > 0)
+        {
+            genImage.sprite = battery[3];
+        }
+        else if (energy <= 0)
+        {
+            genImage.sprite = battery[4];
         }
     }
 }
