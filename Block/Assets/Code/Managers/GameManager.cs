@@ -44,6 +44,9 @@ public class GameManager : MonoBehaviour
 
     private Timer gameTimer;
 
+    [Header("Tutorial")]
+    public Text tutText;
+
     //Gamemanager instance
     public static GameManager instance { get; private set; }
 
@@ -76,7 +79,6 @@ public class GameManager : MonoBehaviour
 
     public void Awake()
     {
-
         instance = this;
         managers = new Manager[]
         {
@@ -84,6 +86,7 @@ public class GameManager : MonoBehaviour
             new EnergyManager(),
             new AudioManager(),
             new UIManager(),
+            new TutorialManager(),
         };
         loadLevelOnce = false;
         DontDestroyOnLoad(gameObject);
