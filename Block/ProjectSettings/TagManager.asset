@@ -11,6 +11,8 @@ TagManager:
   - Pickup
   - Door
   - Screen
+  - GenScreen
+  - Collect
   layers:
   - Default
   - TransparentFX

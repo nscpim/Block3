@@ -41,10 +41,16 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject pauseMenuUI;
 
+
+    private Timer gameTimer;
+
+    [Header("Tutorial")]
+    public Text tutText;
+
     //Gamemanager instance
     public static GameManager instance { get; private set; }
 
- 
+
 
     //Check if ingame
     private static bool inGame;
@@ -80,6 +86,7 @@ public class GameManager : MonoBehaviour
             new EnergyManager(),
             new AudioManager(),
             new UIManager(),
+            new TutorialManager(),
         };
         loadLevelOnce = false;
         DontDestroyOnLoad(gameObject);
@@ -88,6 +95,7 @@ public class GameManager : MonoBehaviour
         {
             managers[i].Awake();
         }
+        gameTimer = new Timer();
     }
 
     // Start is called before the first frame update
@@ -98,29 +106,30 @@ public class GameManager : MonoBehaviour
         {
             managers[i].Start();
         }
-      
-
+        gameTimer.SetTimer(240);
     }
 
-    public static void LoadLevel(Levels level) 
+    public float GetTime()
+    {
+        return gameTimer.TimeLeft();
+    }
+
+    public static void LoadLevel(Levels level)
     {
         SceneManager.LoadScene((int)level);
     }
 
-    public IEnumerator StartGame() 
+    public IEnumerator StartGame()
     {
         yield return new WaitForSeconds(5f);
-
-
-
     }
 
 
     // Update is called once per frame
-   public void Update()
+    public void Update()
     {
 
-       
+
         for (int i = 0; i < managers.Length; i++)
         {
             managers[i].Update();
@@ -130,7 +139,12 @@ public class GameManager : MonoBehaviour
             GetManager<AudioManager>().PlayMusic("testmusic", 1);
             doonce = true;
         }
-        
+
+    }
+
+    public static void EndGame(float energy, float needs)
+    {
+
     }
 
     public static void PauseGame(bool value)
@@ -141,18 +155,18 @@ public class GameManager : MonoBehaviour
             managers[i].Pause(value);
         }
     }
-    public void Flick() 
+    public void Flick()
     {
         StartCoroutine(LightsFlicking());
     }
-    public IEnumerator LightsFlicking() 
+    public IEnumerator LightsFlicking()
     {
         foreach (Light i in lights)
         {
             i.intensity = 0.13f;
         }
         yield return new WaitForSeconds(0.2f);
-        
+
         foreach (Light i in lights)
         {
             i.intensity = 3f;
@@ -171,14 +185,14 @@ public class GameManager : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
     }
-    public void ExitGame() 
+    public void ExitGame()
     {
         Application.Quit();
     }
 }
 public enum Levels
 {
-    MainMenu, 
+    MainMenu,
     Game,
     EndScreen
 

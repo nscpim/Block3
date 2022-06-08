@@ -10,6 +10,7 @@ public class EnergyManager : Manager
     public Timer drainTimer;
     public Timer needsTimer;
     public Timer lightsFlickering;
+    public Timer endTimer;
     private float drainage = 0;
     private float needsDrainage;
     public int minimumTime = 20;
@@ -18,14 +19,14 @@ public class EnergyManager : Manager
     private EventEnum eventDummy;
     private float lightsflicking = 1f;
     private bool eventComing;
-   
-
+    public bool canReceivePower = false;
 
     // Start is called before the first frame update
     public override void Start()
     {
         eventTimer = new Timer();
         drainTimer = new Timer();
+        endTimer = new Timer();
         lightsFlickering = new Timer();
         needsTimer = new Timer();
         energyBar = 100f;
@@ -41,7 +42,6 @@ public class EnergyManager : Manager
     // Update is called once per frame
     public override void Update()
     {
-
         //If statements so our energy bar doesnt go out of bounds
         if (energyBar >= 100)
         {
@@ -50,7 +50,7 @@ public class EnergyManager : Manager
         if (energyBar <= 0)
         {
             energyBar = 0;
-            EnergyDepleted();
+            endTimer.SetTimer(5);
         }
 
         if (needsBar >= 100)
@@ -144,6 +144,11 @@ public class EnergyManager : Manager
             needsTimer.SetTimer(2);
         }
 
+        if (endTimer.isActive && endTimer.TimerDone())
+        {
+            endTimer.StopTimer();
+            GameManager.EndGame(energyBar, needsBar);
+        }
     }
 
 
@@ -208,7 +213,11 @@ public class EnergyManager : Manager
         switch (eventInt)
         {
             case (int)EventEnum.Thunderstorm:
-                AddEnergy(100);
+                if (canReceivePower)
+                {
+                    AddEnergy(10);
+                    canReceivePower = false;
+                }
                 break;
             case (int)EventEnum.Earthquake:
                 if (Generator.CanDrain())
@@ -231,11 +240,7 @@ public class EnergyManager : Manager
     {
         return eventInt;
     }
-    //End game
-    public void EnergyDepleted()
-    {
-        
-    }
+ 
 
     public float AddDrainage(float _amount)
     {
