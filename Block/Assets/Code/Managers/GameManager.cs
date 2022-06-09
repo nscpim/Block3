@@ -129,7 +129,6 @@ public class GameManager : MonoBehaviour
     public void Update()
     {
 
-
         for (int i = 0; i < managers.Length; i++)
         {
             managers[i].Update();

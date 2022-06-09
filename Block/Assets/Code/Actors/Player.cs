@@ -204,11 +204,11 @@ public class Player : Actor
                     }
                     break;
                 case "Pickup":
-                    hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false, hit.transform.gameObject);
                     if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
                     {
                         hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
                     }
+                    hit.transform.gameObject.GetComponent<Interactable>().Interact(true, false, hit.transform.gameObject);
                     break;
                 case "Door":
                     //it checks if the object is a door and play the animation from the animator
