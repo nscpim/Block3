@@ -167,6 +167,14 @@ public class Player : Actor
 
                     }
                     break;
+                case "Sink":
+                    if (Generator.CanDrain())
+                    {
+                        hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
+                        
+                    }
+                    break;
                 case "Fridge":
                     if (Generator.CanDrain())
                     {

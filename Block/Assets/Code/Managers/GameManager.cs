@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public Text musictext;
     public Text SFXtext;
     private bool doonce = false;
+    public GameObject Startscreen;
     [Header("Managers")]
     //managers array
     private static Manager[] managers;

@@ -11,11 +11,19 @@ public class UIManager : Manager
     public override void Start()
     {
         canvas = GameManager.instance.UIcanvas;
+        Debug.Log(GameManager.instance.Startscreen.activeInHierarchy + " pipi small");
+        Startscreen();  
     }
+
+    
 
     // Update is called once per frame
     public override void Update()
     {
+        if (GameManager.instance.Startscreen.activeInHierarchy && Input.GetKeyDown(KeyCode.Space))
+            {
+            GameManager.instance.Startscreen.GetComponent<Animator>().enabled = true;
+        }
         if (GameManager.pause)
         {
             GameManager.GetManager<AudioManager>().SetVolume(GameManager.instance.MusicvolumeSlider.value, AudioType.Music);
@@ -36,4 +44,9 @@ public class UIManager : Manager
         textSourceObj.name = "TempUIText";
         GameObject.Destroy(textSourceObj, _delay);
     }
+    public void Startscreen()
+    {
+        GameManager.instance.Startscreen.GetComponent<Animator>().enabled = false;
+    }
 }
+
