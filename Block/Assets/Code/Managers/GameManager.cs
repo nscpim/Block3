@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
         }
         if (!doonce)
         {
-            GetManager<AudioManager>().PlayMusic("testmusic", 1);
+            //GetManager<AudioManager>().PlayMusic("testmusic", 1);
             doonce = true;
         }
 
