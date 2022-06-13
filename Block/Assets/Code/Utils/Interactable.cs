@@ -12,7 +12,7 @@ public class Interactable : MonoBehaviour
     public Animator anim;
     [HideInInspector]public bool canDrain = false;
     public float needsAmount;
-    public highLight type;
+    public float shaderThickness;
     public TextMeshProUGUI interactableText;
     public InteractionUI interaction_UI;
    

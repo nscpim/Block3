@@ -44,7 +44,7 @@ public class TutorialManager : Manager
 
     public void CompletedAllTutorials()
     {
-        GameManager.instance.tutText.text = "";
+        GameManager.instance.tutText.text = "Try to conserve your energy";
     }
 
     public Tutorial getTutorialByOrder(int _order)
