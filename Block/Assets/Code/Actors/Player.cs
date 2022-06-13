@@ -305,7 +305,7 @@ public class Player : Actor
     {
         int layerMask = 1 << 0 | 1 << 8;
 
-        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 10, layerMask))
+        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 2, layerMask))
         {
             var tag = hit.transform.gameObject.tag;
 
@@ -418,22 +418,7 @@ public class Player : Actor
             ogMat = highlightedObject.GetComponent<MeshRenderer>().sharedMaterial;
 
             highlightedObject.GetComponent<MeshRenderer>().sharedMaterial = highlightmat;
-            if (highlightedObject.GetComponent<Interactable>() == null || highlightedObject.GetComponent<Interactable>().type == highLight.Small)
-            {
-                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.05f);
-            }
-            else if (highlightedObject.GetComponent<Interactable>().type == highLight.Medium)
-            {
-                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.1f);
-            }
-            else if (highlightedObject.GetComponent<Interactable>().type == highLight.Large)
-            {
-                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.001f);
-            }
-            else if (highlightedObject.GetComponent<Interactable>().type == highLight.Screen)
-            {
-                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.00009f);
-            }
+            highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", highlightedObject.GetComponent<Interactable>().shaderThickness);
             highlightedObject.transform.gameObject.AddComponent<OutlineNormalsCalculator>();
             lasthighlightedObject = highlightedObject;
         }

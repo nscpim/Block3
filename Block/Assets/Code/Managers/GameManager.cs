@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -51,6 +52,9 @@ public class GameManager : MonoBehaviour
     //Gamemanager instance
     public static GameManager instance { get; private set; }
 
+    private static float needs;
+    private static float energy;
+
 
 
     //Check if ingame
@@ -62,10 +66,18 @@ public class GameManager : MonoBehaviour
 
     private int time;
 
+    public Text energyLeft;
+    public Text needsLeft;
+    public Text gameState;
+    public Text flavourText;
+    public GameObject endGamePanel;
+
 
     //Main Camera
     public Camera mainCamera;
 
+    private List<string> goodTexts = new List<string>();
+    private List<string> badTexts = new List<string>();
     public static T GetManager<T>() where T : Manager
     {
         for (int i = 0; i < managers.Length; i++)
@@ -89,6 +101,11 @@ public class GameManager : MonoBehaviour
             new UIManager(),
             new TutorialManager(),
         };
+
+        goodTexts.Add("You did well, thanks to you the world did not end.");
+        goodTexts.Add("You did good, The planet will be rebuild");
+        badTexts.Add("You did poorly and the world burns.");
+        badTexts.Add("That went bad, With this power conserving the world will be gone in no time.");   
         loadLevelOnce = false;
         DontDestroyOnLoad(gameObject);
 
@@ -107,7 +124,7 @@ public class GameManager : MonoBehaviour
         {
             managers[i].Start();
         }
-        gameTimer.SetTimer(240);
+        gameTimer.SetTimer(320);
     }
 
     public float GetTime()
@@ -125,12 +142,19 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
     }
 
-
     // Update is called once per frame
     public void Update()
     {
-
-
+        if (gameTimer.TimerDone() && gameTimer.isActive)
+        {
+            gameTimer.StopTimer();
+            
+            EndGame(GetManager<EnergyManager>().energyBar, GetManager<EnergyManager>().needsBar, GameState.Won);
+        }
+        if (SceneManager.sceneCount == (int)Levels.EndScreen)
+        {
+            gameTimer.StopTimer();
+        }
         for (int i = 0; i < managers.Length; i++)
         {
             managers[i].Update();
@@ -143,10 +167,34 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public static void EndGame(float energy, float needs)
-    {
 
+    public void ResetGame()
+    {
+        LoadLevel(Levels.MainMenu);
     }
+
+
+    public void EndGame(float _energy, float _needs, GameState _state)
+    {
+        endGamePanel.SetActive(true);
+        energyLeft.text = string.Format("You have {0}% power left", _energy);
+        needsLeft.text = string.Format("You have {0}% needs left",  (int)_needs);
+        gameState.text = string.Format("You {0}", _state.ToString());
+        if (_state == GameState.Lost)
+        {
+            var randomText = Random.Range(0, badTexts.Count);
+            flavourText.text = badTexts[randomText];
+        }
+        if (_state == GameState.Won)
+        {
+            var randomText = Random.Range(0, goodTexts.Count);
+            flavourText.text = badTexts[randomText];
+        }
+        PauseGame(true);
+        GetManager<AudioManager>().StopPlaying();
+        Cursor.lockState = CursorLockMode.None;
+    }
+
 
     public static void PauseGame(bool value)
     {
@@ -196,6 +244,9 @@ public enum Levels
     MainMenu,
     Game,
     EndScreen
-
-
+}
+public enum GameState
+{
+    Won,
+    Lost
 }

@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class Fridge : Interactable
 {
+    private Timer cooldown;
+
+    public override void Start()
+    {
+        cooldown = new Timer();
+    }
+
+    public override void Update()
+    {
+        if (cooldown.TimerDone() && cooldown.isActive)
+        {
+            cooldown.StopTimer();
+        }
+    }
 
 
     public void PlayAnimation()
@@ -23,8 +37,12 @@ public class Fridge : Interactable
     public void Forward()
     {
         anim.Play("Fridge animation rev");
-        //Add when you are above X percent needs, you dont gain needs
-        GameManager.GetManager<EnergyManager>().AddNeeds(needsAmount);
+        if (!cooldown.isActive)
+        {
+            GameManager.GetManager<EnergyManager>().AddNeeds(needsAmount);
+            cooldown.SetTimer(10f);
+        }
+       
     }
 
     public void BackWards()

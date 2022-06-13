@@ -20,6 +20,7 @@ public class EnergyManager : Manager
     private float lightsflicking = 1f;
     private bool eventComing;
     public bool canReceivePower = false;
+    private bool doThisOnce = false;
 
     // Start is called before the first frame update
     public override void Start()
@@ -31,7 +32,7 @@ public class EnergyManager : Manager
         needsTimer = new Timer();
         energyBar = 100f;
         needsBar = 100f;
-        needsDrainage = 1.5f;
+        needsDrainage = 1f;
         drainTimer.SetTimer(1);
         needsTimer.SetTimer(1);
         ShowEvent(Random.Range(0, 2));
@@ -50,7 +51,12 @@ public class EnergyManager : Manager
         if (energyBar <= 0)
         {
             energyBar = 0;
-            endTimer.SetTimer(5);
+            if (!doThisOnce)
+            {
+                GameManager.instance.EndGame(energyBar, needsBar, GameState.Lost);
+                doThisOnce = true;
+            }
+           
         }
 
         if (needsBar >= 100)
@@ -61,7 +67,7 @@ public class EnergyManager : Manager
         {
             needsBar = 0;
         }
-       
+
         //Under 25%
         if (energyBar < 26 && !lightsFlickering.isActive)
         {
@@ -143,14 +149,7 @@ public class EnergyManager : Manager
             UpdateBar();
             needsTimer.SetTimer(2);
         }
-
-        if (endTimer.isActive && endTimer.TimerDone())
-        {
-            endTimer.StopTimer();
-            GameManager.EndGame(energyBar, needsBar);
-        }
     }
-
 
     public float SubstractEnergy(float amount)
     {
@@ -240,6 +239,8 @@ public class EnergyManager : Manager
     {
         return eventInt;
     }
+
+    
  
 
     public float AddDrainage(float _amount)
