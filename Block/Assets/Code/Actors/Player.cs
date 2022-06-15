@@ -202,8 +202,11 @@ public class Player : Actor
                     {
                         foreach (Light i in GameManager.instance.lights)
                         {
-                            i.transform.gameObject.SetActive(false);
-                            GameManager.GetManager<EnergyManager>().RemoveDrainage(0.2f);
+                            if (i.isActiveAndEnabled)
+                            {
+                                GameManager.GetManager<EnergyManager>().RemoveDrainage(0.2f);
+                                i.transform.gameObject.GetComponent<Lights>().SetToggleLights(false);
+                            }
                         }
                     }
                     if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
@@ -306,10 +309,12 @@ public class Player : Actor
         if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 2, layerMask))
         {
             var tag = hit.transform.gameObject.tag;
+            Debug.LogWarning(hit.transform.gameObject + " " + tag);
 
             if (tag == "Interactable" || tag == "Fridge" || tag == "Lights" || tag == "Generator" || tag == "Screen" || tag == "Pickup" || tag == "Door")
             {
                 HighLightObject(hit.transform.gameObject);
+                Debug.LogWarning("gets here");
                 switch (tag)
                 {
                     case "Fridge":
@@ -414,7 +419,6 @@ public class Player : Actor
         {
             ClearHighLight();
             ogMat = highlightedObject.GetComponent<MeshRenderer>().sharedMaterial;
-
             highlightedObject.GetComponent<MeshRenderer>().sharedMaterial = highlightmat;
             highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", highlightedObject.GetComponent<Interactable>().shaderThickness);
             highlightedObject.transform.gameObject.AddComponent<OutlineNormalsCalculator>();

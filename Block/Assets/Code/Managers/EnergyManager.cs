@@ -44,6 +44,7 @@ public class EnergyManager : Manager
     // Update is called once per frame
     public override void Update()
     {
+        UpdateBar();
         //If statements so our energy bar doesnt go out of bounds
         if (energyBar >= 100)
         {
@@ -147,7 +148,6 @@ public class EnergyManager : Manager
         {
             needsTimer.StopTimer();
             RemoveNeeds(needsDrainage);
-            UpdateBar();
             needsTimer.SetTimer(2);
         }
     }
@@ -175,7 +175,7 @@ public class EnergyManager : Manager
         double fillIn = needsBar * 0.01;
         GameManager.instance.phone.GetComponent<Image>().fillAmount = (float)fillIn;
         double FillInEnergy = energyBar * 0.01;
-        GameManager.instance.phone.GetComponent<Image>().fillAmount = (float)FillInEnergy;
+        GameManager.instance.phoneEnergy.GetComponent<Image>().fillAmount = (float)FillInEnergy;
     }   
     public void ShowEvent(int _event)
     {
