@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class Fridge : Interactable
 {
+    private Timer cooldown;
+
+    public override void Start()
+    {
+        cooldown = new Timer();
+    }
+
+    public override void Update()
+    {
+        if (cooldown.TimerDone() && cooldown.isActive)
+        {
+            cooldown.StopTimer();
+        }
+    }
+
 
     public void PlayAnimation()
     {
@@ -11,7 +26,7 @@ public class Fridge : Interactable
         {
             Forward();
             anim.SetBool("forward", true);
-            
+
         }
         else
         {
@@ -22,7 +37,12 @@ public class Fridge : Interactable
     public void Forward()
     {
         anim.Play("Fridge animation rev");
-        GameManager.GetManager<EnergyManager>().AddNeeds(needsAmount);
+        if (!cooldown.isActive)
+        {
+            GameManager.GetManager<EnergyManager>().AddNeeds(needsAmount);
+            cooldown.SetTimer(10f);
+        }
+       
     }
 
     public void BackWards()
@@ -30,5 +50,5 @@ public class Fridge : Interactable
         anim.Play("Fridge animation rev back");
     }
 
-    
+
 }

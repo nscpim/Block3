@@ -5,35 +5,38 @@ using UnityEngine;
 public class EnergyManager : Manager
 {
     public float needsBar { get; private set; }
-    public float energyBar { get; private set; }
+    public float energyBar;
     public Timer eventTimer;
     public Timer drainTimer;
     public Timer needsTimer;
     public Timer lightsFlickering;
+    public Timer endTimer;
     private float drainage = 0;
     private float needsDrainage;
     public int minimumTime = 20;
-    public int maximumTime = 200;
-    private int eventInt;
+    public int maximumTime = 180;
+    public int eventInt { get; private set; }
     private EventEnum eventDummy;
     private float lightsflicking = 1f;
     private bool eventComing;
-
-
+    public bool canReceivePower = false;
+    private bool doThisOnce = false;
 
     // Start is called before the first frame update
     public override void Start()
     {
         eventTimer = new Timer();
         drainTimer = new Timer();
+        endTimer = new Timer();
         lightsFlickering = new Timer();
         needsTimer = new Timer();
         energyBar = 100f;
         needsBar = 100f;
-        needsDrainage = 0.5f;
+        needsDrainage = 1f;
         drainTimer.SetTimer(1);
         needsTimer.SetTimer(1);
         ShowEvent(Random.Range(0, 2));
+        ComputerScreen.Instance.ToggleScreen();
         UpdateBar();
     }
 
@@ -48,6 +51,12 @@ public class EnergyManager : Manager
         if (energyBar <= 0)
         {
             energyBar = 0;
+            if (!doThisOnce)
+            {
+                GameManager.instance.EndGame(energyBar, needsBar, GameState.Lost);
+                doThisOnce = true;
+            }
+           
         }
 
         if (needsBar >= 100)
@@ -140,9 +149,7 @@ public class EnergyManager : Manager
             UpdateBar();
             needsTimer.SetTimer(2);
         }
-
     }
-
 
     public float SubstractEnergy(float amount)
     {
@@ -205,11 +212,18 @@ public class EnergyManager : Manager
         switch (eventInt)
         {
             case (int)EventEnum.Thunderstorm:
-                AddEnergy(100);
+                if (canReceivePower)
+                {
+                    AddEnergy(10);
+                    canReceivePower = false;
+                }
                 break;
             case (int)EventEnum.Earthquake:
+                if (Generator.CanDrain())
+                {
+                    SubstractEnergy(20);
+                }
                 Utils.instance.StartShake();
-                SubstractEnergy(20);
                 break;
             case (int)EventEnum.None:
                 break;
@@ -217,13 +231,17 @@ public class EnergyManager : Manager
                 break;
         }
         ShowEvent(Random.Range(0, 2));
+        ComputerScreen.Instance.SetEventImage(eventInt);
     }
 
-    //End game
-    public void EnergyDepleted()
+
+    public int GetEvent() 
     {
-
+        return eventInt;
     }
+
+    
+ 
 
     public float AddDrainage(float _amount)
     {

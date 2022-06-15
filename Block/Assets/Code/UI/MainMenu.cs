@@ -8,7 +8,16 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         GameManager.LoadLevel(Levels.Game);
+    }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 
+    public void Settings() 
+    {
+    
+    
     }
 }

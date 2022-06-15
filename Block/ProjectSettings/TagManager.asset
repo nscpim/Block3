@@ -11,6 +11,9 @@ TagManager:
   - Pickup
   - Door
   - Screen
+  - GenScreen
+  - Collect
+  - UIComp
   layers:
   - Default
   - TransparentFX

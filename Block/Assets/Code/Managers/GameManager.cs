@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     public Text musictext;
     public Text SFXtext;
     private bool doonce = false;
+    public GameObject Startscreen;
     [Header("Managers")]
     //managers array
     private static Manager[] managers;
@@ -28,7 +30,6 @@ public class GameManager : MonoBehaviour
     //Player Instance
     public Player player;
     public GameObject phone;
-    public Animator phoneanim;
     public Material red;
     public Material green;
     public Material orange;
@@ -36,12 +37,25 @@ public class GameManager : MonoBehaviour
 
     [Header("Scene")]
     public Light[] lights;
+    public GameObject[] lightObjects;
 
+    public GameObject computerScreenObject;
+
+    [SerializeField] private GameObject pauseMenuUI;
+
+
+    private Timer gameTimer;
+
+    [Header("Tutorial")]
+    public Text tutText;
 
     //Gamemanager instance
     public static GameManager instance { get; private set; }
 
- 
+    private static float needs;
+    private static float energy;
+
+
 
     //Check if ingame
     private static bool inGame;
@@ -52,10 +66,18 @@ public class GameManager : MonoBehaviour
 
     private int time;
 
+    public Text energyLeft;
+    public Text needsLeft;
+    public Text gameState;
+    public Text flavourText;
+    public GameObject endGamePanel;
+
 
     //Main Camera
     public Camera mainCamera;
 
+    private List<string> goodTexts = new List<string>();
+    private List<string> badTexts = new List<string>();
     public static T GetManager<T>() where T : Manager
     {
         for (int i = 0; i < managers.Length; i++)
@@ -77,7 +99,13 @@ public class GameManager : MonoBehaviour
             new EnergyManager(),
             new AudioManager(),
             new UIManager(),
+            new TutorialManager(),
         };
+
+        goodTexts.Add("You did well, thanks to you the world did not end.");
+        goodTexts.Add("You did good, The planet will be rebuild");
+        badTexts.Add("You did poorly and the world burns.");
+        badTexts.Add("That went bad, With this power conserving the world will be gone in no time.");   
         loadLevelOnce = false;
         DontDestroyOnLoad(gameObject);
 
@@ -85,6 +113,7 @@ public class GameManager : MonoBehaviour
         {
             managers[i].Awake();
         }
+        gameTimer = new Timer();
     }
 
     // Start is called before the first frame update
@@ -95,40 +124,77 @@ public class GameManager : MonoBehaviour
         {
             managers[i].Start();
         }
-      
-
+        gameTimer.SetTimer(320);
     }
 
-    public static void LoadLevel(Levels level) 
+    public float GetTime()
+    {
+        return gameTimer.TimeLeft();
+    }
+
+    public static void LoadLevel(Levels level)
     {
         SceneManager.LoadScene((int)level);
     }
 
-    public IEnumerator StartGame() 
+    public IEnumerator StartGame()
     {
         yield return new WaitForSeconds(5f);
-
-
-
     }
 
-
     // Update is called once per frame
-   public void Update()
+    public void Update()
     {
-
-       
+        if (gameTimer.TimerDone() && gameTimer.isActive)
+        {
+            gameTimer.StopTimer();
+            
+            EndGame(GetManager<EnergyManager>().energyBar, GetManager<EnergyManager>().needsBar, GameState.Won);
+        }
+        if (SceneManager.sceneCount == (int)Levels.EndScreen)
+        {
+            gameTimer.StopTimer();
+        }
         for (int i = 0; i < managers.Length; i++)
         {
             managers[i].Update();
         }
         if (!doonce)
         {
-            GetManager<AudioManager>().PlayMusic("testmusic", 1);
+            //GetManager<AudioManager>().PlayMusic("testmusic", 1);
             doonce = true;
         }
-        
+
     }
+
+
+    public void ResetGame()
+    {
+        LoadLevel(Levels.MainMenu);
+    }
+
+
+    public void EndGame(float _energy, float _needs, GameState _state)
+    {
+        endGamePanel.SetActive(true);
+        energyLeft.text = string.Format("You have {0}% power left", _energy);
+        needsLeft.text = string.Format("You have {0}% needs left",  (int)_needs);
+        gameState.text = string.Format("You {0}", _state.ToString());
+        if (_state == GameState.Lost)
+        {
+            var randomText = Random.Range(0, badTexts.Count);
+            flavourText.text = badTexts[randomText];
+        }
+        if (_state == GameState.Won)
+        {
+            var randomText = Random.Range(0, goodTexts.Count);
+            flavourText.text = badTexts[randomText];
+        }
+        PauseGame(true);
+        GetManager<AudioManager>().StopPlaying();
+        Cursor.lockState = CursorLockMode.None;
+    }
+
 
     public static void PauseGame(bool value)
     {
@@ -138,31 +204,49 @@ public class GameManager : MonoBehaviour
             managers[i].Pause(value);
         }
     }
-    public void Flick() 
+    public void Flick()
     {
         StartCoroutine(LightsFlicking());
     }
-    public IEnumerator LightsFlicking() 
+    public IEnumerator LightsFlicking()
     {
         foreach (Light i in lights)
         {
             i.intensity = 0.13f;
         }
         yield return new WaitForSeconds(0.2f);
-        
+
         foreach (Light i in lights)
         {
             i.intensity = 3f;
         }
 
     }
+    public void ActivateMenu()
+    {
+        pauseMenuUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+    }
 
+    public void DeactivateMenu()
+    {
+        GameManager.PauseGame(false);
+        pauseMenuUI.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
 public enum Levels
 {
-    MainMenu, 
+    MainMenu,
     Game,
     EndScreen
-
-
+}
+public enum GameState
+{
+    Won,
+    Lost
 }

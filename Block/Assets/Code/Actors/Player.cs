@@ -12,13 +12,15 @@ public class Player : Actor
     private float turner;
     private float looker;
     public float sensitivity;
-    private float speed = 3.0F;
+    private float speed = 1.0F;
+    private float needsModifier = 0.5f;
     [HideInInspector]
     public Camera cam;
-    public Transform handLocation;
+    public Transform leftHandLocation;
+    public Transform rightHandLocation;
     public bool hasObject = false;
-    private float throwSpeed;
-    [SerializeField] private GameObject pauseMenuUI;
+    private bool sprintneed = false;
+    private Vector3 offset;
 
     
 
@@ -40,12 +42,14 @@ public class Player : Actor
         instance = this;
         Cursor.lockState = CursorLockMode.Locked;
         cam = gameObject.GetComponentInChildren<Camera>();
+      
 
     }
 
     // Update is called once per frame
     public void Update()
     {
+
         movement();
 
         var energyManager = GameManager.GetManager<EnergyManager>();
@@ -66,26 +70,21 @@ public class Player : Actor
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            if (GameManager.instance.phoneanim.GetBool("Phone"))
-            {
-                StartCoroutine(LightsOut());
-                GameManager.instance.phoneanim.SetBool("Phone", false);
-            }
-            else
-            {
-
-                GameManager.instance.phoneLight.enabled = true;
-                GameManager.instance.phoneanim.SetBool("Phone", true);
-            }
-        }
-
         if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Mouse0))
         {
             Interaction();
         }
-
+        print(sprintneed + " Sprint");
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            sprintneed = true;
+            speed = 2f;
+        }
+        else
+        {
+            speed = 1.0f;
+            sprintneed = false;
+        }
         if (Input.GetKeyDown(KeyCode.Z))
         {
 
@@ -100,40 +99,28 @@ public class Player : Actor
                 Place();
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (sprintneed)
         {
-            GameManager.GetManager<InventoryManager>().selectedSlot = 1;
+            GameManager.GetManager<EnergyManager>().RemoveNeeds((1 * Time.deltaTime) * needsModifier);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            GameManager.GetManager<InventoryManager>().selectedSlot = 2;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            GameManager.GetManager<InventoryManager>().selectedSlot = 3;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            GameManager.GetManager<InventoryManager>().selectedSlot = 4;
-        }
-        Scroll();
+        Scroll(); 
         HighLightObjectRay();
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GameManager.PauseGame(true);
-        }
-
-        if (GameManager.pause)
-        {
-            ActivateMenu();
-        }
-        else
-        {
-            DeactivateMenu();
+            if (GameManager.pause)
+            {
+                GameManager.instance.DeactivateMenu();
+                GameManager.PauseGame(false);
+            }
+            else
+            {
+                GameManager.PauseGame(true);
+                GameManager.instance.ActivateMenu();
+            }
+           
         }
     }
-
     public IEnumerator LightsOut()
     {
         yield return new WaitForSeconds(1f);
@@ -158,9 +145,9 @@ public class Player : Actor
 
     public void Interaction()
     {
-        if (handLocation.childCount > 0 && hasObject)
+       /* if (leftHandLocation.childCount > 0 && hasObject)
         {
-            var childObject = handLocation.GetChild(0).gameObject.transform;
+            var childObject = leftHandLocation.GetChild(0).gameObject.transform;
             if (childObject != null)
             {
                 childObject.GetComponent<Rigidbody>().isKinematic = false;
@@ -168,7 +155,7 @@ public class Player : Actor
                 childObject.SetParent(null);
                 hasObject = false;
             }
-        }
+        }*/
         if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 2))
         {
 
@@ -178,6 +165,14 @@ public class Player : Actor
                     if (Generator.CanDrain())
                     {
 
+                    }
+                    break;
+                case "Sink":
+                    if (Generator.CanDrain())
+                    {
+                        hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
+                        
                     }
                     break;
                 case "Fridge":
@@ -208,6 +203,7 @@ public class Player : Actor
                         foreach (Light i in GameManager.instance.lights)
                         {
                             i.transform.gameObject.SetActive(false);
+                            GameManager.GetManager<EnergyManager>().RemoveDrainage(0.2f);
                         }
                     }
                     if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
@@ -229,6 +225,31 @@ public class Player : Actor
                     {
                         hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
                     }
+                    break;
+                case "Screen":
+                    if (Generator.CanDrain())
+                    {
+                        ComputerScreen.Instance.ToggleScreen();
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
+                        }
+                    }
+                    break;
+                case "GenScreen":
+                    if (Generator.CanDrain())
+                    {
+                        GeneratorScreen.Instance.ToggleScreen();
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime = true;
+                        }
+                    }
+                    break;
+                case "Collect":
+                    hit.transform.gameObject.GetComponent<PowerCollector>().CollectPower();
                     break;
                 default:
                     break;
@@ -284,7 +305,7 @@ public class Player : Actor
     {
         int layerMask = 1 << 0 | 1 << 8;
 
-        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 10, layerMask))
+        if (Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(transform.forward), out hit, 2, layerMask))
         {
             var tag = hit.transform.gameObject.tag;
 
@@ -346,6 +367,28 @@ public class Player : Actor
                             }
                         }
                         break;
+                    case "Screen":
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                            {
+                                lastrayObject = hit.transform.gameObject;
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = string.Format(hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text);
+                            }
+                        }
+                        break;
+                    case "GenScreen":
+                        if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
+                        {
+                            if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                            {
+                                lastrayObject = hit.transform.gameObject;
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                                hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = string.Format(hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text);
+                            }
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -375,22 +418,7 @@ public class Player : Actor
             ogMat = highlightedObject.GetComponent<MeshRenderer>().sharedMaterial;
 
             highlightedObject.GetComponent<MeshRenderer>().sharedMaterial = highlightmat;
-            if (highlightedObject.GetComponent<Interactable>() == null || highlightedObject.GetComponent<Interactable>().type == highLight.Small)
-            {
-                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.05f);
-            }
-            else if (highlightedObject.GetComponent<Interactable>().type == highLight.Medium)
-            {
-                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.1f);
-            }
-            else if (highlightedObject.GetComponent<Interactable>().type == highLight.Large)
-            {
-                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.001f);
-            }
-            else if (highlightedObject.GetComponent<Interactable>().type == highLight.Screen)
-            {
-                highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", 0.00009f);
-            }
+            highlightedObject.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", highlightedObject.GetComponent<Interactable>().shaderThickness);
             highlightedObject.transform.gameObject.AddComponent<OutlineNormalsCalculator>();
             lasthighlightedObject = highlightedObject;
         }
@@ -406,17 +434,6 @@ public class Player : Actor
             lasthighlightedObject = null;
         }
     }
-    void ActivateMenu()
-    {
-        pauseMenuUI.SetActive(true);
-    }
-
-    public void DeactivateMenu()
-    {
-        GameManager.PauseGame(false);
-        pauseMenuUI.SetActive(false);
-    }
-
 }
 public enum highLight
 {
