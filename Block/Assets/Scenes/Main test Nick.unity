@@ -753,11 +753,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 273572230}
   m_CullTransparentMesh: 1
---- !u!1 &417762220 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6178350210778571133, guid: 2cc41cd4d927ec24fb9314150fefbece, type: 3}
-  m_PrefabInstance: {fileID: 1203777299917435672}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &423626175
 GameObject:
   m_ObjectHideFlags: 0
@@ -2373,7 +2368,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1359753725}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 4.5}
   m_LocalScale: {x: 0.19210579, y: 0.17732842, z: 1.2708536}
   m_Children: []
   m_Father: {fileID: 423626176}
@@ -2381,8 +2376,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 3.9, y: 9.8}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -137.2, y: 0}
+  m_SizeDelta: {x: 96.3272, y: 81.0507}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1359753727
 MonoBehaviour:
@@ -2747,11 +2742,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!108 &1463036974 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 1484398038, guid: 2cc41cd4d927ec24fb9314150fefbece, type: 3}
-  m_PrefabInstance: {fileID: 1203777299917435672}
-  m_PrefabAsset: {fileID: 0}
 --- !u!20 &1528862778 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 6400100569354850073, guid: 2cc41cd4d927ec24fb9314150fefbece, type: 3}
@@ -2807,7 +2797,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   canDrain: 0
   needsAmount: 0
-  type: 0
+  shaderThickness: 0
   interactableText: {fileID: 0}
   interaction_UI: {fileID: 0}
 --- !u!65 &1585147594
@@ -2997,14 +2987,23 @@ MonoBehaviour:
   Muteallvolume: {fileID: 1611010427}
   musictext: {fileID: 120824665}
   SFXtext: {fileID: 988740768}
+  Startscreen: {fileID: 0}
   player: {fileID: 928968117}
-  phone: {fileID: 417762220}
-  phoneanim: {fileID: 1897508021}
+  phone: {fileID: 0}
   red: {fileID: 2100000, guid: 70a2ed1174df1394eabff3e2f5ea76ff, type: 2}
   green: {fileID: 2100000, guid: 5240c8ebb839af442993b0b5d3167f2b, type: 2}
   orange: {fileID: 2100000, guid: 2908f556538aec44bad56401709ee60e, type: 2}
-  phoneLight: {fileID: 1463036974}
+  phoneLight: {fileID: 0}
   lights: []
+  lightObjects: []
+  computerScreenObject: {fileID: 0}
+  pauseMenuUI: {fileID: 0}
+  tutText: {fileID: 0}
+  energyLeft: {fileID: 0}
+  needsLeft: {fileID: 0}
+  gameState: {fileID: 0}
+  flavourText: {fileID: 0}
+  endGamePanel: {fileID: 0}
   mainCamera: {fileID: 1528862778}
 --- !u!4 &1634223995
 Transform:
@@ -3148,7 +3147,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   canDrain: 0
   needsAmount: 0
-  type: 0
+  shaderThickness: 0
   interactableText: {fileID: 0}
   interaction_UI: {fileID: 0}
 --- !u!1 &1668066493
@@ -3309,9 +3308,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 928968117}
+      - m_Target: {fileID: 1634223993}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: DeactivateMenu
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3585,11 +3584,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1897508021 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 957437051, guid: 2cc41cd4d927ec24fb9314150fefbece, type: 3}
-  m_PrefabInstance: {fileID: 1203777299917435672}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1915810383
 GameObject:
   m_ObjectHideFlags: 0
@@ -3892,7 +3886,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   canDrain: 0
   needsAmount: 0
-  type: 0
+  shaderThickness: 0
   interactableText: {fileID: 0}
   interaction_UI: {fileID: 0}
   lights:
