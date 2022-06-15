@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     //Player Instance
     public Player player;
     public GameObject phone;
+    public GameObject phoneEnergy;
     public Material red;
     public Material green;
     public Material orange;

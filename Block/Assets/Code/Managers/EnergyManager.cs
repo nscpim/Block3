@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnergyManager : Manager
 {
@@ -56,7 +57,7 @@ public class EnergyManager : Manager
                 GameManager.instance.EndGame(energyBar, needsBar, GameState.Lost);
                 doThisOnce = true;
             }
-           
+
         }
 
         if (needsBar >= 100)
@@ -171,24 +172,11 @@ public class EnergyManager : Manager
         GameManager.instance.energyBarSlider.value = energyBar;
         //GameManager.instance.needsBarSlider.value = needsBar;
         GameManager.instance.eventText.text = eventDummy.ToString() + " in : " + (int)eventTimer.TimeLeft() + "    Energy: " + (int)energyBar;
-        if (needsBar <= 100 && needsBar >= 50)
-        {
-            GameManager.instance.phone.GetComponent<Renderer>().material = GameManager.instance.green;
-            GameManager.instance.phoneLight.color = Color.green;
-        }
-        if (needsBar <= 50 && needsBar >= 25)
-        {
-            GameManager.instance.phone.GetComponent<Renderer>().material = GameManager.instance.orange;
-            Color color = new Color32(255, 165, 0, 255);
-            GameManager.instance.phoneLight.color = color;
-        }
-        if (needsBar <= 25 && needsBar >= 0)
-        {
-            GameManager.instance.phone.GetComponent<Renderer>().material = GameManager.instance.red;
-            GameManager.instance.phoneLight.color = Color.red;
-
-        }
-    }
+        double fillIn = needsBar * 0.01;
+        GameManager.instance.phone.GetComponent<Image>().fillAmount = (float)fillIn;
+        double FillInEnergy = energyBar * 0.01;
+        GameManager.instance.phone.GetComponent<Image>().fillAmount = (float)FillInEnergy;
+    }   
     public void ShowEvent(int _event)
     {
         eventInt = _event;
@@ -235,13 +223,13 @@ public class EnergyManager : Manager
     }
 
 
-    public int GetEvent() 
+    public int GetEvent()
     {
         return eventInt;
     }
 
-    
- 
+
+
 
     public float AddDrainage(float _amount)
     {
