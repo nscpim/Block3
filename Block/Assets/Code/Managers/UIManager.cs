@@ -12,17 +12,21 @@ public class UIManager : Manager
     {
         canvas = GameManager.instance.UIcanvas;
         Debug.Log(GameManager.instance.Startscreen.activeInHierarchy + " pipi small");
-        Startscreen();  
+        Startscreen();
     }
 
-    
+
 
     // Update is called once per frame
     public override void Update()
     {
         if (GameManager.instance.Startscreen.activeInHierarchy && Input.GetKeyDown(KeyCode.Space))
-            {
+        {
             GameManager.instance.Startscreen.GetComponent<Animator>().enabled = true;
+        }
+        if (GameManager.instance.Startscreen.GetComponent<Image>().color.a == 0)
+        {
+            GameManager.instance.Startscreen.SetActive(false);
         }
         if (GameManager.pause)
         {
@@ -31,6 +35,7 @@ public class UIManager : Manager
             GameManager.instance.musictext.text = "" + GameManager.instance.MusicvolumeSlider.value;
             GameManager.instance.SFXtext.text = "" + GameManager.instance.SFXvolumeSlider.value;
         }
+        
     }
 
     public void ShowTempUI(int _delay, string _text, int posX, int posY)

@@ -204,9 +204,10 @@ public class Player : Actor
                         {
                             if (i.isActiveAndEnabled)
                             {
+                                i.transform.gameObject.SetActive(Generator.CanDrain());
                                 GameManager.GetManager<EnergyManager>().RemoveDrainage(0.2f);
-                                i.transform.gameObject.GetComponent<Lights>().SetToggleLights(false);
                             }
+                           
                         }
                     }
                     if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)

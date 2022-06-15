@@ -176,6 +176,9 @@ public class GameManager : MonoBehaviour
     }
     public void EndGame(float _energy, float _needs, GameState _state)
     {
+        PauseGame(true);
+        Cursor.lockState = CursorLockMode.None;
+        GetManager<AudioManager>().StopPlaying();
         endGamePanel.SetActive(true);
         energyLeft.text = string.Format("You have {0}% power left", _energy);
         needsLeft.text = string.Format("You have {0}% needs left",  (int)_needs);
@@ -190,9 +193,9 @@ public class GameManager : MonoBehaviour
             var randomText = Random.Range(0, goodTexts.Count);
             flavourText.text = goodTexts[randomText];
         }
-        PauseGame(true);
-        GetManager<AudioManager>().StopPlaying();
-        Cursor.lockState = CursorLockMode.None;
+      
+        
+       
     }
 
 

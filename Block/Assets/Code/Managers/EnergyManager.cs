@@ -22,7 +22,7 @@ public class EnergyManager : Manager
     private bool eventComing;
     public bool canReceivePower = false;
     private bool doThisOnce = false;
-
+    private bool doThisOnceToo = false;
     // Start is called before the first frame update
     public override void Start()
     {
@@ -68,6 +68,13 @@ public class EnergyManager : Manager
         if (needsBar <= 0)
         {
             needsBar = 0;
+            if (!doThisOnceToo)
+            {
+                GameManager.instance.EndGame(energyBar, needsBar, GameState.Lost);
+                doThisOnceToo = true;
+            }
+         
+
         }
 
         //Under 25%
@@ -227,8 +234,6 @@ public class EnergyManager : Manager
     {
         return eventInt;
     }
-
-
 
 
     public float AddDrainage(float _amount)
