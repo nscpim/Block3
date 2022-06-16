@@ -170,9 +170,8 @@ public class Player : Actor
                 case "Sink":
                     if (Generator.CanDrain())
                     {
-                        hit.transform.gameObject.GetComponent<Fridge>().PlayAnimation();
-                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, true, null);
-
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, false, null);
+                        GameManager.GetManager<EnergyManager>().SubstractEnergy(1f);
                     }
                     break;
                 case "Fridge":
@@ -253,6 +252,13 @@ public class Player : Actor
                 case "Collect":
                     hit.transform.gameObject.GetComponent<PowerCollector>().CollectPower();
                     break;
+                case "Stove":
+                    if (Generator.CanDrain())
+                    {
+                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, false, null);
+                        GameManager.GetManager<EnergyManager>().SubstractEnergy(1f);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -312,7 +318,7 @@ public class Player : Actor
             var tag = hit.transform.gameObject.tag;
             Debug.LogWarning(hit.transform.gameObject + " " + tag);
 
-            if (tag == "Interactable" || tag == "Fridge" || tag == "Lights" || tag == "Generator" || tag == "Screen" || tag == "Pickup" || tag == "Door")
+            if (tag == "Interactable" || tag == "Fridge" || tag == "Lights" || tag == "Generator" || tag == "Screen" || tag == "Pickup" || tag == "Door" || tag == "Stove" || tag == "Sink")
             {
                 HighLightObject(hit.transform.gameObject);
                 Debug.LogWarning("gets here");
@@ -391,6 +397,22 @@ public class Player : Actor
                                 hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
                                 hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = string.Format(hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text);
                             }
+                        }
+                        break;
+                    case "Sink":
+                        if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                        {
+                            lastrayObject = hit.transform.gameObject;
+                            hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                            hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = string.Format(hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text);
+                        }
+                        break;
+                    case "Stove":
+                        if (!hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.firstTime)
+                        {
+                            lastrayObject = hit.transform.gameObject;
+                            hit.transform.gameObject.GetComponent<Interactable>().interactableText.transform.gameObject.SetActive(true);
+                            hit.transform.gameObject.GetComponent<Interactable>().interactableText.text = string.Format(hit.transform.gameObject.GetComponent<Interactable>().interaction_UI.text);
                         }
                         break;
                     default:

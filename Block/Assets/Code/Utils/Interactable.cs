@@ -15,12 +15,15 @@ public class Interactable : MonoBehaviour
     public float shaderThickness;
     public TextMeshProUGUI interactableText;
     public InteractionUI interaction_UI;
+    public int cooldown;
+    private Timer cooldownTimer;
 
 
 
     // Start is called before the first frame update
     public virtual void Start()
     {
+        cooldownTimer = new Timer();
         _name = gameObject.name;
         if (interaction_UI != null)
         {
@@ -32,7 +35,10 @@ public class Interactable : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-
+        if (cooldownTimer.TimerDone() && cooldownTimer.isActive)
+        {
+            cooldownTimer.StopTimer();
+        }
     }
     public void Interact(bool canPickUp, bool drain, GameObject objectPickedUp)
     {
@@ -66,7 +72,11 @@ public class Interactable : MonoBehaviour
             GameManager.GetManager<EnergyManager>().RemoveDrainage(drainAmount);
             canDrain = false;
         }
-
+        if (needsAmount != 0 && !cooldownTimer.isActive)
+        {
+            GameManager.GetManager<EnergyManager>().AddNeeds(needsAmount);
+            cooldownTimer.SetTimer(cooldown);
+        }
 
 
     }

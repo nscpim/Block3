@@ -343,6 +343,31 @@ RectTransform:
   m_AnchoredPosition: {x: 3.87, y: 9.27}
   m_SizeDelta: {x: 63.5318, y: 165.8616}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &36103589 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 268242178717263651, guid: 5eb11cfb68da18848a6a3cfc06bef6e7, type: 3}
+  m_PrefabInstance: {fileID: 1873523101}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &36103594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36103589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ae45045fd729344bf004fdade3e15e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drainAmount: 0
+  anim: {fileID: 0}
+  canDrain: 0
+  needsAmount: 10
+  shaderThickness: 0.002
+  interactableText: {fileID: 0}
+  interaction_UI: {fileID: 0}
+  cooldown: 10
 --- !u!1 &42948972
 GameObject:
   m_ObjectHideFlags: 0
@@ -2026,6 +2051,7 @@ MonoBehaviour:
   shaderThickness: 0.0002
   interactableText: {fileID: 1615802297}
   interaction_UI: {fileID: 11400000, guid: 96d743d373560c5488263c1624aa1488, type: 2}
+  cooldown: 0
   display: {fileID: 1383561821}
   red: {fileID: 2100000, guid: c167a19da14854a4690b39dd700d0666, type: 2}
   green: {fileID: 2100000, guid: 0a7796fea5e1fe44c99e29d711870441, type: 2}
@@ -2054,6 +2080,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8700617353114198275, guid: 70c3118ff5adff64db3d6cd9160d22fe, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8700617353114198275, guid: 70c3118ff5adff64db3d6cd9160d22fe, type: 3}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70c3118ff5adff64db3d6cd9160d22fe, type: 3}
@@ -2102,10 +2132,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5084089596211238933, guid: 70c3118ff5adff64db3d6cd9160d22fe, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 65702495048144492, guid: 70c3118ff5adff64db3d6cd9160d22fe, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65702495048144492, guid: 70c3118ff5adff64db3d6cd9160d22fe, type: 3}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 717455967867050444, guid: 70c3118ff5adff64db3d6cd9160d22fe, type: 3}
@@ -2120,15 +2154,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fridge_2.0(1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 70c3118ff5adff64db3d6cd9160d22fe, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5653210777456527020, guid: 70c3118ff5adff64db3d6cd9160d22fe, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8385113628573836108, guid: 70c3118ff5adff64db3d6cd9160d22fe, type: 3}
       propertyPath: m_TagString
       value: Fridge
       objectReference: {fileID: 0}
     - target: {fileID: 8385113628573836108, guid: 70c3118ff5adff64db3d6cd9160d22fe, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8821623529969584324, guid: 70c3118ff5adff64db3d6cd9160d22fe, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -2168,9 +2210,10 @@ MonoBehaviour:
   anim: {fileID: 1850173922}
   canDrain: 0
   needsAmount: 10
-  shaderThickness: 0.0002
+  shaderThickness: 0.002
   interactableText: {fileID: 721114230}
   interaction_UI: {fileID: 11400000, guid: 8c1b19726de08c14ca649508fd01785b, type: 2}
+  cooldown: 10
 --- !u!1 &432954483
 GameObject:
   m_ObjectHideFlags: 0
@@ -3254,6 +3297,7 @@ MonoBehaviour:
   shaderThickness: 0.02
   interactableText: {fileID: 872658571}
   interaction_UI: {fileID: 11400000, guid: cb0a54d47934de145a0c45048ab1261c, type: 2}
+  cooldown: 0
 --- !u!65 &494452084
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3533,9 +3577,10 @@ GameObject:
   - component: {fileID: 549368697}
   - component: {fileID: 549368696}
   - component: {fileID: 549368695}
+  - component: {fileID: 549368698}
   m_Layer: 0
   m_Name: Sink
-  m_TagString: Untagged
+  m_TagString: Sink
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
@@ -3617,6 +3662,26 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549368693}
   m_Mesh: {fileID: 3671124377080654647, guid: 7a5d0036392b46d47b41a8fcee7d262e, type: 3}
+--- !u!114 &549368698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549368693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ae45045fd729344bf004fdade3e15e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drainAmount: 0
+  anim: {fileID: 0}
+  canDrain: 0
+  needsAmount: 0
+  shaderThickness: 0.002
+  interactableText: {fileID: 0}
+  interaction_UI: {fileID: 0}
+  cooldown: 10
 --- !u!108 &549463539 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 2237408031697204441, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
@@ -10200,6 +10265,31 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 754212980}
   m_Mesh: {fileID: -3849098013122800504, guid: 7a5d0036392b46d47b41a8fcee7d262e, type: 3}
+--- !u!1 &758909702 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4983284175836297198, guid: 5eb11cfb68da18848a6a3cfc06bef6e7, type: 3}
+  m_PrefabInstance: {fileID: 1873523101}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &758909707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758909702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ae45045fd729344bf004fdade3e15e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drainAmount: 0
+  anim: {fileID: 0}
+  canDrain: 0
+  needsAmount: 10
+  shaderThickness: 0.002
+  interactableText: {fileID: 0}
+  interaction_UI: {fileID: 0}
+  cooldown: 10
 --- !u!1 &768240755 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2237408032016053018, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
@@ -11047,6 +11137,7 @@ MonoBehaviour:
   shaderThickness: 0
   interactableText: {fileID: 0}
   interaction_UI: {fileID: 0}
+  cooldown: 0
 --- !u!1 &821232302
 GameObject:
   m_ObjectHideFlags: 0
@@ -12558,6 +12649,7 @@ MonoBehaviour:
   shaderThickness: 0.02
   interactableText: {fileID: 893645462}
   interaction_UI: {fileID: 11400000, guid: 5ba4e44caa070a5439666ece673edb28, type: 2}
+  cooldown: 0
   lights:
   - {fileID: 2007655822}
 --- !u!65 &1043475397
@@ -15109,6 +15201,7 @@ MonoBehaviour:
   shaderThickness: 0
   interactableText: {fileID: 872658571}
   interaction_UI: {fileID: 11400000, guid: cb0a54d47934de145a0c45048ab1261c, type: 2}
+  cooldown: 0
 --- !u!65 &1585147594
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15801,6 +15894,7 @@ MonoBehaviour:
   shaderThickness: 0.02
   interactableText: {fileID: 1827862327}
   interaction_UI: {fileID: 11400000, guid: 2c70bb8fe9df47b4193322bd937b995b, type: 2}
+  cooldown: 0
   genImage: {fileID: 1070850837}
   battery:
   - {fileID: 21300000, guid: a456336ba08a6e742a840adc4d6593dd, type: 3}
@@ -17367,8 +17461,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 1108429324}
     m_Modifications:
     - target: {fileID: 268242178717263651, guid: 5eb11cfb68da18848a6a3cfc06bef6e7, type: 3}
+      propertyPath: m_TagString
+      value: Sink
+      objectReference: {fileID: 0}
+    - target: {fileID: 268242178717263651, guid: 5eb11cfb68da18848a6a3cfc06bef6e7, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 402951981218716429, guid: 5eb11cfb68da18848a6a3cfc06bef6e7, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17471,8 +17569,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4983284175836297198, guid: 5eb11cfb68da18848a6a3cfc06bef6e7, type: 3}
+      propertyPath: m_TagString
+      value: Stove
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983284175836297198, guid: 5eb11cfb68da18848a6a3cfc06bef6e7, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5113123797366383668, guid: 5eb11cfb68da18848a6a3cfc06bef6e7, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5113123797366383668, guid: 5eb11cfb68da18848a6a3cfc06bef6e7, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -17486,6 +17592,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 2100000, guid: 68f233765a1dd71458c2f23bddfbf7d1, type: 2}
+    - target: {fileID: 5113123797366383668, guid: 5eb11cfb68da18848a6a3cfc06bef6e7, type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 331b7ebf430d80e4d82a52d739865580, type: 2}
+    - target: {fileID: 5381575633534224468, guid: 5eb11cfb68da18848a6a3cfc06bef6e7, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5381575633534224468, guid: 5eb11cfb68da18848a6a3cfc06bef6e7, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -17494,6 +17608,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 68f233765a1dd71458c2f23bddfbf7d1, type: 2}
+    - target: {fileID: 5381575633534224468, guid: 5eb11cfb68da18848a6a3cfc06bef6e7, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6b9674777f405fc40be15fd3a7e63b61, type: 2}
     - target: {fileID: 5629428068942813169, guid: 5eb11cfb68da18848a6a3cfc06bef6e7, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -18556,9 +18674,10 @@ GameObject:
   - component: {fileID: 2102340194}
   - component: {fileID: 2102340193}
   - component: {fileID: 2102340192}
+  - component: {fileID: 2102340195}
   m_Layer: 0
   m_Name: Sink
-  m_TagString: Untagged
+  m_TagString: Sink
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -18641,6 +18760,26 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2102340190}
   m_Mesh: {fileID: 3671124377080654647, guid: 86d7f6a31ffa32248a404ed8f535107b, type: 3}
+--- !u!114 &2102340195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102340190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ae45045fd729344bf004fdade3e15e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drainAmount: 0
+  anim: {fileID: 0}
+  canDrain: 0
+  needsAmount: 10
+  shaderThickness: 0.002
+  interactableText: {fileID: 0}
+  interaction_UI: {fileID: 0}
+  cooldown: 10
 --- !u!1 &2122974359
 GameObject:
   m_ObjectHideFlags: 0
