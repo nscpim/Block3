@@ -87,7 +87,6 @@ public class Player : Actor
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
-
             if (!GameManager.GetManager<InventoryManager>().HasItem())
             {
                 print("false");
@@ -208,6 +207,7 @@ public class Player : Actor
                             }
                            
                         }
+                        GeneratorScreen.Instance.SetToggleScreen(false);
                     }
                     if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
                     {
@@ -448,7 +448,6 @@ public class Player : Actor
             lasthighlightedObject = highlightedObject;
         }
     }
-
     public void ClearHighLight()
     {
         if (lasthighlightedObject != null)
