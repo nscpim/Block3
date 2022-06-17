@@ -13704,13 +13704,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1213476394}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ccdb0b5b2d33cc458b6ce27a2b7a002, type: 3}
+  m_Script: {fileID: 11500000, guid: efc3050c94e35a4429369ab4e0734056, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   order: 1
   explanation: Pick up the SMD (Self measuring device) in the kitchen.
-  keys:
-  - e
 --- !u!1 &1233036848
 GameObject:
   m_ObjectHideFlags: 0
@@ -15902,6 +15900,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ae9e3b3b741693e4abdbb536a0449562, type: 3}
   - {fileID: 21300000, guid: 54f78e1cc74c82a419442d54bb0271f8, type: 3}
   - {fileID: 21300000, guid: 12f00f864a9264f4aa01cf62deeded0d, type: 3}
+  toggleScreen: 1
 --- !u!23 &1633611744
 MeshRenderer:
   m_ObjectHideFlags: 0

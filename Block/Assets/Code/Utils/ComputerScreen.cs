@@ -41,6 +41,10 @@ public class ComputerScreen : Interactable
                 print(GameManager.GetManager<EnergyManager>().eventInt + " EventInteger");
             }
     }
+    public void SetToggleScreen(bool _toggle)
+    {
+        sourceObject.gameObject.SetActive(_toggle);
+    }
     public void SetEventImage(int eventInteger)
     {
         switch (eventInteger)
