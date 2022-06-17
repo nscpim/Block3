@@ -171,7 +171,7 @@ public class Player : Actor
                     if (Generator.CanDrain())
                     {
                         hit.transform.gameObject.GetComponent<Interactable>().Interact(false, false, null);
-                        GameManager.GetManager<EnergyManager>().SubstractEnergy(1f);
+                        GameManager.GetManager<EnergyManager>().SubstractEnergy(2f);
                     }
                     break;
                 case "Fridge":
@@ -204,7 +204,7 @@ public class Player : Actor
                             if (i.isActiveAndEnabled)
                             {
                                 i.transform.gameObject.SetActive(Generator.CanDrain());
-                                GameManager.GetManager<EnergyManager>().RemoveDrainage(0.2f);
+                                GameManager.GetManager<EnergyManager>().RemoveDrainage(0.1f);
                             }
 
                         }
@@ -258,7 +258,7 @@ public class Player : Actor
                     if (Generator.CanDrain())
                     {
                         hit.transform.gameObject.GetComponent<Interactable>().Interact(false, false, null);
-                        GameManager.GetManager<EnergyManager>().SubstractEnergy(1f);
+                        GameManager.GetManager<EnergyManager>().SubstractEnergy(2f);
                     }
                     break;
                 default:

@@ -36,10 +36,12 @@ public class Generator : Interactable
             foreach (GameObject item in GameManager.instance.lightObjects)
             {
                 item.GetComponent<Interactable>().Interact(false, true, null);
+                item.gameObject.GetComponent<Lights>().lightToggle = true;
             }
             foreach (Light item in GameManager.instance.lights)
             {
                 item.gameObject.SetActive(true);
+              
             }
             firstTime = false;
         }

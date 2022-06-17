@@ -54,7 +54,7 @@ public class EnergyManager : Manager
             energyBar = 0;
             if (!doThisOnce)
             {
-                GameManager.instance.EndGame(energyBar, needsBar, GameState.Lost);
+                GameManager.instance.EndGame(energyBar, needsBar, GameState.Lost, NeedsorPower.NONE);
                 doThisOnce = true;
             }
 
@@ -69,7 +69,7 @@ public class EnergyManager : Manager
             needsBar = 0;
             if (!doThisOnceToo)
             {
-                GameManager.instance.EndGame(energyBar, needsBar, GameState.Lost);
+                GameManager.instance.EndGame(energyBar, needsBar, GameState.Lost, NeedsorPower.Needs);
                 doThisOnceToo = true;
             }
          

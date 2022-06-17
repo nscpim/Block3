@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Lights : Interactable
 {
-
+    public Image lightState;
+    public Sprite[] onOff;
     public Light[] lights;
-    private bool lightToggle = false;
+    public bool lightToggle = false;
 
     // Start is called before the first frame update
    public override void Start()
@@ -17,7 +19,14 @@ public class Lights : Interactable
     // Update is called once per frame
     public override void Update()
     {
-        
+        if (lightToggle)
+        {
+            lightState.sprite = onOff[0];
+        }
+        else
+        {
+            lightState.sprite = onOff[1];
+        }
     }
 
 
