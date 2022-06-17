@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+
 
 public class MainMenu : MonoBehaviour
 {
+    public Button[] MenuButtons;
+
+    
     public void PlayGame()
     {
         GameManager.LoadLevel(Levels.Game);
