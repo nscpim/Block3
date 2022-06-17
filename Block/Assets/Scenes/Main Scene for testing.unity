@@ -364,7 +364,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   canDrain: 0
   needsAmount: 10
-  shaderThickness: 0.002
+  shaderThickness: 0.0002
   interactableText: {fileID: 0}
   interaction_UI: {fileID: 0}
   cooldown: 10
@@ -2210,7 +2210,7 @@ MonoBehaviour:
   anim: {fileID: 1850173922}
   canDrain: 0
   needsAmount: 10
-  shaderThickness: 0.002
+  shaderThickness: 0.0002
   interactableText: {fileID: 721114230}
   interaction_UI: {fileID: 11400000, guid: 8c1b19726de08c14ca649508fd01785b, type: 2}
   cooldown: 10
@@ -10286,7 +10286,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   canDrain: 0
   needsAmount: 10
-  shaderThickness: 0.002
+  shaderThickness: 0.0002
   interactableText: {fileID: 0}
   interaction_UI: {fileID: 0}
   cooldown: 10
