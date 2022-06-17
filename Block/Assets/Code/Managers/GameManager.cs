@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject pauseMenuUI;
 
-
+    public Light[] doorLights; 
     public Timer gameTimer;
 
     [Header("Tutorial")]

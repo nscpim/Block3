@@ -33,6 +33,11 @@ public class Generator : Interactable
             GameManager.instance.gameTimer.SetTimer(240);
             Player.instance.mayDrain = true;
             GameManager.GetManager<EnergyManager>().needsTimer.SetTimer(1);
+            foreach (Light item in GameManager.instance.doorLights)
+            {
+                item.gameObject.SetActive(false);
+            }
+
             foreach (GameObject item in GameManager.instance.lightObjects)
             {
                 item.GetComponent<Interactable>().Interact(false, true, null);
