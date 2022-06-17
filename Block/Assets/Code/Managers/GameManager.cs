@@ -44,8 +44,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject pauseMenuUI;
 
-
-    private Timer gameTimer;
+    public Light[] doorLights; 
+    public Timer gameTimer;
 
     [Header("Tutorial")]
     public Text tutText;
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
     private static float needs;
     private static float energy;
 
-
+    public bool openedDoor = false;
 
     //Check if ingame
     private static bool inGame;
@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
 
     private List<string> goodTexts = new List<string>();
     private List<string> badTexts = new List<string>();
+    private List<string> needsTexts = new List<string>();
     public static T GetManager<T>() where T : Manager
     {
         for (int i = 0; i < managers.Length; i++)
@@ -107,6 +108,7 @@ public class GameManager : MonoBehaviour
         goodTexts.Add("You did good, The planet will be rebuild");
         badTexts.Add("You did poorly and the world burns.");
         badTexts.Add("That went bad, With this power conserving the world will be gone in no time.");
+        needsTexts.Add("You die of hunger");
         loadLevelOnce = false;
         DontDestroyOnLoad(gameObject);
 
@@ -125,8 +127,7 @@ public class GameManager : MonoBehaviour
         {
             managers[i].Start();
         }
-        //4 minutes
-        gameTimer.SetTimer(240);
+        
     }
 
     public float GetTime()
@@ -150,8 +151,8 @@ public class GameManager : MonoBehaviour
         if (gameTimer.TimerDone() && gameTimer.isActive)
         {
             gameTimer.StopTimer();
-            
-            EndGame(GetManager<EnergyManager>().energyBar, GetManager<EnergyManager>().needsBar, GameState.Won);
+
+            EndGame(GetManager<EnergyManager>().energyBar, GetManager<EnergyManager>().needsBar, GameState.Won, NeedsorPower.NONE);
         }
         if (SceneManager.sceneCount == (int)Levels.EndScreen)
         {
@@ -174,31 +175,31 @@ public class GameManager : MonoBehaviour
     {
         LoadLevel(Levels.MainMenu);
     }
-    public void EndGame(float _energy, float _needs, GameState _state)
+    public void EndGame(float _energy, float _needs, GameState _state, NeedsorPower _needsorPower)
     {
         PauseGame(true);
         Cursor.lockState = CursorLockMode.None;
         GetManager<AudioManager>().StopPlaying();
         endGamePanel.SetActive(true);
         energyLeft.text = string.Format("You have {0}% power left", _energy);
-        needsLeft.text = string.Format("You have {0}% needs left",  (int)_needs);
+        needsLeft.text = string.Format("You have {0}% needs left", (int)_needs);
         gameState.text = string.Format("You {0}", _state.ToString());
-        if (_state == GameState.Lost)
+        if (_state == GameState.Lost && _needsorPower == NeedsorPower.NONE)
         {
             var randomText = Random.Range(0, badTexts.Count);
             flavourText.text = badTexts[randomText];
         }
-        else if (_state == GameState.Won)
+        else if (_state == GameState.Won && _needsorPower == NeedsorPower.NONE)
         {
             var randomText = Random.Range(0, goodTexts.Count);
             flavourText.text = goodTexts[randomText];
         }
-      
-        
-       
+        else if (_state == GameState.Lost && _needsorPower == NeedsorPower.Needs)
+        {
+            var randomText = Random.Range(0, needsTexts.Count);
+            flavourText.text = needsTexts[randomText];
+        }
     }
-
-
     public static void PauseGame(bool value)
     {
         pause = value;
@@ -230,7 +231,6 @@ public class GameManager : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
     }
-
     public void DeactivateMenu()
     {
         GameManager.PauseGame(false);
@@ -252,4 +252,10 @@ public enum GameState
 {
     Won,
     Lost
+}
+public enum NeedsorPower
+{
+    Needs,
+    Power,
+    NONE
 }

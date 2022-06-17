@@ -33,9 +33,8 @@ public class EnergyManager : Manager
         needsTimer = new Timer();
         energyBar = 100f;
         needsBar = 100f;
-        needsDrainage = 1f;
+        needsDrainage = 0.5f;
         drainTimer.SetTimer(1);
-        needsTimer.SetTimer(1);
         ShowEvent(Random.Range(0, 2));
         ComputerScreen.Instance.ToggleScreen();
         UpdateBar();
@@ -55,7 +54,7 @@ public class EnergyManager : Manager
             energyBar = 0;
             if (!doThisOnce)
             {
-                GameManager.instance.EndGame(energyBar, needsBar, GameState.Lost);
+                GameManager.instance.EndGame(energyBar, needsBar, GameState.Lost, NeedsorPower.NONE);
                 doThisOnce = true;
             }
 
@@ -70,7 +69,7 @@ public class EnergyManager : Manager
             needsBar = 0;
             if (!doThisOnceToo)
             {
-                GameManager.instance.EndGame(energyBar, needsBar, GameState.Lost);
+                GameManager.instance.EndGame(energyBar, needsBar, GameState.Lost, NeedsorPower.Needs);
                 doThisOnceToo = true;
             }
          

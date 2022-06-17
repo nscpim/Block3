@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class Doors : Interactable
 {
-
+    
     public void PlayAnimation()
     {
         if (!anim.GetBool("open"))
         {
+            GameManager.instance.openedDoor = true;
             open();
             anim.SetBool("open", true);
-
         }
     }
-
     public void open()
     {
         anim.Play("Door animation opening");
@@ -22,12 +21,10 @@ public class Doors : Interactable
         
 
     }
-
     public void BackWards()
     {
         anim.Play("Door animation closing");
     }
-
     private IEnumerator ClosingDoor()
     {
         yield return new WaitForSeconds(5);
