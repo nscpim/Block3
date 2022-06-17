@@ -33,9 +33,8 @@ public class EnergyManager : Manager
         needsTimer = new Timer();
         energyBar = 100f;
         needsBar = 100f;
-        needsDrainage = 1f;
+        needsDrainage = 0.5f;
         drainTimer.SetTimer(1);
-        needsTimer.SetTimer(1);
         ShowEvent(Random.Range(0, 2));
         ComputerScreen.Instance.ToggleScreen();
         UpdateBar();

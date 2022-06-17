@@ -21,6 +21,7 @@ public class Player : Actor
     public bool hasObject = false;
     private bool sprintneed = false;
     private Vector3 offset;
+    public bool mayDrain = false;
 
 
 
@@ -98,7 +99,7 @@ public class Player : Actor
                 Place();
             }
         }
-        if (sprintneed)
+        if (sprintneed && mayDrain)
         {
             GameManager.GetManager<EnergyManager>().RemoveNeeds((1 * Time.deltaTime) * needsModifier);
         }

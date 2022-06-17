@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenuUI;
 
 
-    private Timer gameTimer;
+    public Timer gameTimer;
 
     [Header("Tutorial")]
     public Text tutText;
@@ -125,8 +125,7 @@ public class GameManager : MonoBehaviour
         {
             managers[i].Start();
         }
-        //4 minutes
-        gameTimer.SetTimer(240);
+        
     }
 
     public float GetTime()
@@ -150,7 +149,7 @@ public class GameManager : MonoBehaviour
         if (gameTimer.TimerDone() && gameTimer.isActive)
         {
             gameTimer.StopTimer();
-            
+
             EndGame(GetManager<EnergyManager>().energyBar, GetManager<EnergyManager>().needsBar, GameState.Won);
         }
         if (SceneManager.sceneCount == (int)Levels.EndScreen)
@@ -181,7 +180,7 @@ public class GameManager : MonoBehaviour
         GetManager<AudioManager>().StopPlaying();
         endGamePanel.SetActive(true);
         energyLeft.text = string.Format("You have {0}% power left", _energy);
-        needsLeft.text = string.Format("You have {0}% needs left",  (int)_needs);
+        needsLeft.text = string.Format("You have {0}% needs left", (int)_needs);
         gameState.text = string.Format("You {0}", _state.ToString());
         if (_state == GameState.Lost)
         {
@@ -193,9 +192,9 @@ public class GameManager : MonoBehaviour
             var randomText = Random.Range(0, goodTexts.Count);
             flavourText.text = goodTexts[randomText];
         }
-      
-        
-       
+
+
+
     }
 
 
@@ -230,7 +229,6 @@ public class GameManager : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
     }
-
     public void DeactivateMenu()
     {
         GameManager.PauseGame(false);
@@ -252,4 +250,9 @@ public enum GameState
 {
     Won,
     Lost
+}
+public enum NeedsorPower
+{
+    Needs,
+    Power
 }
