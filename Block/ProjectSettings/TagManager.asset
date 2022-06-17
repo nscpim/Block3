@@ -14,6 +14,8 @@ TagManager:
   - GenScreen
   - Collect
   - UIComp
+  - Sink
+  - Stove
   layers:
   - Default
   - TransparentFX

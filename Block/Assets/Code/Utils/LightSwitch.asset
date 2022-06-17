@@ -12,5 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f829780d19e254648a640aaaf778034d, type: 3}
   m_Name: LightSwitch
   m_EditorClassIdentifier: 
-  text: Switch on the light with E or LMB
+  text: 'Switch on the light with E or LMB
+
+
+    Lights energy usage:
+
+    60W
+
+
+'
   firstTime: 0

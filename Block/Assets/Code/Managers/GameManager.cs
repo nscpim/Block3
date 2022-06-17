@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     //Player Instance
     public Player player;
     public GameObject phone;
+    public GameObject phoneEnergy;
     public Material red;
     public Material green;
     public Material orange;
@@ -105,7 +106,7 @@ public class GameManager : MonoBehaviour
         goodTexts.Add("You did well, thanks to you the world did not end.");
         goodTexts.Add("You did good, The planet will be rebuild");
         badTexts.Add("You did poorly and the world burns.");
-        badTexts.Add("That went bad, With this power conserving the world will be gone in no time.");   
+        badTexts.Add("That went bad, With this power conserving the world will be gone in no time.");
         loadLevelOnce = false;
         DontDestroyOnLoad(gameObject);
 
@@ -124,7 +125,8 @@ public class GameManager : MonoBehaviour
         {
             managers[i].Start();
         }
-        gameTimer.SetTimer(320);
+        //4 minutes
+        gameTimer.SetTimer(240);
     }
 
     public float GetTime()
@@ -172,10 +174,11 @@ public class GameManager : MonoBehaviour
     {
         LoadLevel(Levels.MainMenu);
     }
-
-
     public void EndGame(float _energy, float _needs, GameState _state)
     {
+        PauseGame(true);
+        Cursor.lockState = CursorLockMode.None;
+        GetManager<AudioManager>().StopPlaying();
         endGamePanel.SetActive(true);
         energyLeft.text = string.Format("You have {0}% power left", _energy);
         needsLeft.text = string.Format("You have {0}% needs left",  (int)_needs);
@@ -185,14 +188,14 @@ public class GameManager : MonoBehaviour
             var randomText = Random.Range(0, badTexts.Count);
             flavourText.text = badTexts[randomText];
         }
-        if (_state == GameState.Won)
+        else if (_state == GameState.Won)
         {
             var randomText = Random.Range(0, goodTexts.Count);
-            flavourText.text = badTexts[randomText];
+            flavourText.text = goodTexts[randomText];
         }
-        PauseGame(true);
-        GetManager<AudioManager>().StopPlaying();
-        Cursor.lockState = CursorLockMode.None;
+      
+        
+       
     }
 
 

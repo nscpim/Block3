@@ -29,6 +29,13 @@ public class Lights : Interactable
             i.transform.gameObject.SetActive(lightToggle);
         }
     }
+    public void SetToggleLights(bool _toggle)
+    {
+        foreach (Light i in lights)
+        {
+            i.transform.gameObject.SetActive(_toggle);
+        }
+    }
 
 
     public bool GetState() 

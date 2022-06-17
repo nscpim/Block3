@@ -9,7 +9,7 @@ public class GeneratorScreen : Interactable
     public Image genImage;
     private float energy;
     public Sprite[] battery;
-    private bool toggleScreen = true;
+    public bool toggleScreen = true;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -36,6 +36,10 @@ public class GeneratorScreen : Interactable
         {
             SetBattery(); 
         }
+    }
+    public void SetToggleScreen(bool _toggle) 
+    {
+       genImage.gameObject.SetActive(_toggle);
     }
 
     public void SetBattery() 
