@@ -9,7 +9,8 @@ public class Generator : Interactable
     public Material red;
     public Material green;
     public GameObject[] screens;
-    public bool firstTime = true;
+    public static bool firstTime = true;
+
 
     // Start is called before the first frame update
     public override void Start()

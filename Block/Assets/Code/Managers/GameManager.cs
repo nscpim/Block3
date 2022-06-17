@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
     private static float needs;
     private static float energy;
 
-
+    public bool openedDoor = false;
 
     //Check if ingame
     private static bool inGame;

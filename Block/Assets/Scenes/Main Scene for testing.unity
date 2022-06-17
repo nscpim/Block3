@@ -2057,7 +2057,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 0a7796fea5e1fe44c99e29d711870441, type: 2}
   screens:
   - {fileID: 0}
-  firstTime: 1
 --- !u!65 &386409916
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11658,13 +11657,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 907891022}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ccdb0b5b2d33cc458b6ce27a2b7a002, type: 3}
+  m_Script: {fileID: 11500000, guid: 51f64ae502651bf4fb96ff573c0f77dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   order: 4
   explanation: Interact with the generator by pressing E.
-  keys:
-  - e
 --- !u!1 &917420497 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2237408032018880145, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
@@ -13150,13 +13147,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1082548775}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ccdb0b5b2d33cc458b6ce27a2b7a002, type: 3}
+  m_Script: {fileID: 11500000, guid: ab004e964ca038f43a4367db85618c7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   order: 2
   explanation: Interact with doors with the E button.
-  keys:
-  - e
 --- !u!4 &1108429324 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5809921868998176380, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
@@ -16027,6 +16022,7 @@ MonoBehaviour:
   computerScreenObject: {fileID: 949014285}
   pauseMenuUI: {fileID: 1705015839}
   tutText: {fileID: 546090018}
+  openedDoor: 0
   energyLeft: {fileID: 1386311228}
   needsLeft: {fileID: 1559057639}
   gameState: {fileID: 1681668663}
