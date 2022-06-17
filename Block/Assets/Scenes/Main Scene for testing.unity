@@ -14262,11 +14262,11 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1348598046}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6dcd39d0a1118954583045d03572b55c, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -14275,10 +14275,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 2.6481686
+  MinDistance: 0.878994
+  MaxDistance: 2.5265388
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -14311,7 +14311,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -16029,6 +16029,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ae9e3b3b741693e4abdbb536a0449562, type: 3}
   - {fileID: 21300000, guid: 54f78e1cc74c82a419442d54bb0271f8, type: 3}
   - {fileID: 21300000, guid: 12f00f864a9264f4aa01cf62deeded0d, type: 3}
+  toggleScreen: 1
 --- !u!23 &1633611744
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16131,6 +16132,7 @@ MonoBehaviour:
   musictext: {fileID: 1806268146}
   SFXtext: {fileID: 602965483}
   Startscreen: {fileID: 2122974359}
+  Fansound: {fileID: 1348598046}
   player: {fileID: 1774821535}
   phone: {fileID: 462172696}
   phoneEnergy: {fileID: 2138531282}
@@ -16194,9 +16196,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioGroups:
-  - name: testmusic
+  - name: bunkerwalking
     clips:
-    - {fileID: 8300000, guid: 573e3c40601cba14ba8e4dd11c586fd0, type: 3}
+    - {fileID: 8300000, guid: efd9d0717f6b21746a2011f120daaacd, type: 3}
+  - name: bunker startsound
+    clips:
+    - {fileID: 8300000, guid: 5a74c5f014076b74996fdee4fee20be7, type: 3}
+  - name: fan buildup
+    clips:
+    - {fileID: 8300000, guid: e4308f3a75746084f8f9a335f9f22643, type: 3}
+  - name: bunkerrunningsound
+    clips:
+    - {fileID: 8300000, guid: 315ca48261da20f409cee27aaa9bd161, type: 3}
+  - name: Backgroundsound/music
+    clips:
+    - {fileID: 8300000, guid: 2fd71b69a916d684dad335b137dfac8b, type: 3}
 --- !u!1 &1652003210
 GameObject:
   m_ObjectHideFlags: 0

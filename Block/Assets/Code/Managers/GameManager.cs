@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public Text SFXtext;
     private bool doonce = false;
     public GameObject Startscreen;
+    public GameObject Fansound;
     [Header("Managers")]
     //managers array
     private static Manager[] managers;

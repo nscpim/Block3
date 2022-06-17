@@ -79,6 +79,7 @@ public class Player : Actor
         {
             sprintneed = true;
             speed = 2f;
+            //sprintsound here
         }
         else
         {
@@ -196,6 +197,8 @@ public class Player : Actor
                 case "Generator":
                     print("Hits generator");
                     hit.transform.gameObject.GetComponent<Generator>().ToggleDrain();
+                    GameManager.GetManager<AudioManager>().PlaySound("bunker startsound");
+                    Invoke("playgeneratorsound", 1f);
                     if (!Generator.CanDrain())
                     {
                         foreach (Light i in GameManager.instance.lights)
@@ -266,6 +269,16 @@ public class Player : Actor
         }
         Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(transform.forward), Color.white, 200f);
     }
+
+    public void playgeneratorsound()
+    {
+        GameManager.GetManager<AudioManager>().PlaySound("fan buildup");
+        Invoke("fansound", 5f);
+    }
+    public void fansound()
+    {
+        GameManager.instance.Fansound.GetComponent<AudioSource>().Play();
+    }
     public void movement()
     {
         CharacterController controller = GetComponent<CharacterController>();
@@ -276,6 +289,7 @@ public class Player : Actor
             moveDirection = cam.transform.TransformDirection(moveDirection);
             moveDirection.y = 0.0f;
             moveDirection *= speed;
+            //walking sound here 
         }
 
         turner = Input.GetAxis("Mouse X") * sensitivity;
