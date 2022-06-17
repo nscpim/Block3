@@ -87,7 +87,6 @@ public class Player : Actor
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
-
             if (!GameManager.GetManager<InventoryManager>().HasItem())
             {
                 print("false");
@@ -206,8 +205,10 @@ public class Player : Actor
                                 i.transform.gameObject.SetActive(Generator.CanDrain());
                                 GameManager.GetManager<EnergyManager>().RemoveDrainage(0.2f);
                             }
-                           
+
                         }
+                        GeneratorScreen.Instance.SetToggleScreen(false);
+                        ComputerScreen.Instance.SetToggleScreen(false);
                     }
                     if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
                     {
@@ -448,7 +449,6 @@ public class Player : Actor
             lasthighlightedObject = highlightedObject;
         }
     }
-
     public void ClearHighLight()
     {
         if (lasthighlightedObject != null)
