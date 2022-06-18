@@ -6,12 +6,11 @@ using UnityEngine.UI;
 public class Lights : Interactable
 {
     public Image lightState;
-    public Sprite[] onOff;
     public Light[] lights;
     public bool lightToggle = false;
 
     // Start is called before the first frame update
-   public override void Start()
+    public override void Start()
     {
         base.Start();
     }
@@ -21,19 +20,19 @@ public class Lights : Interactable
     {
         if (lightToggle)
         {
-            lightState.sprite = onOff[0];
+            lightState.sprite = GameManager.instance.onOff[0];
         }
         else
         {
-            lightState.sprite = onOff[1];
+            lightState.sprite = GameManager.instance.onOff[1];
         }
     }
 
 
-    public void ToggleLights() 
+    public void ToggleLights()
     {
         lightToggle = !lightToggle;
-        foreach  (Light i in lights)
+        foreach (Light i in lights)
         {
             i.transform.gameObject.SetActive(lightToggle);
         }
@@ -47,7 +46,7 @@ public class Lights : Interactable
     }
 
 
-    public bool GetState() 
+    public bool GetState()
     {
         return lightToggle;
     }

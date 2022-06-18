@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : Actor
 {
@@ -22,7 +23,7 @@ public class Player : Actor
     private bool sprintneed = false;
     private Vector3 offset;
    [HideInInspector] public bool mayDrain = false;
-
+   
 
 
     [Header("Materials")]
@@ -197,16 +198,22 @@ public class Player : Actor
                 case "Generator":
                     print("Hits generator");
                     hit.transform.gameObject.GetComponent<Generator>().ToggleDrain();
+                   
                     if (!Generator.CanDrain())
                     {
+                        
                         foreach (Light i in GameManager.instance.lights)
                         {
                             if (i.isActiveAndEnabled)
                             {
                                 i.transform.gameObject.SetActive(Generator.CanDrain());
-                                GameManager.GetManager<EnergyManager>().RemoveDrainage(0.1f);
+                                GameManager.GetManager<EnergyManager>().AddDrainage(0.1f);
                             }
-
+                        }
+                       
+                        foreach (GameObject item in GameManager.instance.lightObjects)
+                        {
+                            item.GetComponent<Lights>().lightToggle = false;
                         }
                         ComputerScreen.Instance.SetToggleScreen(false);
                     }

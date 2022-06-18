@@ -39,8 +39,8 @@ public class GameManager : MonoBehaviour
     [Header("Scene")]
     public Light[] lights;
     public GameObject[] lightObjects;
-
-    public GameObject computerScreenObject;
+    public GameObject[] lightState;
+    public Sprite[] onOff;
 
     [SerializeField] private GameObject pauseMenuUI;
 

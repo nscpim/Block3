@@ -8,9 +8,9 @@ public class Generator : Interactable
     public static bool generatorDraining = false;
     public GameObject display;
     public GameObject screen;
-    public Sprite[] onOff;
+   
     public static bool firstTime = true;
-    public GameObject[] lightState;
+   
 
 
     // Start is called before the first frame update
@@ -50,6 +50,7 @@ public class Generator : Interactable
             }
             firstTime = false;
         }
+
         return generatorDraining;
     }
 
@@ -62,15 +63,11 @@ public class Generator : Interactable
     {
         if (CanDrain())
         {
-            screen.gameObject.GetComponent<Image>().sprite = onOff[0];
+            screen.gameObject.GetComponent<Image>().sprite = GameManager.instance.onOff[0];
         }
         else 
         {
-            screen.gameObject.GetComponent<Image>().sprite = onOff[1];
-            foreach (GameObject item in lightState)
-            {
-                item.GetComponent<Image>().sprite = onOff[1];
-            }
+            screen.gameObject.GetComponent<Image>().sprite = GameManager.instance.onOff[1];
         }
     }
 

@@ -2559,9 +2559,6 @@ MonoBehaviour:
   cooldown: 0
   display: {fileID: 1383561821}
   screen: {fileID: 1070850835}
-  onOff:
-  - {fileID: 21300000, guid: 3069e9323dc2b0645921069e836558e3, type: 3}
-  - {fileID: 21300000, guid: d7cbb08a0a944054bbbbc4f1ca0b012f, type: 3}
 --- !u!65 &386409916
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11841,11 +11838,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 931198929}
   m_Mesh: {fileID: 2712931043218557613, guid: 245797a7270a2cf49a688cbacd5db61d, type: 3}
---- !u!1 &949014285 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 389862202, guid: 3c35e24da2f6e274bad235e7ce283915, type: 3}
-  m_PrefabInstance: {fileID: 1791331889992997668}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &959989237
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16586,7 +16578,16 @@ MonoBehaviour:
   - {fileID: 1329954768}
   - {fileID: 2050169540}
   - {fileID: 69455159}
-  computerScreenObject: {fileID: 949014285}
+  lightState:
+  - {fileID: 2035076635}
+  - {fileID: 1698380371}
+  - {fileID: 1683989171}
+  - {fileID: 34095254}
+  - {fileID: 70767050}
+  - {fileID: 1263873903}
+  onOff:
+  - {fileID: 21300000, guid: 3069e9323dc2b0645921069e836558e3, type: 3}
+  - {fileID: 21300000, guid: d7cbb08a0a944054bbbbc4f1ca0b012f, type: 3}
   pauseMenuUI: {fileID: 30800029}
   doorLights:
   - {fileID: 1154757288}
@@ -19980,6 +19981,10 @@ PrefabInstance:
     - target: {fileID: 2237408032018880147, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
       propertyPath: drainAmount
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2237408032018880147, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
+      propertyPath: lightToggle
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2237408032018880147, guid: 1b4dbe768e5c24a408f6e5e0bfd89f6a, type: 3}
       propertyPath: interaction_UI

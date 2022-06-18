@@ -116,7 +116,7 @@ public class EnergyManager : Manager
             lightsFlickering.StopTimer();
             GameManager.instance.Flick();
         }
-        Debug.Log(energyBar + " " + needsBar);
+        Debug.Log(energyBar + " " + needsBar + " " + drainage);
 
 
         if (eventTimer.isActive && eventTimer.TimerDone())
