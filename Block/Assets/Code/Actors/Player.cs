@@ -18,10 +18,10 @@ public class Player : Actor
     public Camera cam;
     public Transform leftHandLocation;
     public Transform rightHandLocation;
-    public bool hasObject = false;
+   [HideInInspector] public bool hasObject = false;
     private bool sprintneed = false;
     private Vector3 offset;
-    public bool mayDrain = false;
+   [HideInInspector] public bool mayDrain = false;
 
 
 
@@ -208,7 +208,6 @@ public class Player : Actor
                             }
 
                         }
-                        GeneratorScreen.Instance.SetToggleScreen(false);
                         ComputerScreen.Instance.SetToggleScreen(false);
                     }
                     if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)

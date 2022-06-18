@@ -10,6 +10,7 @@ public class Generator : Interactable
     public GameObject screen;
     public Sprite[] onOff;
     public static bool firstTime = true;
+    public GameObject[] lightState;
 
 
     // Start is called before the first frame update
@@ -37,7 +38,6 @@ public class Generator : Interactable
             {
                 item.gameObject.SetActive(false);
             }
-
             foreach (GameObject item in GameManager.instance.lightObjects)
             {
                 item.GetComponent<Interactable>().Interact(false, true, null);
@@ -67,6 +67,10 @@ public class Generator : Interactable
         else 
         {
             screen.gameObject.GetComponent<Image>().sprite = onOff[1];
+            foreach (GameObject item in lightState)
+            {
+                item.GetComponent<Image>().sprite = onOff[1];
+            }
         }
     }
 
