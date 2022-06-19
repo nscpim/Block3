@@ -731,7 +731,7 @@ MonoBehaviour:
   drainAmount: 0
   anim: {fileID: 0}
   canDrain: 0
-  needsAmount: 10
+  needsAmount: 5
   shaderThickness: 0.0002
   interactableText: {fileID: 902381359}
   interaction_UI: {fileID: 11400000, guid: 2793e97b4f1e68640aa7ad7717270c2b, type: 2}
@@ -2857,7 +2857,7 @@ MonoBehaviour:
   drainAmount: 2
   anim: {fileID: 1850173922}
   canDrain: 0
-  needsAmount: 10
+  needsAmount: 5
   shaderThickness: 0.0002
   interactableText: {fileID: 721114230}
   interaction_UI: {fileID: 11400000, guid: 8c1b19726de08c14ca649508fd01785b, type: 2}
@@ -4224,8 +4224,8 @@ MonoBehaviour:
   drainAmount: 0
   anim: {fileID: 0}
   canDrain: 0
-  needsAmount: 0
-  shaderThickness: 0.002
+  needsAmount: 5
+  shaderThickness: 0.0002
   interactableText: {fileID: 1955555009}
   interaction_UI: {fileID: 11400000, guid: 2793e97b4f1e68640aa7ad7717270c2b, type: 2}
   cooldown: 10
@@ -10238,7 +10238,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 5.8726616, z: 0, w: -2.706026}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &721114231
@@ -20517,8 +20517,8 @@ MonoBehaviour:
   drainAmount: 0
   anim: {fileID: 0}
   canDrain: 0
-  needsAmount: 10
-  shaderThickness: 0.002
+  needsAmount: 5
+  shaderThickness: 0.0002
   interactableText: {fileID: 1518279983}
   interaction_UI: {fileID: 11400000, guid: 2793e97b4f1e68640aa7ad7717270c2b, type: 2}
   cooldown: 10

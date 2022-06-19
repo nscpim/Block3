@@ -264,7 +264,7 @@ public class Player : Actor
                     if (Generator.CanDrain())
                     {
                         hit.transform.gameObject.GetComponent<Interactable>().Interact(false, false, null);
-                        GameManager.GetManager<EnergyManager>().SubstractEnergy(2f);
+                        GameManager.GetManager<EnergyManager>().SubstractEnergy(5f);
                     }
                     break;
                 default:
