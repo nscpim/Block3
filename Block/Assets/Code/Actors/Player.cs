@@ -289,7 +289,8 @@ public class Player : Actor
             moveDirection = cam.transform.TransformDirection(moveDirection);
             moveDirection.y = 0.0f;
             moveDirection *= speed;
-            //walking sound here 
+            GameManager.GetManager<AudioManager>().PlaySound("bunkerwalking");
+            // audio is bugging because with everyfootstep it plays the 5 second audio, same will be with running so gotta look into that 
         }
 
         turner = Input.GetAxis("Mouse X") * sensitivity;
