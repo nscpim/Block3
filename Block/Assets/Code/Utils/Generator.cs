@@ -30,8 +30,8 @@ public class Generator : Interactable
         Display();
         if (firstTime)
         {
-            //4 minutes
-            GameManager.instance.gameTimer.SetTimer(240);
+            //3 minutes
+            GameManager.instance.gameTimer.SetTimer(180);
             Player.instance.mayDrain = true;
             GameManager.GetManager<EnergyManager>().needsTimer.SetTimer(1);
             foreach (Light item in GameManager.instance.doorLights)
@@ -50,7 +50,10 @@ public class Generator : Interactable
             }
             firstTime = false;
         }
-
+        if (!generatorDraining)
+        {
+            GameManager.instance.Fansound.GetComponent<AudioSource>().Stop();
+        }
         return generatorDraining;
     }
 

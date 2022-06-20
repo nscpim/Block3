@@ -112,6 +112,7 @@ public class AudioManager : Manager
 
         }
     }
+  
     //gets the audio from the AudioLibrary with the given name and Plays the music.
     public void PlayMusic(string clipName, float fadeLength = 1f)
     {
@@ -124,7 +125,7 @@ public class AudioManager : Manager
     {
         GameObject sourceObj = new GameObject();
         AudioSource source = sourceObj.AddComponent<AudioSource>();
-        source.name = "AudioClip";
+        source.name = soundName;
         source.clip = GameManager.instance.GetComponent<AudioLibrary>().GetAudio(soundName);
         source.Play();
         SFXSources.Add(source);

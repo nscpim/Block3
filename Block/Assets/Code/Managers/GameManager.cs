@@ -104,7 +104,6 @@ public class GameManager : MonoBehaviour
             new UIManager(),
             new TutorialManager(),
         };
-
         goodTexts.Add("You did well, thanks to you the world did not end.");
         goodTexts.Add("You did good, The planet will be rebuild");
         badTexts.Add("You did poorly and the world burns.");
@@ -165,7 +164,7 @@ public class GameManager : MonoBehaviour
         }
         if (!doonce)
         {
-            //GetManager<AudioManager>().PlayMusic("testmusic", 1);
+            GetManager<AudioManager>().PlayMusic("Backgroundsound/music", 1);
             doonce = true;
         }
 

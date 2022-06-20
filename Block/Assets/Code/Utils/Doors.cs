@@ -18,12 +18,15 @@ public class Doors : Interactable
     {
         anim.Play("Door animation opening");
         StartCoroutine(ClosingDoor());
+        Player.instance.canPlay = false;
         
 
     }
     public void BackWards()
     {
+        GameManager.GetManager<AudioManager>().PlaySound("Doorslide");
         anim.Play("Door animation closing");
+        Player.instance.canPlay = true;
     }
     private IEnumerator ClosingDoor()
     {

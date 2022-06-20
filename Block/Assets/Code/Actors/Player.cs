@@ -26,7 +26,7 @@ public class Player : Actor
    
     [SerializeField] private float stepRate = 5f;
     private float stepCD;
-    [SerializeField] private AudioSource walkingSound;
+    private AudioSource walkingSound;
     public AudioClip footStep;
 
     [Header("Materials")]
@@ -34,7 +34,7 @@ public class Player : Actor
     public Material highlightmat;
     GameObject lasthighlightedObject;
     GameObject lastrayObject;
-
+    public bool canPlay;
 
     public void Awake()
     {
@@ -48,6 +48,7 @@ public class Player : Actor
         Cursor.lockState = CursorLockMode.Locked;
         cam = gameObject.GetComponentInChildren<Camera>();
         walkingSound = gameObject.GetComponent<AudioSource>();
+        canPlay = true;
 
     }
 
@@ -58,22 +59,6 @@ public class Player : Actor
         movement();
 
         var energyManager = GameManager.GetManager<EnergyManager>();
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            GameManager.GetManager<UIManager>().ShowTempUI(5, "Test", 400, 400);
-        }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            if (energyManager.eventTimer.isActive)
-            {
-                energyManager.eventTimer.StopTimer();
-                energyManager.eventTimer.SetTimer(Random.Range(energyManager.minimumTime, energyManager.maximumTime));
-            }
-            else
-            {
-                energyManager.eventTimer.SetTimer(Random.Range(energyManager.minimumTime, energyManager.maximumTime));
-            }
-        }
 
         if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Mouse0))
         {
@@ -90,19 +75,6 @@ public class Player : Actor
         {
             speed = 1.0f;
             sprintneed = false;
-        }
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            if (!GameManager.GetManager<InventoryManager>().HasItem())
-            {
-                print("false");
-                return;
-            }
-            else
-            {
-                print("true");
-                Place();
-            }
         }
         if (sprintneed && mayDrain)
         {
@@ -202,13 +174,10 @@ public class Player : Actor
                 case "Generator":
                     print("Hits generator");
                     hit.transform.gameObject.GetComponent<Generator>().ToggleDrain();
-
-                    GameManager.GetManager<AudioManager>().PlaySound("bunker startsound");
-                    Invoke("playgeneratorsound", 1f);
-                 
+                   
                     if (!Generator.CanDrain())
                     {
-                        
+                        GameManager.instance.Fansound.GetComponent<AudioSource>().Stop();
                         foreach (Light i in GameManager.instance.lights)
                         {
                             if (i.isActiveAndEnabled)
@@ -223,6 +192,13 @@ public class Player : Actor
                             item.GetComponent<Lights>().lightToggle = false;
                         }
                         ComputerScreen.Instance.SetToggleScreen(false);
+
+                        
+                    }
+                    else
+                    {
+                        GameManager.GetManager<AudioManager>().PlaySound("bunker startsound");
+                        Invoke("playgeneratorsound", 1f);
                     }
                     if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
                     {
@@ -235,8 +211,11 @@ public class Player : Actor
                     break;
                 case "Door":
                     //it checks if the object is a door and play the animation from the animator
+                    if (canPlay)
+                    {
+                        GameManager.GetManager<AudioManager>().PlaySound("Doorslide");
+                    }
                     hit.transform.gameObject.GetComponent<Doors>().PlayAnimation();
-                    GameManager.GetManager<AudioManager>().PlaySound("Doorslide");
                     if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
                     {
 
@@ -285,12 +264,19 @@ public class Player : Actor
 
     public void playgeneratorsound()
     {
-        GameManager.GetManager<AudioManager>().PlaySound("fan buildup");
-        Invoke("fansound", 5f);
+        if (Generator.CanDrain())
+        {
+            GameManager.GetManager<AudioManager>().PlaySound("fan buildup");
+            Invoke("fansound", 5f);
+        }
+       
     }
     public void fansound()
     {
-        GameManager.instance.Fansound.GetComponent<AudioSource>().Play();
+        if (Generator.CanDrain())
+        {
+            GameManager.instance.Fansound.GetComponent<AudioSource>().Play();
+        }
     }
     public void movement()
     {
@@ -298,13 +284,18 @@ public class Player : Actor
 
         if (controller.isGrounded)
         {
-            if ((Input.GetAxis("Horizontal") != 0f || Input.GetAxis("Vertical") != 0f) && stepCD < 0f)
+            if ((Input.GetAxis("Horizontal") != 0f || Input.GetAxis("Vertical") != 0f))
             {
-                Debug.Log("ur mom");
-                walkingSound.pitch = 1f + Random.Range(-0.1f, 0.1f); 
-                walkingSound.PlayOneShot(footStep, 0.4f);
+                if (!walkingSound.isPlaying)
+                {
+                    walkingSound.pitch = 1f + Random.Range(-0.1f, 0.1f);
+                    walkingSound.PlayOneShot(footStep, 1f);
+                }
                 //StartCoroutine(stepper());
-                stepCD = stepRate;
+            }
+            else
+            {
+                walkingSound.Stop();
             }
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             moveDirection = cam.transform.TransformDirection(moveDirection);
