@@ -77,7 +77,10 @@ public class Interactable : MonoBehaviour
             cooldownTimer.SetTimer(cooldown);
         }
 
-
+    }
+    public Timer GetTimer() 
+    {
+        return cooldownTimer;
     }
 }
 

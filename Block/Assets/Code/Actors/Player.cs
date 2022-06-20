@@ -147,8 +147,12 @@ public class Player : Actor
                 case "Sink":
                     if (Generator.CanDrain())
                     {
-                        hit.transform.gameObject.GetComponent<Interactable>().Interact(false, false, null);
-                        GameManager.GetManager<EnergyManager>().SubstractEnergy(2f);
+
+                        if (hit.transform.gameObject.GetComponent<Interactable>().GetTimer().TimeLeft() == 0)
+                        {
+                            hit.transform.gameObject.GetComponent<Interactable>().Interact(false, false, null);
+                            GameManager.GetManager<EnergyManager>().SubstractEnergy(1f);
+                        }
                     }
                     break;
                 case "Fridge":
@@ -251,7 +255,11 @@ public class Player : Actor
                     if (Generator.CanDrain())
                     {
                         hit.transform.gameObject.GetComponent<Interactable>().Interact(false, false, null);
-                        GameManager.GetManager<EnergyManager>().SubstractEnergy(5f);
+                        if (hit.transform.gameObject.GetComponent<Interactable>().GetTimer().TimeLeft() == 0)
+                        {
+                            hit.transform.gameObject.GetComponent<Interactable>().Interact(false, false, null);
+                            GameManager.GetManager<EnergyManager>().SubstractEnergy(4f);
+                        }
                     }
                     break;
                 default:
