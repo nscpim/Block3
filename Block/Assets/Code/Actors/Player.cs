@@ -22,7 +22,10 @@ public class Player : Actor
     private bool sprintneed = false;
     private Vector3 offset;
 
-
+    [SerializeField] private float stepRate = 5f;
+    private float stepCD;
+    [SerializeField] private AudioSource walkingSound;
+    public AudioClip footStep;
 
     [Header("Materials")]
     Material ogMat;
@@ -42,14 +45,14 @@ public class Player : Actor
         instance = this;
         Cursor.lockState = CursorLockMode.Locked;
         cam = gameObject.GetComponentInChildren<Camera>();
-
+        walkingSound = gameObject.GetComponent<AudioSource>();
 
     }
 
     // Update is called once per frame
     public void Update()
     {
-
+        stepCD -= Time.deltaTime;
         movement();
 
         var energyManager = GameManager.GetManager<EnergyManager>();
@@ -224,6 +227,7 @@ public class Player : Actor
                 case "Door":
                     //it checks if the object is a door and play the animation from the animator
                     hit.transform.gameObject.GetComponent<Doors>().PlayAnimation();
+                    GameManager.GetManager<AudioManager>().PlaySound("Doorslide");
                     if (hit.transform.gameObject.GetComponent<Interactable>().interaction_UI != null)
                     {
 
@@ -285,14 +289,20 @@ public class Player : Actor
 
         if (controller.isGrounded)
         {
+            if ((Input.GetAxis("Horizontal") != 0f || Input.GetAxis("Vertical") != 0f) && stepCD < 0f)
+            {
+                Debug.Log("ur mom");
+                walkingSound.pitch = 1f + Random.Range(-0.1f, 0.1f); 
+                walkingSound.PlayOneShot(footStep, 0.4f);
+                //StartCoroutine(stepper());
+                stepCD = stepRate;
+            }
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             moveDirection = cam.transform.TransformDirection(moveDirection);
             moveDirection.y = 0.0f;
             moveDirection *= speed;
-            GameManager.GetManager<AudioManager>().PlaySound("bunkerwalking");
-            // audio is bugging because with everyfootstep it plays the 5 second audio, same will be with running so gotta look into that 
         }
-
+        
         turner = Input.GetAxis("Mouse X") * sensitivity;
         looker = -Input.GetAxis("Mouse Y") * sensitivity;
         if (turner != 0)
@@ -307,6 +317,12 @@ public class Player : Actor
         moveDirection.y -= gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
     }
+
+    IEnumerator stepper()
+    {
+        yield return new WaitForSeconds(2f);
+    }
+
     public void Scroll()
     {
         if (GameManager.GetManager<InventoryManager>().selectedSlot > 0 && GameManager.GetManager<InventoryManager>().selectedSlot < 5)
